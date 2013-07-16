@@ -3,3 +3,4 @@
 /lib-python/
 /include
 /bin/
+*.pyc
