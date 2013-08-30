@@ -1,0 +1,46 @@
+<html lang="en">
+    <head>
+        <meta charset="UTF-8" />
+        <meta name="author" content="Infogroep"/>
+        <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+        <title>Bedrijvendag 2014</title>
+        <link href="/static/css/bootstrap.css" rel="stylesheet" type="text/css">
+    </head>
+    <body>
+        <header class="jumbotron subhead">
+            <div class="container">
+                <div class="row">
+                    <div class="span3">
+                        logo
+                    </div>
+                    <div class="span6">
+                        <h1>Infogroep Bedrijvendag</h1>
+                        <p class="lead">Editie 2014</p>
+                    </div>
+                </div>
+            </div>
+        </header>
+        <div class="container">
+        <div class="row-fluid">
+            <div class="span9">
+                {% block main %}{% endblock %}
+            </div>
+            <div class="span2">
+                <div class="nav nav-list">
+                    <li class="nav-header">Bedrijvendag</li>
+                    <li><a href="/">About</a></li>
+                    <li><a href="/">When and where</a></li>
+                    <li><a href="/">Participants</a></li>
+                    <li><a href="/">Upload your cv</a></li>
+                    <li><a href="/">Tombola</a></li>
+                    <li class="divider"></li>
+                    <li class ="nav-header">Companies</a></li>
+                    <li><a href="/">Login</a></li>
+                    <li><a href="/">Create account</a></li>
+                    <li><a href="/">Price list</a></li>
+                </div>
+            </div>
+        </div>
+        </div>
+     </body>
+</html>

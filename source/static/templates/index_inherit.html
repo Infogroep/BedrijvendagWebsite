@@ -1,0 +1,6 @@
+{% extends "static/templates/layout.html" %}
+{% block main %}
+    {% for newsrow in news_feed_query %}
+        {{newsrow[0]}} <br> {{newsrow[1]}}<br><br>
+    {% endfor%}
+{% endblock %}
