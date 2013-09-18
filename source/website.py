@@ -1,7 +1,8 @@
 from database import *
+import bottle_session
 import bottle
 # Use Jinja2 as the template engine, allows for more extensive templates, like inheritance. http://jinja.pocoo.org/docs/
-from bottle import jinja2_view as view, jinja2_template as template, static_file
+from bottle import jinja2_view as view, jinja2_template as template, static_file, request
 from os.path import dirname, abspath
 
 app = bottle.Bottle()
@@ -25,6 +26,11 @@ def server_static(filepath):
     print filepath
     return static_file(filepath,root= ROOT)
 
-@app.route('/hello/<name>')
-def index(name='World'):
-    return template('<b>Hello {{name}}</b>!', name=name)
+@app.route('/register')
+def register_form():
+    return template('static/templates/register_inherit.html')
+
+@app.route('/register', method='post')
+def register():
+    print request.forms.get('name')
+    return template('static/templates/register_inherit.html')
