@@ -8,7 +8,7 @@ def open_connection():
     return sqlite3.connect('website-data.db')
 
 def open_companies_connection():
-    return mysql.connect('localhost', 'bedrijvendag', 'groenwater', 'bedrijvendag')
+    return mysql.connect('127.0.0.1', 'bedrijvendag', 'groenwater', 'bedrijvendag')
 
 # Closes the connection
 # First commits the changes
@@ -36,12 +36,23 @@ def get_news_feed():
     close_connection(connection)
     return queryresult
 
-def company_exists(name):
+def company(name):
     connection = open_companies_connection()
     cursor = connection.cursor()
-    
-    cursor.execute('SELECT id FROM companies where name = ?', name)
+   
+    query = '''SELECT id, name, adres, postcode, place, country, tav, email, telephonenr, faxnr, gsmnr, website FROM companies WHERE name="%s"'''
+    query = query % name
+
+    print query
+     
+    cursor.execute(query)
     queryresult = cursor.fetchall()
     
+    for row in queryresult:
+        print row
+   
     close_connection(connection)
-    return (len(queryresult) = 0)
+    if (len(queryresult) == 1):
+        return queryresult
+    else:
+        return False
