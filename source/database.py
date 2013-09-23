@@ -8,7 +8,7 @@ def open_connection():
     return sqlite3.connect('website-data.db')
 
 def open_companies_connection():
-    return mysql.connect('127.0.0.1', 'bedrijvendag', 'groenwater', 'bedrijvendag')
+    return mysql.connect(, , , )
 
 # Closes the connection
 # First commits the changes
