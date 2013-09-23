@@ -1,4 +1,5 @@
 {% extends "static/templates/layout.html" %}
+
 {% block main %}
     <form class="form-horizontal" action="/register" method="post">
         <div class="control-group">
@@ -7,32 +8,13 @@
                 <input type="text" id="name" name="name">
             </div>
         </div>
-        <div class="control-group">
-            <label class="control-label" for="adress">Adress</label>
+        <div class ="control-group">
+            <label class="control-label" for="password">Password</label>
             <div class="controls">
-                <input type="text" id="adress" placeholder="street name, number">
+                <input type="password" id="password" name="password">
             </div>
         </div>
-        <div class="control-group">
-            <label class="control-label" for="zipcode">Zipcode</label>
-            <div class="controls">
-                <input type="number" id="zipcode" placeholder="Zipcode">
-            </div>
-        </div>
-        <div class="control-group">
-            <label class="control-label" for="city">City</label>
-            <div class="controls">
-                <input type="text" id="city" placeholder="City">
-            </div>
-        </div>
-        <div class="control-group">
-            <label class="control-label" for="country">Country</label>
-            <div class="controls">
-                <input type="text" id="country" placeholder="Country">
-            </div>
-        </div>
-        <div class="control-group">
-            <button type="submit" class="btn">Register</button>
-        </div>
+    <button class="btn" type="submit">Register</button>
     </form>
+
 {% endblock %}

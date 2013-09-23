@@ -1,0 +1,50 @@
+{% extends "static/templates/layout.html" %}
+{% block main %}
+    <form class="form-horizontal" action="/register2" method="post">
+        <div class="control-group">
+            <label class="control-label" for="name">Company name</label>
+            <div class="controls">
+                <input type="text" id="name" name="name" value={{name}} disabled>
+            </div>
+        </div>
+        <div class="control-group">
+            <label class="control-label" for="password">Password</label>
+            <div class="controls">
+                <input type="password" id="password" name="password" value={{password}} disabled>
+            </div>
+        </div>
+        <div class="control-group">
+            <label class="control-label" for="retype_password">Retype password</label>
+            <div class="controls">
+                <input type="password" id="retype_password" name="retype_password">
+            </div>
+        </div>
+        <div class="control-group">
+            <label class="control-label" for="adress">Adress</label>
+            <div class="controls">
+                <input type="text" id="adress" placeholder="street name, number">
+            </div>
+        </div>
+        <div class="control-group">
+            <label class="control-label" for="zipcode">Zipcode</label>
+            <div class="controls">
+                <input type="number" id="zipcode" placeholder="Zipcode">
+            </div>
+        </div>
+        <div class="control-group">
+            <label class="control-label" for="city">City</label>
+            <div class="controls">
+                <input type="text" id="city" placeholder="City">
+            </div>
+        </div>
+        <div class="control-group">
+            <label class="control-label" for="country">Country</label>
+            <div class="controls">
+                <input type="text" id="country" placeholder="Country">
+            </div>
+        </div>
+        <div class="control-group">
+            <button type="submit" class="btn">Register</button>
+        </div>
+    </form>
+{% endblock %}
