@@ -1,0 +1,14 @@
+{% extends "static/templates/layout.html" %}
+
+{% block main %}
+
+<div class="login-form">
+    <form action="/login" method="post">
+        <h2 class="form-signin-heading">Sign in</h2>
+        <input type="text" class="input-block-level" placeholder="Company name" id="name" name="name">
+        <input type="password" class="input-block-level" placeholder="Password" id="password" name="password">
+        <button class="btn btn-large btn-primary" type="submit">Sign in</button>
+    </form>
+</div>
+
+{% endblock %}
