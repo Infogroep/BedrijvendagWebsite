@@ -8,7 +8,7 @@ def open_connection():
     return sqlite3.connect('website-data.db')
 
 def open_companies_connection():
-    return mysql.connect(, , , )
+    return mysql.connect()
 
 # Closes the connection
 # First commits the changes
@@ -21,7 +21,7 @@ def initialise():
     cursor = connection.cursor()
     
     cursor.execute('''CREATE TABLE Newsfeed (Date DATA, Description CHAR(255), Newsmessage TEXT)''')
-    cursor.execute('''CREATE TABLE Companies (Name CHAR(255), Key CHAR(255), CompanyID int''')
+    cursor.execute('''CREATE TABLE Companies (Name CHAR(255), Key CHAR(255))''')
     
     close_connection(connection)
 
@@ -43,16 +43,28 @@ def company(name):
     query = '''SELECT id, name, adres, postcode, place, country, tav, email, telephonenr, faxnr, gsmnr, website FROM companies WHERE name="%s"'''
     query = query % name
 
-    print query
      
     cursor.execute(query)
     queryresult = cursor.fetchall()
     
-    for row in queryresult:
-        print row
    
     close_connection(connection)
     if (len(queryresult) == 1):
         return queryresult
     else:
         return False
+
+def add_login(user, password):
+    query = 'INSERT INTO Companies VALUES("' + user + '", "' + password + '")'
+    
+    print query
+    
+    connection = open_connection()
+    cursor = connection.cursor()
+    
+    cursor.execute(query)
+    
+    close_connection(connection)
+
+
+
