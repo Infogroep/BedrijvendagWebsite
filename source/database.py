@@ -8,7 +8,7 @@ def open_connection():
     return sqlite3.connect('website-data.db')
 
 def open_companies_connection():
-    return mysql.connect()
+    return mysql.connect('127.0.0.1', 'bedrijvendag', 'groenwater', 'bedrijvendag')
 
 # Closes the connection
 # First commits the changes
@@ -66,5 +66,23 @@ def add_login(user, password):
     
     close_connection(connection)
 
+def get_new_company_id():
+    connection = open_companies_connection()
+    cursor = connection.cursor()
+    
+    query = '''SELECT MAX(id) FROM companies'''
+    
+    cursor.execute(query)
+    
+    result = cursor.fetchone()
+    
+    return result[0] + 1
 
 
+def add_company():
+    connection = open_companies_connection()
+    cursor = connection.cursor()
+    
+    ID = GetNewID(name, )
+    
+    query = '''INSERT INTO companies VALUES(%s)

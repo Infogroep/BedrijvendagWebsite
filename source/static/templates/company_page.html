@@ -1,12 +1,13 @@
 {% extends "static/templates/layout.html" %}
 {% block main %}
-    <div class="navbar navbar-inverse">
+    <div class="navbar">
         <div class="navbar-inner">
             <a class="brand" href="#">{{name}}</a>
             <ul class="nav">
-                <li class="active"><a href="/home" data-toggle="tab">Home</a></li>
-                <li><a href="/information" data-toggle="tab">Information</a></li>
-                <li><a href="/résumés" data-toggle="tab">Résumés</a></li>
+                <li><a href="/company/{{name}}">Home</a></li>
+                <li><a href="/company/{{name}}/information">Information</a></li>
+                <li><a href="/company/{{name}}/register">Register</a></li>
+                <li><a href="/company/{{name}}/résumés">Résumés</a></li>
             </ul>
         </div>
     </div>
