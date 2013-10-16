@@ -1,6 +1,11 @@
 {% extends "static/templates/layout.html" %}
 {% block main %}
     {% for newsrow in news_feed_query %}
-        {{newsrow[0]}} <br> {{newsrow[1]}}<br><br>
+        <div class="panel panel-primary">
+            <div class="panel-heading">
+                <h4 class="panel-title">{{newsrow[2]}}   <small>{{newsrow[1]}}</small></h4>
+            </div>
+            <div class="panel-body">{{newsrow[3]}}</div>
+        </div>
     {% endfor%}
 {% endblock %}

@@ -1,13 +1,12 @@
 {% extends "static/templates/layout.html" %}
-
 {% block main %}
 
     {% if error %}
-        <div class="alert">
+        <div class="alert alert-danger">
             <strong>{{message}}</strong>
         </div>
     {% endif %}
-    
+
     <form class="form-horizontal" action="/register" method="post">
         <div class="control-group">
             <label class="control-label" for="name">Company name</label>
@@ -15,21 +14,80 @@
                 <input type="text" id="name" name="name">
             </div>
         </div>
-        <div class ="control-group">
+        <div class="control-group">
             <label class="control-label" for="password">Password</label>
             <div class="controls">
                 <input type="password" id="password" name="password">
             </div>
         </div>
         <div class="control-group">
-            <label class="control-label" for="password2">Retype Password</label>
+            <label class="control-label" for="retype_password">Retype password</label>
             <div class="controls">
-                <input type="password" id="password2" name="password2">
+                <input type="password" id="retype_password" name="retype_password">
             </div>
         </div>
         <div class="control-group">
-            <button class="btn btn-large btn-primary" type="submit">Register</button>
+            <label class="control-label" for="address">Address</label>
+            <div class="controls">
+                <input type="text" id="adress" name="address" placeholder="street name, number">
+            </div>
+        </div>
+        <div class="control-group">
+            <label class="control-label" for="postal">Postal</label>
+            <div class="controls">
+                <input type="number" id="zipcode" name="zipcode"  placeholder="Zipcode">
+            </div>
+        </div>
+        <div class="control-group">
+            <label class="control-label" for="city">City</label>
+            <div class="controls">
+                <input type="text" id="city" name="city" placeholder="City">
+            </div>
+        </div>
+        <div class="control-group">
+            <label class="control-label" for="country">Country</label>
+            <div class="controls">
+                <input type="text" id="country" name="country" placeholder="Country">
+            </div>
+        </div>
+        <div class="control-group">
+            <label class="control-label" for="contact">Contact person</label>
+            <div class="controls">
+                <input type="text" id="tav" name="tav" placeholder="contact">
+            </div>
+        </div>
+        <div class="control-group">
+            <label class="control-label" for="email">Email</label>
+            <div class="controls">
+                <input type="email" id="email" name="email" placeholder="contac@company.be">
+            </div>
+        </div>
+        <div class="control-group">
+            <label class="control-label" for="tel">Telephone number</label>
+            <div class="controls">
+                <input type="tel" id="tel" name="tel">
+            </div>
+        </div>
+        <div class="control-group">
+            <label class="control-label" for="fax">Fax number</label>
+            <div class="controls">
+                <input type="tel" id="fax" name="fax">
+            </div>
+        </div>
+        <div class="control-group">
+            <label class="control-label" for="cell">Cellphone number</label>
+            <div class="controls">
+                <input type="tel" id="cell" name="cell">
+            </div>
+        </div>
+        <div class="control-group">
+            <label class="control-label" for="website">Website</label>
+            <div class="controls">
+                <input type="url" id="website" name="website">
+            </div>
+        </div>
+        <div class="control-group">
+            <button type="submit" class="btn">Register</button>
         </div>
     </form>
-
 {% endblock %}

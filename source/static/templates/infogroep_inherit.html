@@ -1,0 +1,19 @@
+{% extends "static/templates/admin.html" %}
+{% block admin %}
+<form class="form-horizontal" action="/add news" method="post"> 
+    <legend>Add a news item</legend>
+        <div class="form-group">
+            <label class="control-label" for="short">Title</label>
+            <div class="controls">
+                <input type="text-area" class="form-control" id="short" name="short" placeholder="Title">
+            </div>
+        </div>
+        <div class="form-group">
+            <label class="control-label" for="news">News item</label>
+            <div class="controls">
+                <input type="text-area" rows="3" class="form-control" placeholder="actual news" id="news" name="news">
+            </div>
+        </div>
+        <button class="btn btn-primary" type="submit">Add news item</button>
+</form>
+{% endblock %}

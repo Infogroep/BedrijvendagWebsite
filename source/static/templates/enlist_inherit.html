@@ -1,0 +1,18 @@
+{% extends "static/templates/company_page.html" %}
+{% block company %}
+<form class="horizontal-form" action="/company/<name>/enlist" method="post">
+    {% if ((not participant) or (not confirmed)) %}
+    <select>
+        {% for item in options %}
+            <option value="{{item[0]}}">{{item[1]}}</option>
+        {% endfor %}
+    </select>
+        <div class="pull-right">
+            {% for item in options %}
+                <p><b>{{item[1]}}:</b> €{{item[2]}}</p>
+            {% endfor %}
+        </div>
+    {% endif %}
+</form>
+
+{% endblock %}

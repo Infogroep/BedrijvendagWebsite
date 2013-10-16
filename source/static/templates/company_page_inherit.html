@@ -1,0 +1,56 @@
+{% extends "static/templates/company_page.html" %}
+
+{% block company %}
+<div>
+<h1>{{name}}</h1>
+<hr>
+<p class="lead">Marketing</p><br>
+
+<table class="table">
+ <tr>
+  <td>Logo:</td><td>{{logo}}</td>
+ </tr>
+ <tr>
+  <td>website:</td><td><a href="{{website}}"> {{website}}</a></td>
+ </tr>
+</table>
+<br>
+<p class="lead">Address</p><br>
+<table class="table">
+ <tr>
+  <td>Address:</td><td>{{address}}</td>
+ </tr>
+ <tr>
+  <td>Area code, City</td><td>{{postal}}, {{place}}</td>
+ </tr>
+ <tr>
+  <td>country:</td><td>{{country}}</td>
+ </tr>
+</table>
+</P><br>
+<p class="lead">Contact</P><br>
+<table class="table">
+ <tr>
+  <td>Contact person:</td><td>{{tav}}</td>
+ </tr>
+ <tr>
+  <td>Email:</td><td>{{email}}</td>
+ </tr>
+ <tr>
+  <td>Telephone number:<td></td>{{tel}}</td>
+ </tr>
+ <tr>
+  <td>Fax number:</td><td>{{fax}}</td>
+ </tr>
+ <tr>
+  <td>Cellphone number:</td><td>{{cell}}</td>
+ </tr>
+</table>
+<table class="table">
+ <tr>
+  <td><a href="/company/{{name}}/edit" class="btn btn-default">Edit</a></td>
+ </tr>
+</table>
+<br>
+</div>
+{% endblock %}

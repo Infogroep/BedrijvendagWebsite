@@ -2,13 +2,21 @@
 
 {% block main %}
 
-<div class="login-form">
-    <form action="/login" method="post">
+    {% if error %}
+        <div class="alert">
+            <strong>{{message}}</strong>
+        </div>
+    {% endif %}
+        
+    <form class="form-horizontal text-center" action="/login" method="post" role="form">
         <h2 class="form-signin-heading">Sign in</h2>
-        <input type="text" class="input-block-level" placeholder="Company name" id="name" name="name">
-        <input type="password" class="input-block-level" placeholder="Password" id="password" name="password">
+        <div class="form-group">
+            <input type="text" class="input-block-level" placeholder="Company name" id="name" name="name">
+        </div>
+        <div class="form-group">
+            <input type="password" class="input-block-level" placeholder="Password" id="password" name="password">
+        </div>
         <button class="btn btn-large btn-primary" type="submit">Sign in</button>
     </form>
-</div>
 
 {% endblock %}

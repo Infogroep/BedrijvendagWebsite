@@ -1,0 +1,19 @@
+{% extends "static/templates/layout.html" %}
+
+{% block main %}
+<h1>{{name}}</h1>
+
+    <div class="navbar default-navbar" role="navigation">
+            <ul class="nav navbar-nav">
+                <li><a href="/{{name}}/newspanel">Newspanel</a></li>
+                <li><a href="/{{name}}/financial">Financial</a></li>
+                <li><a href="/{{name}}/participants">Participants</a></li>
+            </ul>
+            <ul class="nav pull-right">
+                <li><a href="/company/{{name}}/logout">Logout</a></li>
+            </ul>
+    </div>
+
+{% block admin %}{% endblock %}
+
+{% endblock %}

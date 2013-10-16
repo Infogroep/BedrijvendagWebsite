@@ -1,0 +1,118 @@
+{% extends "static/templates/company_page.html" %}
+
+{% block company %}
+<div>
+<h1>{{name}}</h1>
+<hr>
+<p class="lead">Marketing</p><br>
+
+<table class="table">
+ <tr>
+  <td>Logo: {{logo}}</td>
+  <td>
+   <form class="pull-right" method="post" action="{{name}}/logo" enctype="multipart/form-data">
+       <input type="file" name="logo" id="logo" placeholder="logo">
+       <button class="btn">Upload logo</button>
+   </form>
+  </td>
+ </tr>
+ <tr>
+  <td><a href="{{website}}">website: {{website}}</a></td>
+  <td>
+   <form class="pull-right" method="post" action="{{name}}/update/website">
+       <input type="url" name="value" id="value" placeholder="{{website}}">
+       <button class="btn">Update</button>
+   </form>
+  </td>
+ </tr>
+</table>
+<br>
+<p class="lead">Address</p><br>
+<table class="table">
+ <tr>
+  <td>Address: {{address}}</td>
+  <td>
+   <form class="pull-right" method="post" action="{{name}}/update/address">
+       <input type="text" name="value" id="value" placeholder="{{address}}">
+       <button class="btn">Update</button>
+   </form>
+  </td>
+ </tr>
+ <tr>
+  <td>Area code, City{{postal}}, {{place}}</td>
+  <td>
+   <form class="pull-right" method="post" action="{{name}}/update/area_code">
+       <input type="text" name="value" id="value" placeholder="{{postal}}">
+       <button class="btn">Update</button>
+   </form>
+  </td>
+  <td>
+   <form class="pull-right" method="post" action="{{name}}/update/place">
+       <input type="text" name="value" id="value" placeholder="{{place}}">
+       <button class="btn">Update</button>
+   </form>
+  </td>
+ </tr>
+ <tr>
+  <td>country: {{country}}</td>
+  <td>
+   <form class="pull-right" method="post" action="{{name}}/update/country">
+       <input type="text" name="value" id="value" placeholder="{{country}}">
+       <button class="btn">Update</button>
+   </form>
+  </td>
+ </tr>
+</table>
+</P><br>
+<p class="lead">Contact</P><br>
+<table class="table">
+ <tr>
+  <td>Contact person: {{tav}}</td>
+  <td class="pull-right">
+   <form method="post" action="{{name}}/update/tav">
+      <input type="text" name="value" id="value" placeholder="{{tav}}">
+      <button class="btn">Update</button>
+   </form>
+  </td>
+ </tr>
+ <tr>
+  <td>Email: {{email}}</td>
+  <td class="pull-right">
+   <form method="post" action="{{name}}/update/email">
+      <input type="text" name="value" id="value" placeholder="{{email}}">
+      <button class="btn">Update</button>
+   </form>
+  </td>
+ </tr>
+ <tr>
+  <td>Telephone number: {{tel}}</td>
+  <td class="pull-right">
+   <form method="post" action="{{name}}/update/telephone_number">
+      <input type="text" name="value" id="value" placeholder="{{tel}}">
+      <button class="btn">Update</button>
+   </form>
+  </td>
+ </tr>
+ <tr>
+  <td>Fax number: {{fax}}</td>
+  <td class="pull-right">
+   <form method="post" action="{{name}}/update/fax_number">
+      <input type="text" name="value" id="value" placeholder="{{fax}}">
+      <button class="btn">Update</button>
+   </form>
+  </td>
+ </tr>
+ <tr>
+  <td>Cellphone number: {{cell}}</td>
+  <td class="pull-right">
+   <form method="post" action="{{name}}/update/cellphone_number">
+      <input type="text" name="value" id="value" placeholder="{{cell}}">
+      <button class="btn">Update</button>
+   </form>
+  </td>
+ </tr>
+</table>
+<a href="/company/{{name}}" class="btn btn-default">Done</a>
+<br>
+</div>
+{% endblock %}

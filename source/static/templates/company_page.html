@@ -1,15 +1,20 @@
 {% extends "static/templates/layout.html" %}
 {% block main %}
-    <div class="navbar">
-        <div class="navbar-inner">
-            <a class="brand" href="#">{{name}}</a>
-            <ul class="nav">
+    <div class="navbar navbar-default" role="navigation">
+<!--        <div class="navbar-inner"> -->
+            <div class="navbar-header">
+                <a class="navbar-brand" href="/company/{{name}}">{{name}}</a>
+            </div>
+            <ul class="nav navbar-nav">
                 <li><a href="/company/{{name}}">Home</a></li>
-                <li><a href="/company/{{name}}/information">Information</a></li>
-                <li><a href="/company/{{name}}/register">Register</a></li>
+                <li><a href="/company/{{name}}/companiesbook">Companies book</a></li>
+                <li><a href="/company/{{name}}/enlist">Enlist</a></li>
                 <li><a href="/company/{{name}}/résumés">Résumés</a></li>
             </ul>
-        </div>
+            <ul class="nav pull-right">
+                <li><a href="/company/{{name}}/logout">Logout</a></li>
+            </ul>
+<!--        </div> -->
     </div>
     
     {% block company %}{% endblock %}

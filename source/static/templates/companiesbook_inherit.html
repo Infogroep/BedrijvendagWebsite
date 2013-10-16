@@ -1,0 +1,88 @@
+{% extends "static/templates/company_page.html" %}
+{% block company %}
+
+<form class="form-horizontal" action="/company/{{name}}/companiesbook" method="post">
+    <div class="form-group">
+        <label for="location" class="control-group">Location</label>
+        <div class="col-lg-5">
+            <input type="text" class="form-control" id="location" name="location">
+        </div>
+    </div>
+    <div class="form-group">
+        <label for="slogan" class="control-group">Slogan</label>
+        <div class="col-lg-5">
+            <input type="text" class="form-control" id="slogan" name="slogan">
+        </div>
+    </div>
+    <div class="form-group">
+        <label for="why" class="control-group">Why {{name}}?</label>
+        <div class="col-lg-5">
+            <input type="text" class="form-control" id="why" name="why">
+        </div>
+    </div>
+    <div class="form-group">
+        <label for="schooling" class="control-group">Schooling</label>
+        <div class="col-lg-5">
+            <input type="text" class="form-control" id="shooling" name="shooling">
+        </div>
+    </div>
+    <div class="form-group">
+        <label for="develop" class="control-group">Develop possibilities</label>
+        <div class="col-lg-5">
+            <input type="text" class="form-control" id="develop" name="develop">
+        </div>
+    </div>
+    <div class="form-group">
+        <label class="checkbox-inline">
+            <input type="checkbox" class="form-control" id="NL" name="NL" value="True">Dutch
+        </label>
+        <label class="checkbox-inline">
+            <input type="checkbox" class="form-control" id="ENG" name="ENG" value="True">English
+        </label>
+        <label class="checkbox-inline">
+            <input type="checkbox" class="form-control" id="DE" name="DE" value="True">German
+        </label>
+        <label class="checkbox-inline">
+            <input type="checkbox" class="form-control" id="FR" name="FR" value="True">French
+        </label>
+    </div>
+    <div class="form-group">
+        <label class="checkbox-inline">
+            <input type="checkbox" class="form-control" id="JOBS" name="JOBS" value="True">Jobs
+        </label>
+        <label class="checkbox-inline">
+            <input type="checkbox" class="form-control" id="SJOBS" name="SJOBS" value="True">Student Jobs
+        </label>
+        <label class="checkbox-inline">
+            <input type="checkbox" class="form-control" id="STAGE" name="STAGE" value="True">Internship
+        </label>
+    </div>
+    <div class="form-group">
+        <label class="checkbox-inline">
+            <input type="checkbox" class="form-control" id="FY" name="FY" value="True">Physics
+        </label>
+        <label class="checkbox-inline">
+            <input type="checkbox" class="form-control" id="CH" name="CH" value="True">Chemistry
+        </label>
+        <label class="checkbox-inline">
+            <input type="checkbox" class="form-control" id="WI" name="WI" value="True">Mathematics
+        </label>
+        <label class="checkbox-inline">
+            <input type="checkbox" class="form-control" id="BIO" name="BIO" value="True">Biology
+        </label>
+        <label class="checkbox-inline">
+            <input type="checkbox" class="form-control" id="CW" name="CW" value="True">Computer science
+        </label>
+        <label class="checkbox-inline">
+            <input type="checkbox" class="form-control" id="GEO" name="GEO" value="True">Geography
+        </label>
+        <label class="checkbox-inline">
+            <input type="checkbox" class="form-control" id="BIN" name="BIN" value="True">Bioscience engineering
+        </label>
+    </div>
+    <div class="form-group">
+        <button class="btn btn-primary" type="submit">Submit</button>
+    </div> 
+
+
+{% endblock %}
