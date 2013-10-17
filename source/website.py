@@ -11,7 +11,7 @@ from os.path import dirname, abspath
 
 #app = bottle.Bottle()
 
-ROOT = dirname(abspath(__file__)) + '/static'
+STATIC = ROOT + '/static'
 
 session_opts = {
     'session.type': 'file',
@@ -34,11 +34,11 @@ def pricelist():
 
 @bottle.route('/static/<filepath:path>')
 def server_static(filepath):
-    return static_file(filepath,root= ROOT)
+    return static_file(filepath,root= STATIC)
 
 @bottle.route('/logos/<filepath:path>')
 def server_log(filepath):
-    return static_file(filepath, root = ROOT)
+    return static_file(filepath, root = STATIC)
 
 @bottle.route('/register')
 def register_form():
@@ -46,7 +46,7 @@ def register_form():
 
 @bottle.route('/resume')
 def resume_form():
-   return template('static/templates/resume_inherit.html', fields = fields_of_study) 
+   return template('static/templates/resume_inherit.html', fields = fields_of_study, edition = edition) 
 
 @bottle.route('/resume', method="post")
 def resume_upload():
@@ -244,15 +244,35 @@ def update_(name, column):
         bottle.redirect('/unauthorized')
 
 @bottle.route('/company/<name>/enlist')
-def enlist(name):
+def enlist_form(name):
     session = bottle.request.environ.get('beaker.session')
     try:
         if(session[name] == True):
-            return template('static/templates/enlist_inherit.html', options = get_formulas(), name = name)
+            return template('static/templates/enlist_inherit.html', options = get_formulas(), name = name, \
+                                                                    participant = is_participant(name, edition), \
+                                                                    confirmed = requested_contract(name), \
+                                                                    edition = edition)
         else:
             bottle.redirect('/unauthorized')
     except KeyError:
         bottle.redirect('/unauthorized')
+
+@bottle.route('/company/<name>/enlist', method='post')
+def enlist():
+    session = bottle.request.environ.get('beaker.session')
+    try:
+        if(session[name] == True):
+            formula = request.forms.get('formula')
+            high = request.forms.get('high')
+            if (not high == 1):
+                high = 0
+
+            add_participant(name, edition, formula, high)
+        else:
+            bottle.redirect('/unauthorized')
+    except KeyError:
+        bottle.redirect('/unauthorized')
+
 
 @bottle.route('/unauthorized')
 def unauthorized():
@@ -350,3 +370,15 @@ def addnews():
     add_news_item(short, news)
     
     bottle.redirect('/infogroep')
+
+@bottle.route('/<name>/participants')
+def admin_participants(name):
+    session = bottle.request.environ.get('beaker.session')
+    try:
+        if(session[name] == True):
+            return template('static/templates/admin_participants.html', name = name, edition = edition)
+        else:
+            bottle.redirect('/unauthorized')
+    except KeyError:
+        bottle.redirect('/unauthorized')
+    

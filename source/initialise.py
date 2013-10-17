@@ -8,6 +8,12 @@ def initialise():
 		initialise_field_folders()
 	except:
 		print "field files creation failed"
+
+	try:
+		initialise_logo_folders()
+	except:
+		print "logo folders creation failed"
+
 	try:
 		initialise_database()
 	except:
@@ -29,3 +35,11 @@ def initialise_database():
 	
 	if (not (os.path.exists(database_name))):
 		database.db_initialise()
+
+def initialise_logo_folders():
+	if (not (os.path.exists(logo_original))):
+		os.mkdir(logo_original)
+
+	if(not(os.path.exists(logo_resized))):
+		os.mkdir(logo_resized)
+

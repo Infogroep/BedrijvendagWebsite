@@ -1,6 +1,7 @@
 import sqlite3
-import initialise
+import initialise, participant_converter
 from password import *
+from participant_state import *
 from config import database_name
 import MySQLdb as mysql
 import time, datetime
@@ -198,19 +199,25 @@ def add_news_item(short, text):
     
     close_connection(connection)
 
-def isparticipant(name, year):
+def get_companyID(name):
     connection = open_companies_connection()
     cursor = connection.cursor()
     
-    cursor.execute('''SELECT ID FROM companies where name = ?''', (name,))
+    cursor.execute('''SELECT ID FROM companies where name = "%s"''' % (name,))
     
     result = cursor.fetchone()
     
     ID = result[0]
+
+    return ID
+
+def is_participant(name, year):
+    connection = open_companies_connection()
+    cursor = connection.cursor()
     
-    cursor.execute('''SELECT company_ID FROM participants where company_id = ? and year= ?''', (ID, year))
+    ID = get_companyID(name)
     
-    cursor.execute(query)
+    cursor.execute('''SELECT companyID FROM participants where companyID = "%s" and year = "%s"''' % (ID, year))
 
     result = cursor.fetchall()
     close_connection(connection)
@@ -219,6 +226,20 @@ def isparticipant(name, year):
         return False
     else:
         return True
+
+def get_status(name, edition):
+    if(is_participant(name, edition)):
+        connection = open_companies_connection()
+        cursor = connection.cursor()
+
+        ID = get_companyID(name)
+        cursor.execute('''SELECT state FROM participants WHERE companyID= %s and year = "%s" ''' % (ID, year))
+
+        result = cursor.fetchone()
+
+        close_connection(connection)
+        return result[0]
+
 
 def get_formulas():
     connection = open_companies_connection()
@@ -236,4 +257,54 @@ def update(company, value, column):
     cursor.execute('''UPDATE companies SET %s = "%s" where name = "%s"''' % (column, value, company))
     
     close_connection(connection)
+
+def add_participant(company, year, formula, high):
+    connection = open_companies_connection()
+    cursor = connection.cursor()
+
+    ID = get_companyID(company)
+    state = participant_converter.id_to_state(0)
+
+    tables = 2
+    promotion_wands = 2
+
+    if((formula == 2) or (formula == 3)):
+        tables = 0
+        promotion_wands = 0
+
+    cursor.execute('''INSERT INTO participants VALUES (%s, %s, %s, "%s", %s, %s, "", %s)''' % (ID, year, formula, state, tables, promotion_wands, high))
+
+    close_connection(connection)
+
+def get_company_name_by_id(id):
+    connection = open_companies_connection()
+    cursor = connection.cursor()
+
+    cursor.execute('''SELECT name FROM company Where ID = %s''' %(id,))
+
+    result = cursor.fetchone()
+    close_connection(connection)
+    return result[0]
+
+def get_participants(year):
+    connection = open_companies_connection()
+    cursor = connection.cursor()
+
+    cursor.execute('''SELECT * FROM participants where year = %s''' % (year,))
+
+    result = cursor.fetchall()
+    close_connection(connection)
+
+    result = map(list, result)
+    
+    # converting to human readable time
+    # I know it's not part of the database abstraction I'm so very sorry
+    # You can always rewrite it.
+    for res in result:
+        company_name = get_company_name_by_id(result[0])
+        result[0] = company_name
+
+    return result
+
+
 

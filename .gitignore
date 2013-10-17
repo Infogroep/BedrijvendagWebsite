@@ -4,3 +4,6 @@
 /include
 /bin/
 *.pyc
+*.out
+*.sh
+*.swp

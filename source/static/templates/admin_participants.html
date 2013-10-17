@@ -1,0 +1,15 @@
+{% extends "static/templates/admin.html" %}
+{% block admin %}
+
+<table class="table">
+{% for company in participant %}
+    <tr>
+        {% for value in company %}
+            <td>{{value}}</td>
+        {% endfor%}
+    </tr>
+{% endfor %}
+
+</table>
+
+{% endblock %}
