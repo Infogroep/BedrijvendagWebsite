@@ -144,11 +144,11 @@ def login(user, password):
     cursor.execute('''SELECT key from Companies where name=?''', (user,))
     
     result = cursor.fetchone()
-    company_ = company(user)
+#    company_ = company(user)
 
-    if not(company_):
-        return False
-    elif result is None:
+#    if not(company_):
+#        return False
+    if result is None:
         return False
     elif(len(result) == 0):
         return False
@@ -216,15 +216,20 @@ def is_participant(name, year):
     cursor = connection.cursor()
     
     ID = get_companyID(name)
+    print ID, name, year
     
     cursor.execute('''SELECT companyID FROM participants where companyID = "%s" and year = "%s"''' % (ID, year))
 
     result = cursor.fetchall()
     close_connection(connection)
     
+    print result, len(result)
+
     if (len(result) == 0):
+        print False
         return False
     else:
+        print True
         return True
 
 def get_status(name, edition):
@@ -233,7 +238,7 @@ def get_status(name, edition):
         cursor = connection.cursor()
 
         ID = get_companyID(name)
-        cursor.execute('''SELECT state FROM participants WHERE companyID= %s and year = "%s" ''' % (ID, year))
+        cursor.execute('''SELECT state FROM participants WHERE companyID= %s and year = "%s" ''' % (ID, edition))
 
         result = cursor.fetchone()
 
@@ -263,7 +268,8 @@ def add_participant(company, year, formula, high):
     cursor = connection.cursor()
 
     ID = get_companyID(company)
-    state = participant_converter.id_to_state(0)
+#    state = participant_converter.id_to_state(0)
+    state = 0
 
     tables = 2
     promotion_wands = 2
@@ -272,15 +278,15 @@ def add_participant(company, year, formula, high):
         tables = 0
         promotion_wands = 0
 
-    cursor.execute('''INSERT INTO participants VALUES (%s, %s, %s, "%s", %s, %s, "", %s)''' % (ID, year, formula, state, tables, promotion_wands, high))
-
+#    cursor.execute('''INSERT INTO participants VALUES (%s, %s, %s, "%s", %s, %s, "", %s)''' % (ID, year, formula, state, tables, promotion_wands, high))
+    cursor.execute('''INSERT INTO participants VALUES (%s, %s, %s, %s, %s, %s, "", %s)''' % (ID, year, formula, state, tables, promotion_wands, high))
     close_connection(connection)
 
-def get_company_name_by_id(id):
+def get_company_name_by_id(company_id):
     connection = open_companies_connection()
     cursor = connection.cursor()
 
-    cursor.execute('''SELECT name FROM company Where ID = %s''' %(id,))
+    cursor.execute('''SELECT name FROM companies WHERE ID = %s''' % (company_id,))
 
     result = cursor.fetchone()
     close_connection(connection)
@@ -301,8 +307,8 @@ def get_participants(year):
     # I know it's not part of the database abstraction I'm so very sorry
     # You can always rewrite it.
     for res in result:
-        company_name = get_company_name_by_id(result[0])
-        result[0] = company_name
+        company_name = get_company_name_by_id(res[0])
+        res[0] = company_name
 
     return result
 

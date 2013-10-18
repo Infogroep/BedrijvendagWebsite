@@ -258,19 +258,24 @@ def enlist_form(name):
         bottle.redirect('/unauthorized')
 
 @bottle.route('/company/<name>/enlist', method='post')
-def enlist():
+def enlist(name):
     session = bottle.request.environ.get('beaker.session')
     try:
+        print 1, name
         if(session[name] == True):
+            print 2, name
             formula = request.forms.get('formula')
             high = request.forms.get('high')
+            print 3, formula, high
             if (not high == 1):
                 high = 0
 
             add_participant(name, edition, formula, high)
+            bottle.redirect('/company/%s/enlist' % (name,))
         else:
             bottle.redirect('/unauthorized')
     except KeyError:
+        print "KeyError"
         bottle.redirect('/unauthorized')
 
 
@@ -338,9 +343,11 @@ def login_():
     route_address = route_address % name
     
     if (name == 'ig'):
-        route_address = '/infogroep'
+        name = 'infogroep'
+        route_address = '/' + name
     if (name == 'wk'):
-        route_address = '/wetenschappelijke kring'
+        name = 'wetenschappelijke kring'
+        route_address = '/' + name
     
     if(login(name, password)):
         session = bottle.request.environ.get('beaker.session')
@@ -349,12 +356,12 @@ def login_():
     else:
         return template('static/templates/login_inherit', error=True, msg = "The given combination was incorrect")
 
-@bottle.route('/infogroep')
-def infogroep():
+@bottle.route('/<name>')
+def admin_page(name):
     session = bottle.request.environ.get('beaker.session')
     try:
-        if(session['ig'] == True):
-            return template('static/templates/infogroep_inherit.html', name = "Infogroep", edition = edition)
+        if(session[name] == True):
+            return template('static/templates/infogroep_inherit.html', name = "infogroep", edition = edition)
         else:
             bottle.redirect('/unauthorized')
     except KeyError:
@@ -376,7 +383,7 @@ def admin_participants(name):
     session = bottle.request.environ.get('beaker.session')
     try:
         if(session[name] == True):
-            return template('static/templates/admin_participants.html', name = name, edition = edition)
+            return template('static/templates/admin_participants.html', name = name, edition = edition, participants = get_participants(edition))
         else:
             bottle.redirect('/unauthorized')
     except KeyError:

@@ -10,4 +10,5 @@ def is_state(company, state):
 	return current_state ==  state
 
 def requested_contract(company):
-	return is_state(company, id_to_state(2))
+	#return is_state(company, participant_converter.id_to_state(2))
+	return is_state(company, 2)

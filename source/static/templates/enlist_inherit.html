@@ -1,9 +1,9 @@
 {% extends "static/templates/company_page.html" %}
 {% block company %}
-<form class="horizontal-form" {% if (not particpant) %}
-                                action="/company/<name>/enlist"
+<form class="horizontal-form" {% if (not participant) %}
+                                action="/company/{{name}}/enlist"
                               {% else %}
-                                action="/company/<name>/enlistupdate"
+                                action="/company/{{name}}/enlistupdate"
                               {% endif %}
                                  method="post">
     <select name="formula">
