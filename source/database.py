@@ -216,20 +216,15 @@ def is_participant(name, year):
     cursor = connection.cursor()
     
     ID = get_companyID(name)
-    print ID, name, year
     
     cursor.execute('''SELECT companyID FROM participants where companyID = "%s" and year = "%s"''' % (ID, year))
 
     result = cursor.fetchall()
     close_connection(connection)
-    
-    print result, len(result)
 
     if (len(result) == 0):
-        print False
         return False
     else:
-        print True
         return True
 
 def get_status(name, edition):
@@ -267,6 +262,9 @@ def add_participant(company, year, formula, high):
     connection = open_companies_connection()
     cursor = connection.cursor()
 
+    if(is_participant(company, year)):
+        return
+
     ID = get_companyID(company)
 #    state = participant_converter.id_to_state(0)
     state = 0
@@ -296,7 +294,7 @@ def get_participants(year):
     connection = open_companies_connection()
     cursor = connection.cursor()
 
-    cursor.execute('''SELECT * FROM participants where year = %s''' % (year,))
+    cursor.execute('''SELECT companyID, formulaID, state, tables, high_stand, remarks FROM participants where year = %s''' % (year,))
 
     result = cursor.fetchall()
     close_connection(connection)
@@ -309,6 +307,10 @@ def get_participants(year):
     for res in result:
         company_name = get_company_name_by_id(res[0])
         res[0] = company_name
+        high = res[4]
+
+        if high:
+            res[4] = 1
 
     return result
 

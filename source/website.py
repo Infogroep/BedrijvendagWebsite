@@ -261,21 +261,19 @@ def enlist_form(name):
 def enlist(name):
     session = bottle.request.environ.get('beaker.session')
     try:
-        print 1, name
         if(session[name] == True):
-            print 2, name
             formula = request.forms.get('formula')
             high = request.forms.get('high')
-            print 3, formula, high
-            if (not high == 1):
+            print "enlist", formula, high
+            if (not high == "1"):
                 high = 0
+            print high
 
             add_participant(name, edition, formula, high)
             bottle.redirect('/company/%s/enlist' % (name,))
         else:
             bottle.redirect('/unauthorized')
     except KeyError:
-        print "KeyError"
         bottle.redirect('/unauthorized')
 
 

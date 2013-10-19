@@ -2,14 +2,16 @@
 {% block admin %}
 
 <table class="table">
-{% for company in participants %}
-    <tr>
-        {% for value in company %}
-            <td>{{value}}</td>
-        {% endfor%}
-    </tr>
-{% endfor %}
-
+	<tr>
+		<b><td>Company</td><td>formula</td><td>state</td><td>tables</td><td>high stand</td><td>remarks</td></b>
+	</tr>
+	{% for company in participants %}
+   	<tr>
+       	{% for value in company %}
+		<td>{{value}}</td>
+       	{% endfor%}
+   	</tr>
+	{% endfor %}
 </table>
 
 {% endblock %}
