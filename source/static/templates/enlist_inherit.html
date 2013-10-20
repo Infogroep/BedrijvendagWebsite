@@ -13,18 +13,23 @@
                                 action="/company/{{name}}/enlistupdate"
                               {% endif %}
                                  method="post">
-    <select name="formula">
-        {% for item in options %}
+     <div class="control-group">
+        <label class="control-label" for="formula">Formula</label>
+        <select id="formula" name="formula">
+            {% for item in options %}
             <option value="{{item[0]}}"
                 {% if confirmed %}
                     disabled
                 {% endif %}
                 >{{item[1]}}</option>
-        {% endfor %}
-    </select>
-    <br>
-    High stand (> 2,1 meters): 
-    <input type="checkbox" name="high" value="1">
+            {% endfor %}
+        </select>
+    </div>
+    <div class="control-group">
+        <label class="control-label" for="high">High Stand (> 2,1 meters)</label>
+        <input type="checkbox" name="high" id="high" value="1">
+        <span class="help-block">Number of places higher then 2,1 meters are limited</span>
+    </div>
     <br>
     {% if (not particpant) %}
         <button class="btn" type="submit">Enlist</button>

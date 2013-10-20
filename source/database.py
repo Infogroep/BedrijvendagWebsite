@@ -295,10 +295,12 @@ def get_participants(year):
     connection = open_companies_connection()
     cursor = connection.cursor()
 
-    cursor.execute('''SELECT companyID, formulaID, state, tables, high_stand, remarks FROM participants where year = %s''' % (year,))
+    cursor.execute('''SELECT companyID, formulaID, state, tables, promotion_wands,high_stand, remarks FROM participants where year = %s''' % (year,))
 
     result = cursor.fetchall()
     close_connection(connection)
+
+    result = map(lambda t: t + ("",), result)
 
     result = map(list, result)
     
@@ -308,6 +310,14 @@ def get_participants(year):
     for res in result:
         company_name = get_company_name_by_id(res[0])
         res[0] = company_name
+
+
+        formula = get_formula_by_id(res[1])
+        res[1] = formula
+
+        stateID = participant_converter.state_to_id(res[2])
+        res[7] = stateID
+
         high = res[4]
 
         if high:
@@ -322,7 +332,7 @@ def change_participant_status(company, year, state):
     connection = open_companies_connection()
     cursor = connection.cursor()
 
-    cursor.execute('''UPDATE participants SET state = %s where companyID = %s AND year = %s''' % (state, ID, year))
+    cursor.execute('''UPDATE participants SET state = "%s" where companyID = %s AND year = %s''' % (state, ID, year))
 
     close_connection(connection)    
 
@@ -333,4 +343,9 @@ def get_formula_by_id(id):
 
     cursor.execute('''SELECT name FROM formula where ID = %s''' %(id))
 
+    result = cursor.fetchone()
+
     close_connection(connection)
+
+    return result[0]
+

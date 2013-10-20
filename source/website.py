@@ -418,7 +418,8 @@ def set_state(name, company, state):
     session = bottle.request.environ.get('beaker.session')
     try:
         if(session[name] == True):
-            state = id_to_state(state)
+            state = participant_converter.id_to_state(state)
+            print state
             change_participant_status(company, edition, state)
             bottle.redirect('/%s/participants' %(name))
         else:
