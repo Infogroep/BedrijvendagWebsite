@@ -266,8 +266,9 @@ def add_participant(company, year, formula, high):
         return
 
     ID = get_companyID(company)
-#    state = participant_converter.id_to_state(0)
-    state = 0
+    state = participant_converter.id_to_state(0)
+
+    print state
 
     tables = 2
     promotion_wands = 2
@@ -277,7 +278,7 @@ def add_participant(company, year, formula, high):
         promotion_wands = 0
 
 #    cursor.execute('''INSERT INTO participants VALUES (%s, %s, %s, "%s", %s, %s, "", %s)''' % (ID, year, formula, state, tables, promotion_wands, high))
-    cursor.execute('''INSERT INTO participants VALUES (%s, %s, %s, %s, %s, %s, "", %s)''' % (ID, year, formula, state, tables, promotion_wands, high))
+    cursor.execute('''INSERT INTO participants VALUES (%s, %s, %s, "%s", %s, %s, "", %s)''' % (ID, year, formula, state, tables, promotion_wands, high))
     close_connection(connection)
 
 def get_company_name_by_id(company_id):
@@ -314,5 +315,22 @@ def get_participants(year):
 
     return result
 
+def change_participant_status(company, year, state):
+
+    ID = get_companyID(company)
+
+    connection = open_companies_connection()
+    cursor = connection.cursor()
+
+    cursor.execute('''UPDATE participants SET state = %s where companyID = %s AND year = %s''' % (state, ID, year))
+
+    close_connection(connection)    
 
 
+def get_formula_by_id(id):
+    connection = open_companies_connection()
+    cursor = connection.cursor()
+
+    cursor.execute('''SELECT name FROM formula where ID = %s''' %(id))
+
+    close_connection(connection)

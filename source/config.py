@@ -29,9 +29,9 @@ fields_of_study = (("computerwetenschappen", "computer science"),
         		   ("ander", "Other"),
 				  )
 
-participant_states = ((0, "Subcribed"),
+participant_states = ((0, "Awaiting confirmation"),
 					  (1, "In queue"),
-					  (2, "Subcription confirmed by organiser"),
+					  (2, "Subcription confirmed"),
 					  (3, "Requested contract"),
 					  (4, "Contract signed"),
 					  (5, "Received payment"),

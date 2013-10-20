@@ -3,13 +3,22 @@
 
 <table class="table">
 	<tr>
-		<b><td>Company</td><td>formula</td><td>state</td><td>tables</td><td>high stand</td><td>remarks</td></b>
+		<b><td>Company</td><td>formula</td><td>state</td><td>tables</td><td>high stand</td><td>remarks</td><td></td></b>
 	</tr>
 	{% for company in participants %}
    	<tr>
        	{% for value in company %}
 		<td>{{value}}</td>
        	{% endfor%}
+       	<td>
+       		{% if company[2] == 0 %}
+       		<a class="btn" href="participants/setstate/{{company[0]}}/1">Confirm</a>
+       		<a class="btn" href="participants/setstate/{{company[0]}}/2">Place in queue</a>
+       		{% endif %}
+       		{% if company[2] == 2 %}
+       		<a class="btn" href="participants/setstate/{{company[0]}}/1">Confirm</a>
+       		{% endif %}
+       	</td>
    	</tr>
 	{% endfor %}
 </table>

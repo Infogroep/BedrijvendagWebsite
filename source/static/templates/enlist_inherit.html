@@ -1,6 +1,13 @@
 {% extends "static/templates/company_page.html" %}
 {% block company %}
-<form class="horizontal-form" {% if (not participant) %}
+
+{% if (not participant)%}
+    <h2>You are not a participant yet of this years event</h2>
+{% else %}
+    <h2>Current state: {{state}}</h2>
+{% endif %}
+
+<form class="horizontal-form pull-left" {% if (not participant) %}
                                 action="/company/{{name}}/enlist"
                               {% else %}
                                 action="/company/{{name}}/enlistupdate"
@@ -29,6 +36,7 @@
             {% for item in options %}
                 <p><b>{{item[1]}}:</b> €{{item[2]}}</p>
             {% endfor %}
+            Please read the <a href="/pricelist">price list</a> for<br>more detailed information.
         </div>
 
 {% endblock %}

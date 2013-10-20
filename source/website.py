@@ -4,7 +4,7 @@ from bedrijvendagboek import *
 import beaker.middleware
 # Use Jinja2 as the template engine, allows for more extensive templates, like inheritance. http://jinja.pocoo.org/docs/
 import datetime, resume
-import bottle, logo, re
+import bottle, logo, re, participant_converter
 from config import *
 from bottle import jinja2_view as view, jinja2_template as template, static_file, request, app
 from os.path import dirname, abspath
@@ -248,8 +248,18 @@ def enlist_form(name):
     session = bottle.request.environ.get('beaker.session')
     try:
         if(session[name] == True):
+            participating = is_participant(name, edition)
+            state = None
+            stateID = None
+            
+            if participating:
+                state = get_status(name, edition)
+                stateID = participant_converter.state_to_id(state)
+
             return template('static/templates/enlist_inherit.html', options = get_formulas(), name = name, \
-                                                                    participant = is_participant(name, edition), \
+                                                                    participant = participating, \
+                                                                    state = state, \
+                                                                    stateID = stateID, \
                                                                     confirmed = requested_contract(name), \
                                                                     edition = edition)
         else:
@@ -270,6 +280,24 @@ def enlist(name):
             print high
 
             add_participant(name, edition, formula, high)
+            bottle.redirect('/company/%s/enlist' % (name,))
+        else:
+            bottle.redirect('/unauthorized')
+    except KeyError:
+        bottle.redirect('/unauthorized')
+
+@bottle.route('/company/<name>/enlistupdate', method='post')
+def enlist(name):
+    session = bottle.request.environ.get('beaker.session')
+    try:
+        if(session[name] == True):
+            formula = request.forms.get('formula')
+            high = request.forms.get('high')
+
+            if (not high == "1"):
+                high = 0
+
+            update_participant(name, edition, formula, high)
             bottle.redirect('/company/%s/enlist' % (name,))
         else:
             bottle.redirect('/unauthorized')
@@ -365,8 +393,6 @@ def admin_page(name):
     except KeyError:
         bottle.redirect('/unauthorized')
     
-    
-
 @bottle.route('/add news', method='post')
 def addnews():
     short = request.forms.get('short')
@@ -387,3 +413,15 @@ def admin_participants(name):
     except KeyError:
         bottle.redirect('/unauthorized')
     
+@bottle.route('/<name>/participants/setstate/<company>/<state>')
+def set_state(name, company, state):
+    session = bottle.request.environ.get('beaker.session')
+    try:
+        if(session[name] == True):
+            state = id_to_state(state)
+            change_participant_status(company, edition, state)
+            bottle.redirect('/%s/participants' %(name))
+        else:
+            bottle.redirect('/unauthorized')
+    except KeyError:
+        bottle.redirect('/unauthorized')
