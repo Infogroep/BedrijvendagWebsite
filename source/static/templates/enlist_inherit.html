@@ -7,12 +7,8 @@
     <h2>Current state: {{state}}</h2>
 {% endif %}
 
-<form class="horizontal-form pull-left" {% if (not participant) %}
-                                action="/company/{{name}}/enlist"
-                              {% else %}
-                                action="/company/{{name}}/enlistupdate"
-                              {% endif %}
-                                 method="post">
+<form class="horizontal-form pull-left" action="/company/{{name}}/enlist" method="post">
+     {% if (not confirmed) %}
      <div class="control-group">
         <label class="control-label" for="formula">Formula</label>
         <select id="formula" name="formula">
@@ -25,17 +21,38 @@
             {% endfor %}
         </select>
     </div>
-    <div class="control-group">
+    <br>
+    <div  class="control-group">
         <label class="control-label" for="high">High Stand (> 2,1 meters)</label>
         <input type="checkbox" name="high" id="high" value="1">
         <span class="help-block">Number of places higher then 2,1 meters are limited</span>
     </div>
     <br>
-    {% if (not particpant) %}
-        <button class="btn" type="submit">Enlist</button>
-    {% else %}
-        <button class="btn" type="submit">update </button>
     {% endif %}
+    {% if participant %}
+    <div class="control-group">
+        <label class="control-label" for="table">Number of tables</label>
+        <input type="number" name="table" id="table">
+        <span class="help-block">Only people with the big stand formula may choose there number of tables</span>
+    </div>
+    <br>
+    <div class="control-group">
+        <label class="control-label" for="promo_wand">Number of promotion wands</label>
+        <input type="number" name="promo_wand" id="promo_wand">
+        <span class="help-block">Only people with the big stand formula may choose there number of promotion wands</span>
+    </div>
+    <br>
+    <div class="control-group">
+        <label class="control-label" for="remarks">Remarks</label>
+        <input type="text" name="remarks" id="remarks">
+        <span class="help-block">Any additional remarks may be placed here.</span>
+    </div>
+    <br>
+    {% endif %}
+    <div class="control-group">
+        <button class="btn" type="submit">Enlist</button>
+    </div>
+    <br>
 </form>
         <div class="pull-right">
             {% for item in options %}

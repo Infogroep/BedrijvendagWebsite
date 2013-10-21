@@ -279,25 +279,10 @@ def enlist(name):
                 high = 0
             print high
 
-            add_participant(name, edition, formula, high)
-            bottle.redirect('/company/%s/enlist' % (name,))
-        else:
-            bottle.redirect('/unauthorized')
-    except KeyError:
-        bottle.redirect('/unauthorized')
-
-@bottle.route('/company/<name>/enlistupdate', method='post')
-def enlist(name):
-    session = bottle.request.environ.get('beaker.session')
-    try:
-        if(session[name] == True):
-            formula = request.forms.get('formula')
-            high = request.forms.get('high')
-
-            if (not high == "1"):
-                high = 0
-
-            update_participant(name, edition, formula, high)
+            if is_participant(name, edition):
+                edit_participant(name, edition, formula, high, tables, promo_wands, remarks)
+            else:
+                add_participant(name, edition, formula, high)
             bottle.redirect('/company/%s/enlist' % (name,))
         else:
             bottle.redirect('/unauthorized')

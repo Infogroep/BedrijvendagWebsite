@@ -263,12 +263,10 @@ def add_participant(company, year, formula, high):
     cursor = connection.cursor()
 
     if(is_participant(company, year)):
-        return
+        return False
 
     ID = get_companyID(company)
     state = participant_converter.id_to_state(0)
-
-    print state
 
     tables = 2
     promotion_wands = 2
@@ -277,9 +275,43 @@ def add_participant(company, year, formula, high):
         tables = 0
         promotion_wands = 0
 
-#    cursor.execute('''INSERT INTO participants VALUES (%s, %s, %s, "%s", %s, %s, "", %s)''' % (ID, year, formula, state, tables, promotion_wands, high))
     cursor.execute('''INSERT INTO participants VALUES (%s, %s, %s, "%s", %s, %s, "", %s)''' % (ID, year, formula, state, tables, promotion_wands, high))
     close_connection(connection)
+
+def get_participant(company_id, year):
+    connection = open_companies_connection()
+    cursor = connection.cursor()    
+
+    cursor.execute('''SELECT * FROM participants WHERE companyID = %s AND year = %s''' % (company_id, year))
+
+    res = cursor.fetchone()
+    close_connection(connection)
+
+    return res
+
+
+def edit_participant(company, year, formula, high, tables, promotion_wands, remarks):
+    ID = get_companyID(company)
+    participant_information = get_participant(ID, year)
+
+    current_formula = participant_information[2]
+    state = participant_information[3]
+    current_high = participant_information[7]
+
+    if ((current_high != high) or (current_formula != formula)):
+        state = participant_converter.id_to_state(0)
+
+    if formula == 1:
+        tables = 2
+        promotion_wands = 2
+    elif ((formula == 2) or (formula ==3)):
+        tables = promotion_wands = 0
+
+
+    connection = open_companies_connection()
+    cursor = connection.cursor()
+
+
 
 def get_company_name_by_id(company_id):
     connection = open_companies_connection()
