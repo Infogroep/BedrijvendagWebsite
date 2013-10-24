@@ -1,19 +1,25 @@
 {% extends "static/templates/company_page.html" %}
 {% block company %}
 
+<div class="pull-left" border="1">
 {% if (not participant)%}
     <h2>You are not a participant yet of this years event</h2>
 {% else %}
     <h2>Current state: {{state}}</h2>
+    <br>
+    current formula: {{formula}}
 {% endif %}
+<hr>
+</div>
+<br>
 
-<form class="horizontal-form pull-left" action="/company/{{name}}/enlist" method="post">
+<form class="horizontal-form pull-left" action="/company/{{name}}/enlist" method="post" style="min-width: 100%;">
      {% if (not confirmed) %}
      <div class="control-group">
         <label class="control-label" for="formula">Formula</label>
-        <select id="formula" name="formula">
+        <select class="form-control" id="formula" name="formula">
             {% for item in options %}
-            <option value="{{item[0]}}"
+            <option value="{{item[0]}}" {% if item[0] == formulaID %} selected {% endif %}
                 {% if confirmed %}
                     disabled
                 {% endif %}
@@ -24,7 +30,7 @@
     <br>
     <div  class="control-group">
         <label class="control-label" for="high">High Stand (> 2,1 meters)</label>
-        <input type="checkbox" name="high" id="high" value="1">
+        <input type="checkbox" class="form-control" name="high" id="high" value="1" {% if high == 1 %} checked {% endif %}>
         <span class="help-block">Number of places higher then 2,1 meters are limited</span>
     </div>
     <br>
@@ -32,25 +38,30 @@
     {% if participant %}
     <div class="control-group">
         <label class="control-label" for="table">Number of tables</label>
-        <input type="number" name="table" id="table">
+        <input type="number" class="form-control" name="table" id="table" value="{{tables}}" {% if formulaID != 0 %} disabled {% endif %}>
         <span class="help-block">Only people with the big stand formula may choose there number of tables</span>
     </div>
     <br>
     <div class="control-group">
         <label class="control-label" for="promo_wand">Number of promotion wands</label>
-        <input type="number" name="promo_wand" id="promo_wand">
+        <input type="number" class="form-control" name="promo_wand" id="promo_wand" value="{{promo}}" {% if formulaID != 0 %} disabled {% endif %}>
         <span class="help-block">Only people with the big stand formula may choose there number of promotion wands</span>
     </div>
     <br>
     <div class="control-group">
         <label class="control-label" for="remarks">Remarks</label>
-        <input type="text" name="remarks" id="remarks">
+        <textarea class="form-control" rows="3" name="remarks" id="remarks">{{remarks}}</textarea>
         <span class="help-block">Any additional remarks may be placed here.</span>
     </div>
     <br>
     {% endif %}
     <div class="control-group">
         <button class="btn" type="submit">Enlist</button>
+        {% if participant %}
+        <a class="btn" href="">Request contract</a>
+        <br>
+        You can no longer change formula after you're contract has been requested
+        {% endif %}
     </div>
     <br>
 </form>

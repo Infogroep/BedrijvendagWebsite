@@ -4,7 +4,7 @@ def id_to_state(id):
 	state = False
 	for state_tuple in participant_states:
 		print state_tuple
-		if str(state_tuple[0]) == id:
+		if state_tuple[0] == int(id):
 			state = state_tuple[1]
 			break
 	return state

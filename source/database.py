@@ -268,6 +268,8 @@ def add_participant(company, year, formula, high):
     ID = get_companyID(company)
     state = participant_converter.id_to_state(0)
 
+    print state
+
     tables = 2
     promotion_wands = 2
 
@@ -307,11 +309,21 @@ def edit_participant(company, year, formula, high, tables, promotion_wands, rema
     elif ((formula == 2) or (formula ==3)):
         tables = promotion_wands = 0
 
+    if tables is None:
+        tables = 2
+    if promotion_wands is None:
+        promotion_wands = 2
+
 
     connection = open_companies_connection()
     cursor = connection.cursor()
 
+    print formula, tables, promotion_wands, high, remarks
 
+    cursor.execute('''UPDATE participants SET formulaID = %s, tables = %s, promotion_wands = %s, high_stand = %s, remarks = "%s" WHERE companyID = %s''' % \
+                      (formula, tables, promotion_wands, high, remarks, ID))
+
+    close_connection(connection)
 
 def get_company_name_by_id(company_id):
     connection = open_companies_connection()
@@ -374,6 +386,20 @@ def get_formula_by_id(id):
     cursor = connection.cursor()
 
     cursor.execute('''SELECT name FROM formula where ID = %s''' %(id))
+
+    result = cursor.fetchone()
+
+    close_connection(connection)
+
+    return result[0]
+
+def get_formula(name, edition):
+    connection = open_companies_connection()
+    cursor = connection.cursor()
+
+    ID = get_companyID(name)
+
+    cursor.execute('''SELECT formulaID FROM participants where companyID = %s and year = %s''' % (ID, edition))
 
     result = cursor.fetchone()
 

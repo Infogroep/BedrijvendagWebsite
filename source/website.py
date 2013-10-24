@@ -251,16 +251,38 @@ def enlist_form(name):
             participating = is_participant(name, edition)
             state = None
             stateID = None
+            formulaID = None
+            formula = None
             
             if participating:
                 state = get_status(name, edition)
+                formulaID = get_formula(name, edition)
+                formula = get_formula_by_id(formulaID)
                 stateID = participant_converter.state_to_id(state)
+
+                ID = get_companyID(name)
+                participant = get_participant(ID, edition)
+
+                # This is ugly and wrong and I am ashamed but fuck it
+                # Deadline is long due
+
+                tables = participant[4]
+                promo = participant[5]
+                remarks = participant[6]
+                high = participant[7]
+
 
             return template('static/templates/enlist_inherit.html', options = get_formulas(), name = name, \
                                                                     participant = participating, \
                                                                     state = state, \
                                                                     stateID = stateID, \
+                                                                    formula = formula, \
+                                                                    formulaID = formulaID, \
                                                                     confirmed = requested_contract(name), \
+                                                                    tables = tables, \
+                                                                    promo = promo, \
+                                                                    remarks = remarks, \
+                                                                    high = high, \
                                                                     edition = edition)
         else:
             bottle.redirect('/unauthorized')
@@ -277,11 +299,13 @@ def enlist(name):
             print "enlist", formula, high
             if (not high == "1"):
                 high = 0
-            print high
 
             if is_participant(name, edition):
+                tables = request.forms.get('table')
+                promo_wands = request.forms.get('promo_wand')
+                remarks = request.forms.get('remarks')
                 edit_participant(name, edition, formula, high, tables, promo_wands, remarks)
-            else:
+            else: 
                 add_participant(name, edition, formula, high)
             bottle.redirect('/company/%s/enlist' % (name,))
         else:
@@ -406,7 +430,7 @@ def set_state(name, company, state):
             state = participant_converter.id_to_state(state)
             print state
             change_participant_status(company, edition, state)
-            bottle.redirect('/%s/participants' %(name))
+            bottle.redirect('/%s/participants' % (name))
         else:
             bottle.redirect('/unauthorized')
     except KeyError:
