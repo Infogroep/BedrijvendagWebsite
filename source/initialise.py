@@ -4,6 +4,7 @@ from config import *
 
 
 def initialise():
+	'''Calls all the initialise functions and check wether the were succesfull or not'''
 	try:
 		initialise_field_folders()
 	except:
@@ -20,6 +21,9 @@ def initialise():
 		print "database creation failed"
 
 def  initialise_field_folders():
+	'''Creates the folders per field to collect the resumes is.
+	First checks wether or not the folders already exists
+	Fields are located in config.py (fields_of_study)'''
 
 	if (not(os.path.exists(ROOT + "/" + field_directory))):
 		os.mkdir(ROOT + "/" + field_directory)
@@ -32,11 +36,14 @@ def  initialise_field_folders():
 			os.mkdir(direcory_name)
 
 def initialise_database():
+	'''Calls the the initialise functions from databse.py if the database does not yet exist'''
 	
 	if (not (os.path.exists(database_name))):
 		database.db_initialise()
 
 def initialise_logo_folders():
+	'''Creates the folders where the company logos are to be stored
+	folder names are locate in config.py'''
 	if (not (os.path.exists(logo_original))):
 		os.mkdir(logo_original)
 

@@ -314,6 +314,20 @@ def enlist(name):
         bottle.redirect('/unauthorized')
 
 
+@bottle.route('/company/<name>/confirm')
+def confirm(name):
+    session = bottle.request.environ.get('beaker.session')
+    try:
+        if(session[name] == True):
+
+            print yay
+
+        else:
+            bottle.redirect('/unauthorized')
+    except KeyError:
+        bottle.redirect('/unauthorized')
+
+
 @bottle.route('/unauthorized')
 def unauthorized():
     return template('static/templates/error_inherit.html', error = "You don't have the right permission", edition = edition)

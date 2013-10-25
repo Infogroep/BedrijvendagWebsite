@@ -6,17 +6,21 @@ from config import database_name
 import MySQLdb as mysql
 import time, datetime
 
+
 # Opens the connection to the website data.
 # This different from the companies data
 def open_connection():
+    '''Opens connection to the website database'''
     return sqlite3.connect(database_name)
 
 def open_companies_connection():
+    '''Opens connection to the companies database'''
     return mysql.connect('127.0.0.1', 'bedrijvendag', 'groenwater', 'bedrijvendagDEV')
 
 # Closes the connection
 # First commits the changes
 def close_connection(connection):
+    '''Commits any changes and closes the connection to any database'''
     connection.commit()
     connection.close()
 
@@ -24,6 +28,7 @@ def close_connection(connection):
 # Creates the database
 # sqlite database for non-company, information
 def db_initialise():
+    '''Initialises the website database'''
     connection = open_connection()
     cursor = connection.cursor()
     
@@ -35,6 +40,8 @@ def db_initialise():
     close_connection(connection)
 
 def get_new_news_id():
+    '''Generates a new id for a newsitem in the newsfeed'''
+
     connection = open_connection()
     cursor = connection.cursor()
     
@@ -49,6 +56,8 @@ def get_new_news_id():
         return 0
 
 def get_website(name):
+    '''Returns the website from given company. Company name is expected to be a string'''
+
     connection = open_companies_connection()
     cursor = connection.cursor()
     
@@ -64,6 +73,9 @@ def get_website(name):
 # extracts the newsfeed from the sqlite databse
 # time is an unix timestamp, we first convert to an human readable time
 def get_news_feed():
+    '''Fetches all the news items currently in the newsfeed 
+    remark: maybe fetch only the 10 newest?'''
+
     connection = open_connection()
     cursor = connection.cursor()
 
@@ -86,6 +98,7 @@ def get_news_feed():
     return queryresult
 
 def set_logo(company, filename):
+    '''set the path to the logo in the database'''
     connection = open_connection()
     cursor = connection.cursor()
     
@@ -96,6 +109,7 @@ def set_logo(company, filename):
     close_connection(connection)
 
 def get_logo(company):
+    '''Get the path to the companies logo'''
     connection = open_connection()
     cursor = connection.cursor()
     
@@ -113,6 +127,7 @@ def get_logo(company):
         return result
 
 def company(name):
+    '''Get all the data stored in the database of this company'''
     connection = open_companies_connection()
     cursor = connection.cursor()
     
@@ -128,6 +143,8 @@ def company(name):
         return False
 
 def add_login(user, password):
+    '''saves a login, password pair in the database.
+    Password is already encrypted before it gets here'''
     
     connection = open_connection()
     cursor = connection.cursor()
@@ -138,6 +155,8 @@ def add_login(user, password):
     close_connection(connection)
 
 def login(user, password):
+    '''returns true if the user password pair matches
+    false otherwise'''
     connection = open_connection()
     cursor = connection.cursor()
     
@@ -160,6 +179,7 @@ def login(user, password):
             return False
 
 def get_new_company_id():
+    '''Generates a new company id'''
     connection = open_companies_connection()
     cursor = connection.cursor()
     
@@ -177,6 +197,8 @@ def get_new_company_id():
 
 
 def add_company(name, address, postal, place, country, tav, email, tel, fax, cell, website):
+    '''add a company to the company database'''
+
     connection = open_companies_connection()
     cursor = connection.cursor()
     
@@ -189,6 +211,8 @@ def add_company(name, address, postal, place, country, tav, email, tel, fax, cel
     close_connection(connection)
 
 def add_news_item(short, text):
+    '''Add a news item. News item are displayed on the front page'''
+
     connection = open_connection()
     cursor = connection.cursor()
     
@@ -200,6 +224,7 @@ def add_news_item(short, text):
     close_connection(connection)
 
 def get_companyID(name):
+    '''Get the id of given company'''
     connection = open_companies_connection()
     cursor = connection.cursor()
     
@@ -212,6 +237,7 @@ def get_companyID(name):
     return ID
 
 def is_participant(name, year):
+    '''Checks if given company is/was a participant at given year'''
     connection = open_companies_connection()
     cursor = connection.cursor()
     
@@ -228,6 +254,8 @@ def is_participant(name, year):
         return True
 
 def get_status(name, edition):
+    '''Gets the current status of the participant.
+    if it isn't a participant return None'''
     if(is_participant(name, edition)):
         connection = open_companies_connection()
         cursor = connection.cursor()
@@ -241,7 +269,9 @@ def get_status(name, edition):
         return result[0]
 
 
+
 def get_formulas():
+    '''fetches all possible formulas'''
     connection = open_companies_connection()
     cursor = connection.cursor()
     
@@ -251,6 +281,7 @@ def get_formulas():
     return cursor.fetchall()
 
 def update(company, value, column):
+    '''Updates given column of given company to given value'''
     connection = open_companies_connection()
     cursor = connection.cursor()
     
@@ -259,6 +290,9 @@ def update(company, value, column):
     close_connection(connection)
 
 def add_participant(company, year, formula, high):
+    '''add a participant to the given edition with given formula and high flag
+    company is also given. Checks if company isn't a participant yet '''
+
     connection = open_companies_connection()
     cursor = connection.cursor()
 
@@ -268,7 +302,7 @@ def add_participant(company, year, formula, high):
     ID = get_companyID(company)
     state = participant_converter.id_to_state(0)
 
-    print state
+    
 
     tables = 2
     promotion_wands = 2
@@ -281,6 +315,7 @@ def add_participant(company, year, formula, high):
     close_connection(connection)
 
 def get_participant(company_id, year):
+    '''get participant information of given company of given year'''
     connection = open_companies_connection()
     cursor = connection.cursor()    
 
@@ -293,6 +328,7 @@ def get_participant(company_id, year):
 
 
 def edit_participant(company, year, formula, high, tables, promotion_wands, remarks):
+    '''edit the participant information'''
     ID = get_companyID(company)
     participant_information = get_participant(ID, year)
 
@@ -318,14 +354,13 @@ def edit_participant(company, year, formula, high, tables, promotion_wands, rema
     connection = open_companies_connection()
     cursor = connection.cursor()
 
-    print formula, tables, promotion_wands, high, remarks
-
     cursor.execute('''UPDATE participants SET formulaID = %s, tables = %s, promotion_wands = %s, high_stand = %s, remarks = "%s" WHERE companyID = %s''' % \
                       (formula, tables, promotion_wands, high, remarks, ID))
 
     close_connection(connection)
 
 def get_company_name_by_id(company_id):
+    '''get the name of the company by given id'''
     connection = open_companies_connection()
     cursor = connection.cursor()
 
@@ -336,6 +371,8 @@ def get_company_name_by_id(company_id):
     return result[0]
 
 def get_participants(year):
+    '''Get all participants of a given year'''
+
     connection = open_companies_connection()
     cursor = connection.cursor()
 
@@ -370,6 +407,7 @@ def get_participants(year):
     return result
 
 def change_participant_status(company, year, state):
+    '''Changes the status of the given participant (company and year)'''
 
     ID = get_companyID(company)
 
@@ -382,6 +420,7 @@ def change_participant_status(company, year, state):
 
 
 def get_formula_by_id(id):
+    '''get the formula by given id'''
     connection = open_companies_connection()
     cursor = connection.cursor()
 
@@ -394,6 +433,7 @@ def get_formula_by_id(id):
     return result[0]
 
 def get_formula(name, edition):
+    '''Get the formula of a given company and year'''
     connection = open_companies_connection()
     cursor = connection.cursor()
 

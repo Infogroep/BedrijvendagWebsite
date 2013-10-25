@@ -5,6 +5,7 @@ from database import *
 path = dirname(abspath(__file__)) + '/bedrijvendagboek'
 
 def latexify(text):
+    '''escapes certain characters to latex standards'''
     if not(text is None):
         text.replace("%", "\\%")
         text.replace("&", "\\&")
@@ -13,20 +14,24 @@ def latexify(text):
         return ''
 
 def stringvalue(boolean):
+    '''Changes boolean to string value as it should appear on the page'''
     if boolean:
         return "ja"
     else:
         return "nee"
 
 def bedrijvendagboek_path(name):
+    '''returns the path where the file should be saved'''
     return '''%s/%s.pdf''' % path, name
 
 def compile_tex(name):
+    '''compiles the tex file to pdf'''
     os.system('''pdflatex -interaction=nonstopmode  %s''' % (name))
     os.system('''rm -rf *.aux''')
 
 def create_tex_file(name, location, slogan, why, NL, ENG, FR, DE, jobs, stage, sjobs, field, develop, fy, ch, wi, bio, cw, bio_ing, geo):
-   
+   '''generates the tex file and calls the compile function in the end'''
+
     website = get_website(name)
     name = latexify(name)
     location = latexify(location)

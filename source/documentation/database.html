@@ -1,0 +1,78 @@
+
+<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.0 Transitional//EN">
+<html><head><title>Python: module database</title>
+</head><body bgcolor="#f0f0f8">
+
+<table width="100%" cellspacing=0 cellpadding=2 border=0 summary="heading">
+<tr bgcolor="#7799ee">
+<td valign=bottom>&nbsp;<br>
+<font color="#ffffff" face="helvetica, arial">&nbsp;<br><big><big><strong>database</strong></big></big></font></td
+><td align=right valign=bottom
+><font color="#ffffff" face="helvetica, arial"><a href=".">index</a><br><a href="file:/home/spartam/Development/BedrijvendagWebsite/source/database.py">/home/spartam/Development/BedrijvendagWebsite/source/database.py</a></font></td></tr></table>
+    <p></p>
+<p>
+<table width="100%" cellspacing=0 cellpadding=2 border=0 summary="section">
+<tr bgcolor="#aa55cc">
+<td colspan=3 valign=bottom>&nbsp;<br>
+<font color="#ffffff" face="helvetica, arial"><big><strong>Modules</strong></big></font></td></tr>
+    
+<tr><td bgcolor="#aa55cc"><tt>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</tt></td><td>&nbsp;</td>
+<td width="100%"><table width="100%" summary="list"><tr><td width="25%" valign=top><a href="bcrypt.html">bcrypt</a><br>
+<a href="database.html">database</a><br>
+</td><td width="25%" valign=top><a href="datetime.html">datetime</a><br>
+<a href="initialise.html">initialise</a><br>
+</td><td width="25%" valign=top><a href="MySQLdb.html">MySQLdb</a><br>
+<a href="participant_converter.html">participant_converter</a><br>
+</td><td width="25%" valign=top><a href="sqlite3.html">sqlite3</a><br>
+<a href="time.html">time</a><br>
+</td></tr></table></td></tr></table><p>
+<table width="100%" cellspacing=0 cellpadding=2 border=0 summary="section">
+<tr bgcolor="#eeaa77">
+<td colspan=3 valign=bottom>&nbsp;<br>
+<font color="#ffffff" face="helvetica, arial"><big><strong>Functions</strong></big></font></td></tr>
+    
+<tr><td bgcolor="#eeaa77"><tt>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</tt></td><td>&nbsp;</td>
+<td width="100%"><dl><dt><a name="-add_company"><strong>add_company</strong></a>(name, address, postal, place, country, tav, email, tel, fax, cell, website)</dt><dd><tt>add&nbsp;a&nbsp;company&nbsp;to&nbsp;the&nbsp;company&nbsp;database</tt></dd></dl>
+ <dl><dt><a name="-add_login"><strong>add_login</strong></a>(user, password)</dt><dd><tt>saves&nbsp;a&nbsp;login,&nbsp;password&nbsp;pair&nbsp;in&nbsp;the&nbsp;database.<br>
+Password&nbsp;is&nbsp;already&nbsp;encrypted&nbsp;before&nbsp;it&nbsp;gets&nbsp;here</tt></dd></dl>
+ <dl><dt><a name="-add_news_item"><strong>add_news_item</strong></a>(short, text)</dt><dd><tt>Add&nbsp;a&nbsp;news&nbsp;item.&nbsp;News&nbsp;item&nbsp;are&nbsp;displayed&nbsp;on&nbsp;the&nbsp;front&nbsp;page</tt></dd></dl>
+ <dl><dt><a name="-add_participant"><strong>add_participant</strong></a>(company, year, formula, high)</dt><dd><tt>add&nbsp;a&nbsp;participant&nbsp;to&nbsp;the&nbsp;given&nbsp;edition&nbsp;with&nbsp;given&nbsp;formula&nbsp;and&nbsp;high&nbsp;flag<br>
+company&nbsp;is&nbsp;also&nbsp;given.&nbsp;Checks&nbsp;if&nbsp;company&nbsp;isn't&nbsp;a&nbsp;participant&nbsp;yet</tt></dd></dl>
+ <dl><dt><a name="-change_participant_status"><strong>change_participant_status</strong></a>(company, year, state)</dt><dd><tt>Changes&nbsp;the&nbsp;status&nbsp;of&nbsp;the&nbsp;given&nbsp;participant&nbsp;(company&nbsp;and&nbsp;year)</tt></dd></dl>
+ <dl><dt><a name="-close_connection"><strong>close_connection</strong></a>(connection)</dt><dd><tt>Commits&nbsp;any&nbsp;changes&nbsp;and&nbsp;closes&nbsp;the&nbsp;connection&nbsp;to&nbsp;any&nbsp;database</tt></dd></dl>
+ <dl><dt><a name="-company"><strong>company</strong></a>(name)</dt><dd><tt>Get&nbsp;all&nbsp;the&nbsp;data&nbsp;stored&nbsp;in&nbsp;the&nbsp;database&nbsp;of&nbsp;this&nbsp;company</tt></dd></dl>
+ <dl><dt><a name="-db_initialise"><strong>db_initialise</strong></a>()</dt><dd><tt>Initialises&nbsp;the&nbsp;website&nbsp;database</tt></dd></dl>
+ <dl><dt><a name="-edit_participant"><strong>edit_participant</strong></a>(company, year, formula, high, tables, promotion_wands, remarks)</dt><dd><tt>edit&nbsp;the&nbsp;participant&nbsp;information</tt></dd></dl>
+ <dl><dt><a name="-get_companyID"><strong>get_companyID</strong></a>(name)</dt><dd><tt>Get&nbsp;the&nbsp;id&nbsp;of&nbsp;given&nbsp;company</tt></dd></dl>
+ <dl><dt><a name="-get_company_name_by_id"><strong>get_company_name_by_id</strong></a>(company_id)</dt><dd><tt>get&nbsp;the&nbsp;name&nbsp;of&nbsp;the&nbsp;company&nbsp;by&nbsp;given&nbsp;id</tt></dd></dl>
+ <dl><dt><a name="-get_formula"><strong>get_formula</strong></a>(name, edition)</dt><dd><tt>Get&nbsp;the&nbsp;formula&nbsp;of&nbsp;a&nbsp;given&nbsp;company&nbsp;and&nbsp;year</tt></dd></dl>
+ <dl><dt><a name="-get_formula_by_id"><strong>get_formula_by_id</strong></a>(id)</dt><dd><tt>get&nbsp;the&nbsp;formula&nbsp;by&nbsp;given&nbsp;id</tt></dd></dl>
+ <dl><dt><a name="-get_formulas"><strong>get_formulas</strong></a>()</dt><dd><tt>fetches&nbsp;all&nbsp;possible&nbsp;formulas</tt></dd></dl>
+ <dl><dt><a name="-get_logo"><strong>get_logo</strong></a>(company)</dt><dd><tt>Get&nbsp;the&nbsp;path&nbsp;to&nbsp;the&nbsp;companies&nbsp;logo</tt></dd></dl>
+ <dl><dt><a name="-get_new_company_id"><strong>get_new_company_id</strong></a>()</dt><dd><tt>Generates&nbsp;a&nbsp;new&nbsp;company&nbsp;id</tt></dd></dl>
+ <dl><dt><a name="-get_new_news_id"><strong>get_new_news_id</strong></a>()</dt><dd><tt>Generates&nbsp;a&nbsp;new&nbsp;id&nbsp;for&nbsp;a&nbsp;newsitem&nbsp;in&nbsp;the&nbsp;newsfeed</tt></dd></dl>
+ <dl><dt><a name="-get_news_feed"><strong>get_news_feed</strong></a>()</dt><dd><tt>Fetches&nbsp;all&nbsp;the&nbsp;news&nbsp;items&nbsp;currently&nbsp;in&nbsp;the&nbsp;newsfeed&nbsp;<br>
+remark:&nbsp;maybe&nbsp;fetch&nbsp;only&nbsp;the&nbsp;10&nbsp;newest?</tt></dd></dl>
+ <dl><dt><a name="-get_participant"><strong>get_participant</strong></a>(company_id, year)</dt><dd><tt>get&nbsp;participant&nbsp;information&nbsp;of&nbsp;given&nbsp;company&nbsp;of&nbsp;given&nbsp;year</tt></dd></dl>
+ <dl><dt><a name="-get_participants"><strong>get_participants</strong></a>(year)</dt><dd><tt>Get&nbsp;all&nbsp;participants&nbsp;of&nbsp;a&nbsp;given&nbsp;year</tt></dd></dl>
+ <dl><dt><a name="-get_status"><strong>get_status</strong></a>(name, edition)</dt><dd><tt>Gets&nbsp;the&nbsp;current&nbsp;status&nbsp;of&nbsp;the&nbsp;participant.<br>
+if&nbsp;it&nbsp;isn't&nbsp;a&nbsp;participant&nbsp;return&nbsp;None</tt></dd></dl>
+ <dl><dt><a name="-get_website"><strong>get_website</strong></a>(name)</dt><dd><tt>Returns&nbsp;the&nbsp;website&nbsp;from&nbsp;given&nbsp;company.&nbsp;Company&nbsp;name&nbsp;is&nbsp;expected&nbsp;to&nbsp;be&nbsp;a&nbsp;string</tt></dd></dl>
+ <dl><dt><a name="-is_participant"><strong>is_participant</strong></a>(name, year)</dt><dd><tt>Checks&nbsp;if&nbsp;given&nbsp;company&nbsp;is/was&nbsp;a&nbsp;participant&nbsp;at&nbsp;given&nbsp;year</tt></dd></dl>
+ <dl><dt><a name="-login"><strong>login</strong></a>(user, password)</dt><dd><tt>returns&nbsp;true&nbsp;if&nbsp;the&nbsp;user&nbsp;password&nbsp;pair&nbsp;matches<br>
+false&nbsp;otherwise</tt></dd></dl>
+ <dl><dt><a name="-open_companies_connection"><strong>open_companies_connection</strong></a>()</dt><dd><tt>Opens&nbsp;connection&nbsp;to&nbsp;the&nbsp;companies&nbsp;database</tt></dd></dl>
+ <dl><dt><a name="-open_connection"><strong>open_connection</strong></a>()</dt><dd><tt>Opens&nbsp;connection&nbsp;to&nbsp;the&nbsp;website&nbsp;database</tt></dd></dl>
+ <dl><dt><a name="-set_logo"><strong>set_logo</strong></a>(company, filename)</dt><dd><tt>set&nbsp;the&nbsp;path&nbsp;to&nbsp;the&nbsp;logo&nbsp;in&nbsp;the&nbsp;database</tt></dd></dl>
+ <dl><dt><a name="-update"><strong>update</strong></a>(company, value, column)</dt><dd><tt>Updates&nbsp;given&nbsp;column&nbsp;of&nbsp;given&nbsp;company&nbsp;to&nbsp;given&nbsp;value</tt></dd></dl>
+</td></tr></table><p>
+<table width="100%" cellspacing=0 cellpadding=2 border=0 summary="section">
+<tr bgcolor="#55aa55">
+<td colspan=3 valign=bottom>&nbsp;<br>
+<font color="#ffffff" face="helvetica, arial"><big><strong>Data</strong></big></font></td></tr>
+    
+<tr><td bgcolor="#55aa55"><tt>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</tt></td><td>&nbsp;</td>
+<td width="100%"><strong>database_name</strong> = 'website-data.db'<br>
+<strong>edition</strong> = '2014'<br>
+<strong>participant_states</strong> = ((0, 'Awaiting confirmation'), (1, 'In queue'), (2, 'Subcription confirmed'), (3, 'Requested contract'), (4, 'Contract signed'), (5, 'Received payment'), (6, 'Annulation'))</td></tr></table>
+</body></html>
