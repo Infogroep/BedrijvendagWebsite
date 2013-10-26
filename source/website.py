@@ -26,30 +26,41 @@ initialise.initialise()
 
 @bottle.route('/')
 def index():
+    '''returns static template index'''
     return template('static/templates/index_inherit.html', news_feed_query = get_news_feed(), edition = edition)
 
 @bottle.route('/pricelist')
 def pricelist():
+    '''retuns static template pricelist'''
     return template('static/templates/pricelist_inherit.html', edition = edition)
 
 @bottle.route('/static/<filepath:path>')
 def server_static(filepath):
+    '''routing to statci files: css, javascript'''
     return static_file(filepath,root= STATIC)
 
 @bottle.route('/logos/<filepath:path>')
 def server_log(filepath):
+    '''routing to logos'''
     return static_file(filepath, root = STATIC)
 
 @bottle.route('/register')
 def register_form():
+    '''returns the static register form'''
     return template('static/templates/register_inherit.html', edition = edition)
 
 @bottle.route('/resume')
 def resume_form():
-   return template('static/templates/resume_inherit.html', fields = fields_of_study, edition = edition) 
+    '''returns the static resume form'''
+    return template('static/templates/resume_inherit.html', fields = fields_of_study, edition = edition) 
 
 @bottle.route('/resume', method="post")
 def resume_upload():
+    '''Uploading of the resume
+    alle parameters are checked on server side
+    resume gets stored in the directory of uploaders
+    field of study
+    '''
 
     resume_file = request.files.resume
     field = request.forms.get('studierichting')
@@ -76,6 +87,8 @@ def resume_upload():
 
 @bottle.route('/company/<name>')
 def company_page(name):
+    '''routing to company's page where he can view it's information'''
+
     session = bottle.request.environ.get('beaker.session')
     try:
         if (session[name] == True):
@@ -116,6 +129,8 @@ def company_page(name):
 
 @bottle.route('/company/<name>/edit')
 def company_page(name):
+    '''routing to company's page where he can edit it's information'''
+
     session = bottle.request.environ.get('beaker.session')
     try:
         if (session[name] == True):
@@ -157,6 +172,7 @@ def company_page(name):
 
 @bottle.route('/company/<name>/logout')
 def logout(name):
+    '''ends the company's session'''
     session = bottle.request.environ.get('beaker.session')
     try:
         session[name] = False
@@ -166,6 +182,7 @@ def logout(name):
 
 @bottle.route('/company/<name>/companiesbook')
 def companiesbook(name):
+    '''returns the companies book form'''
     session = bottle.request.environ.get('beaker.session')
     try:
         if(session[name] == True):
@@ -320,7 +337,15 @@ def confirm(name):
     try:
         if(session[name] == True):
 
-            print yay
+            state = participant_converter.state_to_id(get_status(name, edition))
+
+            # if subscription confirmed
+            if state == 2:
+                change_participant_status(name, edition, participant_converter.id_to_state(3))
+            else:
+                return template('static/templates/error_inherit.html', error = "You can't request your contract in your current state" , edition = edition)
+            
+            bottle.redirect('''/company/%s/enlist''' % (name,))
 
         else:
             bottle.redirect('/unauthorized')
@@ -442,7 +467,7 @@ def set_state(name, company, state):
     try:
         if(session[name] == True):
             state = participant_converter.id_to_state(state)
-            print state
+            
             change_participant_status(company, edition, state)
             bottle.redirect('/%s/participants' % (name))
         else:

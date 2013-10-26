@@ -30,8 +30,7 @@ def compile_tex(name):
     os.system('''rm -rf *.aux''')
 
 def create_tex_file(name, location, slogan, why, NL, ENG, FR, DE, jobs, stage, sjobs, field, develop, fy, ch, wi, bio, cw, bio_ing, geo):
-   '''generates the tex file and calls the compile function in the end'''
-
+    '''generates the tex file and calls the compile function in the end'''
     website = get_website(name)
     name = latexify(name)
     location = latexify(location)

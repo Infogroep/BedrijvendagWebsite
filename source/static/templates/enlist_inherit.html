@@ -13,8 +13,9 @@
 </div>
 <br>
 
+{% if (not confirmed) %}
+
 <form class="horizontal-form pull-left" action="/company/{{name}}/enlist" method="post" style="min-width: 100%;">
-     {% if (not confirmed) %}
      <div class="control-group">
         <label class="control-label" for="formula">Formula</label>
         <select class="form-control" id="formula" name="formula">
@@ -35,7 +36,6 @@
         <span class="help-block">Number of places higher then 2,1 meters are limited</span>
     </div>
     <br>
-    {% endif %}
     {% if participant %}
     <div class="control-group">
         <label class="control-label" for="table">Number of tables</label>
@@ -60,7 +60,7 @@
         <button class="btn btn-default" type="submit">Enlist</button>
         {% if participant %}
         <hr>
-        <a class="btn btn-default" href="{{name}}/confirm">Request contract</a>
+        <a class="btn btn-default" href="confirm">Request contract</a>
         <br><br>
         Make sure you have submitted any last changes before requesting your contract. <br>
         You can no longer make any changes after your contract has been requested.
@@ -68,5 +68,8 @@
     </div>
     <br>
 </form>
+
+{% endif %}
+
 
 {% endblock %}
