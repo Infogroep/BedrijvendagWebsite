@@ -8,3 +8,17 @@ Purpose
 ------
 
 The creation of a webplatform where administrators can get an overal look of the current standing of the event.
+
+Setting up environment
+---------------------
+
+use virtual environment and pip
+sudo apt-get install python-virtualenv
+sudo apt-get install python-pip
+
+* clone this repository
+* virtual-env the directory
+* go inside the directory
+* pip install -r requirements
+
+
