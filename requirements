@@ -1,6 +1,8 @@
-Jinja2==2.7
-MarkupSafe==0.18
+Beaker==1.6.4
+Flask==0.9
+Jinja2==2.6
+MySQL-python==1.2.3
 bottle==0.11.6
-cffi==0.6
-tornado==3.1
+py-bcrypt==0.4
+tornado==3.0.1
 wsgiref==0.1.2
