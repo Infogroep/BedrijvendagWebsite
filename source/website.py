@@ -82,9 +82,6 @@ def resume_upload():
         return template('static/templates/resume_inherit.html', edition = edition, fields = fields_of_study, error = True, message = "Your resume, ... you forgot to select it")
 
  
-
-
-
 @bottle.route('/company/<name>')
 def company_page(name):
     '''routing to company's page where he can view it's information'''
@@ -194,6 +191,8 @@ def companiesbook(name):
 
 @bottle.route('/company/<name>/companiesbook', method='post')
 def static_company_page(name):
+    '''Fetches the data from the form
+    uses this to create his page'''
     session = bottle.request.environ.get('beaker.session')
     try:
         if(session[name] == True):
@@ -229,6 +228,10 @@ def static_company_page(name):
 
 @bottle.route('/company/<name>/logo', method='post')
 def upload(name):
+    '''Fetches the logo send by the company
+    and stores it resizes it and saves both
+    resized and original folder'''
+
     session = bottle.request.environ.get('beaker.session')
     try:
         if(session[name] == True):
@@ -249,6 +252,8 @@ def upload(name):
 
 @bottle.route('/company/<name>/update/<column>', method='post')
 def update_(name, column):
+    '''update given column of given company'''
+
     session = bottle.request.environ.get('beaker.session')
     try:
         if(session[name] == True):
@@ -262,6 +267,8 @@ def update_(name, column):
 
 @bottle.route('/company/<name>/enlist')
 def enlist_form(name):
+    '''returns the enlist form'''
+
     session = bottle.request.environ.get('beaker.session')
     try:
         if(session[name] == True):
@@ -270,6 +277,10 @@ def enlist_form(name):
             stateID = None
             formulaID = None
             formula = None
+            tables = None
+            promo = None
+            remarks = None
+            high = None
             
             if participating:
                 state = get_status(name, edition)
@@ -308,6 +319,10 @@ def enlist_form(name):
 
 @bottle.route('/company/<name>/enlist', method='post')
 def enlist(name):
+    '''uses the posted information to make the
+    company a participant or to change
+    it's settings'''
+
     session = bottle.request.environ.get('beaker.session')
     try:
         if(session[name] == True):
@@ -333,6 +348,8 @@ def enlist(name):
 
 @bottle.route('/company/<name>/confirm')
 def confirm(name):
+    '''Confirm the participant settings, request contract'''
+
     session = bottle.request.environ.get('beaker.session')
     try:
         if(session[name] == True):
@@ -355,10 +372,13 @@ def confirm(name):
 
 @bottle.route('/unauthorized')
 def unauthorized():
+    '''retuns the page showing the unauthorized message'''
     return template('static/templates/error_inherit.html', error = "You don't have the right permission", edition = edition)
 
 @bottle.route('/register', method='post')
 def register():
+    '''uses the posted information to create a new company'''
+
     name = request.forms.get('name')
     password = request.forms.get('password')
     hashed_password = encrypt(password)
@@ -405,10 +425,13 @@ def register():
 
 @bottle.route('/login')
 def login_form():
+    '''shows the login form'''
+
     return template('static/templates/login_inherit.html', edition = edition)
 
 @bottle.route('/login', method='post')
 def login_():
+    '''Start a new session'''
     
     name = request.forms.get('name')
     password = request.forms.get('password')
@@ -432,6 +455,8 @@ def login_():
 
 @bottle.route('/<name>')
 def admin_page(name):
+    '''returns the admin page'''
+
     session = bottle.request.environ.get('beaker.session')
     try:
         if(session[name] == True):
@@ -443,6 +468,8 @@ def admin_page(name):
     
 @bottle.route('/add news', method='post')
 def addnews():
+    '''Add a new news item'''
+
     short = request.forms.get('short')
     news = request.forms.get('news')
     
@@ -452,6 +479,8 @@ def addnews():
 
 @bottle.route('/<name>/participants')
 def admin_participants(name):
+    '''Show and edit participant information'''
+
     session = bottle.request.environ.get('beaker.session')
     try:
         if(session[name] == True):
@@ -463,6 +492,8 @@ def admin_participants(name):
     
 @bottle.route('/<name>/participants/setstate/<company>/<state>')
 def set_state(name, company, state):
+    '''change the state of the company'''
+
     session = bottle.request.environ.get('beaker.session')
     try:
         if(session[name] == True):

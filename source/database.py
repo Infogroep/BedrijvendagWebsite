@@ -336,7 +336,10 @@ def edit_participant(company, year, formula, high, tables, promotion_wands, rema
     state = participant_information[3]
     current_high = participant_information[7]
 
+    formula = int(formula)
+
     if ((current_high != high) or (current_formula != formula)):
+        print "different"
         state = participant_converter.id_to_state(0)
 
     if formula == 1:
@@ -354,8 +357,8 @@ def edit_participant(company, year, formula, high, tables, promotion_wands, rema
     connection = open_companies_connection()
     cursor = connection.cursor()
 
-    cursor.execute('''UPDATE participants SET formulaID = %s, tables = %s, promotion_wands = %s, high_stand = %s, remarks = "%s" WHERE companyID = %s''' % \
-                      (formula, tables, promotion_wands, high, remarks, ID))
+    cursor.execute('''UPDATE participants SET formulaID = %s, state = "%s", tables = %s, promotion_wands = %s, high_stand = %s, remarks = "%s" WHERE companyID = %s''' % \
+                      (formula, state, tables, promotion_wands, high, remarks, ID))
 
     close_connection(connection)
 

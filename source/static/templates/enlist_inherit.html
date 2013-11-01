@@ -1,7 +1,7 @@
 {% extends "static/templates/company_page.html" %}
 {% block company %}
 
-<div class="pull-left" border="1">
+<div>
 {% if (not participant)%}
     <h2>You are not a participant yet of this years event</h2>
 {% else %}
@@ -68,6 +68,19 @@
     </div>
     <br>
 </form>
+
+{% else %}
+
+Dear participant<br>
+We have received your subscription<br>
+Thank you for participating at the Bedrijvendag 2014.<br><br>
+requested high stand: {% if high == 1 %} Yes {% else %} No {% endif %}<br>
+number of tables: {{tables}} <br>
+number of promotion wands: {{promo}}<br>
+your remarks: <br>
+{{remarks}}
+
+
 
 {% endif %}
 

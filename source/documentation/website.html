@@ -38,20 +38,22 @@
 <font color="#ffffff" face="helvetica, arial"><big><strong>Functions</strong></big></font></td></tr>
     
 <tr><td bgcolor="#eeaa77"><tt>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</tt></td><td>&nbsp;</td>
-<td width="100%"><dl><dt><a name="-addnews"><strong>addnews</strong></a>()</dt></dl>
- <dl><dt><a name="-admin_page"><strong>admin_page</strong></a>(name)</dt></dl>
- <dl><dt><a name="-admin_participants"><strong>admin_participants</strong></a>(name)</dt></dl>
+<td width="100%"><dl><dt><a name="-addnews"><strong>addnews</strong></a>()</dt><dd><tt>Add&nbsp;a&nbsp;new&nbsp;news&nbsp;item</tt></dd></dl>
+ <dl><dt><a name="-admin_page"><strong>admin_page</strong></a>(name)</dt><dd><tt>returns&nbsp;the&nbsp;admin&nbsp;page</tt></dd></dl>
+ <dl><dt><a name="-admin_participants"><strong>admin_participants</strong></a>(name)</dt><dd><tt>Show&nbsp;and&nbsp;edit&nbsp;participant&nbsp;information</tt></dd></dl>
  <dl><dt><a name="-companiesbook"><strong>companiesbook</strong></a>(name)</dt><dd><tt>returns&nbsp;the&nbsp;companies&nbsp;book&nbsp;form</tt></dd></dl>
  <dl><dt><a name="-company_page"><strong>company_page</strong></a>(name)</dt><dd><tt>routing&nbsp;to&nbsp;company's&nbsp;page&nbsp;where&nbsp;he&nbsp;can&nbsp;edit&nbsp;it's&nbsp;information</tt></dd></dl>
- <dl><dt><a name="-confirm"><strong>confirm</strong></a>(name)</dt></dl>
- <dl><dt><a name="-enlist"><strong>enlist</strong></a>(name)</dt></dl>
- <dl><dt><a name="-enlist_form"><strong>enlist_form</strong></a>(name)</dt></dl>
+ <dl><dt><a name="-confirm"><strong>confirm</strong></a>(name)</dt><dd><tt>Confirm&nbsp;the&nbsp;participant&nbsp;settings,&nbsp;request&nbsp;contract</tt></dd></dl>
+ <dl><dt><a name="-enlist"><strong>enlist</strong></a>(name)</dt><dd><tt>uses&nbsp;the&nbsp;posted&nbsp;information&nbsp;to&nbsp;make&nbsp;the<br>
+company&nbsp;a&nbsp;participant&nbsp;or&nbsp;to&nbsp;change<br>
+it's&nbsp;settings</tt></dd></dl>
+ <dl><dt><a name="-enlist_form"><strong>enlist_form</strong></a>(name)</dt><dd><tt>returns&nbsp;the&nbsp;enlist&nbsp;form</tt></dd></dl>
  <dl><dt><a name="-index"><strong>index</strong></a>()</dt><dd><tt>returns&nbsp;static&nbsp;template&nbsp;index</tt></dd></dl>
- <dl><dt><a name="-login_"><strong>login_</strong></a>()</dt></dl>
- <dl><dt><a name="-login_form"><strong>login_form</strong></a>()</dt></dl>
+ <dl><dt><a name="-login_"><strong>login_</strong></a>()</dt><dd><tt>Start&nbsp;a&nbsp;new&nbsp;session</tt></dd></dl>
+ <dl><dt><a name="-login_form"><strong>login_form</strong></a>()</dt><dd><tt>shows&nbsp;the&nbsp;login&nbsp;form</tt></dd></dl>
  <dl><dt><a name="-logout"><strong>logout</strong></a>(name)</dt><dd><tt>ends&nbsp;the&nbsp;company's&nbsp;session</tt></dd></dl>
  <dl><dt><a name="-pricelist"><strong>pricelist</strong></a>()</dt><dd><tt>retuns&nbsp;static&nbsp;template&nbsp;pricelist</tt></dd></dl>
- <dl><dt><a name="-register"><strong>register</strong></a>()</dt></dl>
+ <dl><dt><a name="-register"><strong>register</strong></a>()</dt><dd><tt>uses&nbsp;the&nbsp;posted&nbsp;information&nbsp;to&nbsp;create&nbsp;a&nbsp;new&nbsp;company</tt></dd></dl>
  <dl><dt><a name="-register_form"><strong>register_form</strong></a>()</dt><dd><tt>returns&nbsp;the&nbsp;static&nbsp;register&nbsp;form</tt></dd></dl>
  <dl><dt><a name="-resume_form"><strong>resume_form</strong></a>()</dt><dd><tt>returns&nbsp;the&nbsp;static&nbsp;resume&nbsp;form</tt></dd></dl>
  <dl><dt><a name="-resume_upload"><strong>resume_upload</strong></a>()</dt><dd><tt>Uploading&nbsp;of&nbsp;the&nbsp;resume<br>
@@ -60,11 +62,14 @@ resume&nbsp;gets&nbsp;stored&nbsp;in&nbsp;the&nbsp;directory&nbsp;of&nbsp;upload
 field&nbsp;of&nbsp;study</tt></dd></dl>
  <dl><dt><a name="-server_log"><strong>server_log</strong></a>(filepath)</dt><dd><tt>routing&nbsp;to&nbsp;logos</tt></dd></dl>
  <dl><dt><a name="-server_static"><strong>server_static</strong></a>(filepath)</dt><dd><tt>routing&nbsp;to&nbsp;statci&nbsp;files:&nbsp;css,&nbsp;javascript</tt></dd></dl>
- <dl><dt><a name="-set_state"><strong>set_state</strong></a>(name, company, state)</dt></dl>
- <dl><dt><a name="-static_company_page"><strong>static_company_page</strong></a>(name)</dt></dl>
- <dl><dt><a name="-unauthorized"><strong>unauthorized</strong></a>()</dt></dl>
- <dl><dt><a name="-update_"><strong>update_</strong></a>(name, column)</dt></dl>
- <dl><dt><a name="-upload"><strong>upload</strong></a>(name)</dt></dl>
+ <dl><dt><a name="-set_state"><strong>set_state</strong></a>(name, company, state)</dt><dd><tt>change&nbsp;the&nbsp;state&nbsp;of&nbsp;the&nbsp;company</tt></dd></dl>
+ <dl><dt><a name="-static_company_page"><strong>static_company_page</strong></a>(name)</dt><dd><tt>Fetches&nbsp;the&nbsp;data&nbsp;from&nbsp;the&nbsp;form<br>
+uses&nbsp;this&nbsp;to&nbsp;create&nbsp;his&nbsp;page</tt></dd></dl>
+ <dl><dt><a name="-unauthorized"><strong>unauthorized</strong></a>()</dt><dd><tt>retuns&nbsp;the&nbsp;page&nbsp;showing&nbsp;the&nbsp;unauthorized&nbsp;message</tt></dd></dl>
+ <dl><dt><a name="-update_"><strong>update_</strong></a>(name, column)</dt><dd><tt>update&nbsp;given&nbsp;column&nbsp;of&nbsp;given&nbsp;company</tt></dd></dl>
+ <dl><dt><a name="-upload"><strong>upload</strong></a>(name)</dt><dd><tt>Fetches&nbsp;the&nbsp;logo&nbsp;send&nbsp;by&nbsp;the&nbsp;company<br>
+and&nbsp;stores&nbsp;it&nbsp;resizes&nbsp;it&nbsp;and&nbsp;saves&nbsp;both<br>
+resized&nbsp;and&nbsp;original&nbsp;folder</tt></dd></dl>
 </td></tr></table><p>
 <table width="100%" cellspacing=0 cellpadding=2 border=0 summary="section">
 <tr bgcolor="#55aa55">
