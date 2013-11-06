@@ -505,3 +505,5 @@ def set_state(name, company, state):
             bottle.redirect('/unauthorized')
     except KeyError:
         bottle.redirect('/unauthorized')
+
+#bottle.run(app)
