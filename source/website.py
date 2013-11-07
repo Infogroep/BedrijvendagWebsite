@@ -244,7 +244,7 @@ def upload(name):
                 img_file.close()
                 logo.resize_logo(img.filename)
                 set_logo(name, logo.resized_logo(img.filename))
-            bottle.redirect('/company/edit%s' % name)
+            bottle.redirect('/company/%s/edit' % name)
         else:
             bottle.redirect('/unauthorized')
     except KeyError:
