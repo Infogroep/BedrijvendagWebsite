@@ -9,6 +9,12 @@ Purpose
 
 The creation of a webplatform where administrators can get an overal look of the current standing of the event.
 
+Requirements Linux
+------------------
+* python-mysqldb
+* python-dev
+
+
 Setting up environment
 ---------------------
 
