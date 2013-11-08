@@ -14,6 +14,7 @@ event_close_down = "18:00"
 
 logo_original = "static/original"
 logo_resized = "static/resized"
+secret_key ="sPXLrcuPG1"
 
 edition = "2014"
 

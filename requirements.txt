@@ -1,6 +1,0 @@
-Beaker
-Jinja2
-bottle
-py-bcrypt
-tornado
-wsgiref

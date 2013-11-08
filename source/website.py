@@ -7,6 +7,8 @@ import datetime, resume
 import bottle, logo, re, participant_converter
 from config import *
 from bottle import jinja2_view as view, jinja2_template as template, static_file, request, app
+from bottle_flash import FlashPlugin
+from bottle import Jinja2Template
 from os.path import dirname, abspath
 
 #app = bottle.Bottle()
@@ -22,6 +24,9 @@ session_opts = {
 
 app = beaker.middleware.SessionMiddleware(bottle.app(), session_opts)
 
+message_flash = FlashPlugin(key='messages', secret=secret_key)
+Jinja2Template.defaults["get_flashed_messages"] = message_flash.get_flashed_messages
+Jinja2Template.settings["extensions"] =  ["jinja2.ext.with_"]
 initialise.initialise()
 
 @bottle.route('/')
@@ -451,7 +456,8 @@ def login_():
         session[name] = True
         bottle.redirect(route_address)
     else:
-        return template('static/templates/login_inherit', error=True, msg = "The given combination was incorrect")
+        message_flash.flash('The company/password combination is incorrect', 'alert')
+        bottle.redirect('/login')
 
 @bottle.route('/<name>')
 def admin_page(name):

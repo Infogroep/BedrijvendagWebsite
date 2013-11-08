@@ -2,11 +2,15 @@
 
 {% block main %}
 
-    {% if error %}
-        <div class="alert">
-            <strong>{{message}}</strong>
-        </div>
-    {% endif %}
+    {% with messages = get_flashed_messages() %}
+        {%if messages %}
+            {% for message, type in messages %}
+                <div class="{{ type }}">
+                    <strong>{{message}}</strong>
+                </div>
+            {% endfor %}
+        {% endif %}
+    {% endwith %}
         
     <form class="form-horizontal text-center" action="/login" method="post" role="form">
         <h2 class="form-signin-heading">Sign in</h2>
