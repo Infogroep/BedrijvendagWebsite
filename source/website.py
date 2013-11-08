@@ -464,7 +464,7 @@ def admin_page(name):
 
     session = bottle.request.environ.get('beaker.session')
     try:
-        if(name in admin_user and session[name] == True):
+        if(name in admin_users and session[name] == True):
             return template('static/templates/infogroep_inherit.html', name = "infogroep", edition = edition)
         else:
             bottle.redirect('/unauthorized')
@@ -488,7 +488,7 @@ def admin_participants(name):
 
     session = bottle.request.environ.get('beaker.session')
     try:
-        if(name in admin_user and session[name] == True):
+        if(name in admin_users and session[name] == True):
             return template('static/templates/admin_participants.html', name = name, edition = edition, participants = get_participants(edition))
         else:
             bottle.redirect('/unauthorized')
@@ -501,7 +501,7 @@ def set_state(name, company, state):
 
     session = bottle.request.environ.get('beaker.session')
     try:
-        if(name in admin_user and session[name] == True):
+        if(name in admin_users and session[name] == True):
             state = participant_converter.id_to_state(state)
             
             change_participant_status(company, edition, state)
