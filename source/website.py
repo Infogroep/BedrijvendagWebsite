@@ -73,19 +73,22 @@ def resume_upload():
     pattern = re.compile('[0-9]+')
 
     if enrollment_number == "":
-        return template('static/templates/resume_inherit.html', edition = edition, fields = fields_of_study, error = True, message = "Please fill in your enrollment number")
+        message_flash.flash("Please fill in your enrollment number", 'error')
+        bottle.redirect('/resume')
     elif (not pattern.match(enrollment_number)):
-        return template('static/templates/resume_inherit.html', edition = edition, fields = fields_of_study, error = True, message = "Enrollment number are numbers only")
-    
+        message_flash.flash("This field is numbers only", 'error')
+        bottle.redirect('/resume')
     if resume_file:
         if (not resume_file.filename.endswith("pdf")):
-            return template('static/templates/resume_inherit.html', edition = edition, fields = fields_of_study, error = True, message = "Your resume must be a pdf file")
+            message_flash.flash("Your resume must be a pdf", 'error')
+            bottle.redirect('/resume')
         else:
             resume.upload(field, enrollment_number, resume_file.file.read())
-            return template('static/templates/resume_inherit.html', edition = edition, fields = fields_of_study, succes = True, message = "We are most gratefull for your precious resume")
+            message_flash.flash("Thank you for uploading your resume", 'success')
+            bottle.redirect('/resume')
     else:
-        return template('static/templates/resume_inherit.html', edition = edition, fields = fields_of_study, error = True, message = "Your resume, ... you forgot to select it")
-
+        message_flash.flash("You forgot to upload your resume", 'error')
+        bottle.redirect('/resume')
  
 @bottle.route('/company/<name>')
 def company_page(name):

@@ -2,17 +2,15 @@
 
 {% block main %}
 
-{% if error %}
-    <div class="alert alert-danger">
-        <strong>{{message}}</strong>
-    </div>
-{% endif %}
-
-{% if succes %}
-    <div class="alert alert-success">
-        <strong>{{message}}</strong>
-    </div>
-{% endif %}
+{% with messages = get_flashed_messages() %}
+        {%if messages %}
+            {% for message, type in messages %}
+                <div class="alert alert-{{ type }}">
+                    <strong>{{message}}</strong>
+                </div>
+            {% endfor %}
+        {% endif %}
+    {% endwith %}
 
 <form role="form" method="post" action="/resume" enctype="multipart/form-data">
     <div class="form-group">
