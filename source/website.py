@@ -7,6 +7,8 @@ import datetime, resume
 import bottle, logo, re, participant_converter
 from config import *
 from bottle import jinja2_view as view, jinja2_template as template, static_file, request, app
+from bottle_flash import FlashPlugin
+from bottle import Jinja2Template
 from os.path import dirname, abspath
 
 #app = bottle.Bottle()
@@ -22,17 +24,24 @@ session_opts = {
 
 app = beaker.middleware.SessionMiddleware(bottle.app(), session_opts)
 
+message_flash = FlashPlugin(key='messages', secret=secret_key)
+Jinja2Template.defaults["get_flashed_messages"] = message_flash.get_flashed_messages
+Jinja2Template.settings["extensions"] =  ["jinja2.ext.with_"]
 initialise.initialise()
+
+@bottle.hook('before_request')
+def setup_session():
+    request.session = bottle.request.environ.get('beaker.session')
 
 @bottle.route('/')
 def index():
     '''returns static template index'''
-    return template('static/templates/index_inherit.html', news_feed_query = get_news_feed(), edition = edition)
+    return template('static/templates/index_inherit.html', news_feed_query = get_news_feed(), edition = edition, name=request.session.get('logged_in'))
 
 @bottle.route('/pricelist')
 def pricelist():
     '''retuns static template pricelist'''
-    return template('static/templates/pricelist_inherit.html', edition = edition)
+    return template('static/templates/pricelist_inherit.html', edition = edition, name=request.session.get('logged_in'))
 
 @bottle.route('/static/<filepath:path>')
 def server_static(filepath):
@@ -47,12 +56,12 @@ def server_log(filepath):
 @bottle.route('/register')
 def register_form():
     '''returns the static register form'''
-    return template('static/templates/register_inherit.html', edition = edition)
+    return template('static/templates/register_inherit.html', edition = edition, name=request.session.get('logged_in'))
 
 @bottle.route('/resume')
 def resume_form():
     '''returns the static resume form'''
-    return template('static/templates/resume_inherit.html', fields = fields_of_study, edition = edition) 
+    return template('static/templates/resume_inherit.html', fields = fields_of_study, edition = edition, name=request.session.get('logged_in')) 
 
 @bottle.route('/resume', method="post")
 def resume_upload():
@@ -68,19 +77,22 @@ def resume_upload():
     pattern = re.compile('[0-9]+')
 
     if enrollment_number == "":
-        return template('static/templates/resume_inherit.html', edition = edition, fields = fields_of_study, error = True, message = "Please fill in your enrollment number")
+        message_flash.flash("Please fill in your enrollment number", 'error')
+        bottle.redirect('/resume')
     elif (not pattern.match(enrollment_number)):
-        return template('static/templates/resume_inherit.html', edition = edition, fields = fields_of_study, error = True, message = "Enrollment number are numbers only")
-    
+        message_flash.flash("This field is numbers only", 'error')
+        bottle.redirect('/resume')
     if resume_file:
         if (not resume_file.filename.endswith("pdf")):
-            return template('static/templates/resume_inherit.html', edition = edition, fields = fields_of_study, error = True, message = "Your resume must be a pdf file")
+            message_flash.flash("Your resume must be a pdf", 'error')
+            bottle.redirect('/resume')
         else:
             resume.upload(field, enrollment_number, resume_file.file.read())
-            return template('static/templates/resume_inherit.html', edition = edition, fields = fields_of_study, succes = True, message = "We are most gratefull for your precious resume")
+            message_flash.flash("Thank you for uploading your resume", 'success')
+            bottle.redirect('/resume')
     else:
-        return template('static/templates/resume_inherit.html', edition = edition, fields = fields_of_study, error = True, message = "Your resume, ... you forgot to select it")
-
+        message_flash.flash("You forgot to upload your resume", 'error')
+        bottle.redirect('/resume')
  
 @bottle.route('/company/<name>')
 def company_page(name):
@@ -88,7 +100,7 @@ def company_page(name):
 
     session = bottle.request.environ.get('beaker.session')
     try:
-        if (session[name] == True):
+        if (session["logged_in"] == name):
             company_ = company(name)
             logo = get_logo(name)
             address = company_[2]
@@ -105,7 +117,7 @@ def company_page(name):
             if logo:
                 logo = '''<img src="/%s">''' % logo
             else:
-                logo = '''You have yet to upload your logo'''
+                logo = '''You have yet to upload your logo, go to the <a href="edit">edit page</a>'''
              
             if fax is None:
                 fax = ""
@@ -115,10 +127,10 @@ def company_page(name):
                 cell = ""
             
             return template('static/templates/company_page_inherit.html', \
-                            name = name, address = address, postal = postal, \
+                            address = address, postal = postal, \
                             place = place, website = website, tav = tav, \
                             tel = tel, fax = fax, email = email, cell = cell, \
-                            edition = edition, logo = logo, country = country)
+                            edition = edition, logo = logo, country = country, name=request.session.get('logged_in'))
         else:
             bottle.redirect('/unauthorized')
     except KeyError:
@@ -130,7 +142,7 @@ def company_page(name):
 
     session = bottle.request.environ.get('beaker.session')
     try:
-        if (session[name] == True):
+        if (session["logged_in"] == name):
             company_ = company(name)
             logo = get_logo(name)
             address = company_[2]
@@ -157,10 +169,10 @@ def company_page(name):
                 cell = ""
             
             return template('static/templates/company_page_edit_inherit.html', \
-                            name = name, address = address, postal = postal, \
+                            address = address, postal = postal, \
                             place = place, website = website, tav = tav, \
                             tel = tel, fax = fax, email = email, cell = cell, \
-                            edition = edition, logo = logo, country = country)
+                            edition = edition, logo = logo, country = country, name=request.session.get('logged_in'))
         else:
             bottle.redirect('/unauthorized')
     except KeyError:
@@ -172,7 +184,7 @@ def logout(name):
     '''ends the company's session'''
     session = bottle.request.environ.get('beaker.session')
     try:
-        session[name] = False
+        session.delete()
         bottle.redirect('/login')
     except KeyError:
         bottle.redirect('/unauthorized')
@@ -182,8 +194,8 @@ def companiesbook(name):
     '''returns the companies book form'''
     session = bottle.request.environ.get('beaker.session')
     try:
-        if(session[name] == True):
-            return template('static/templates/companiesbook_inherit.html', name = name, edition = edition)
+        if(session["logged_in"] == name):
+            return template('static/templates/companiesbook_inherit.html', edition = edition, name=request.session.get('logged_in'))
         else:
             bottle.redirect('/unauthorized')
     except KeyError:
@@ -195,7 +207,7 @@ def static_company_page(name):
     uses this to create his page'''
     session = bottle.request.environ.get('beaker.session')
     try:
-        if(session[name] == True):
+        if(session["logged_in"] == name):
             location = request.forms.get('location')
             slogan = request.forms.get('slogan')
             why = request.forms.get('why')
@@ -218,7 +230,7 @@ def static_company_page(name):
 
 
             create_tex_file(name, location, slogan, why, NL, ENG, FR, DE, JOBS, STAGE, SJOBS, field, develop, FY, CH, WI, BIO, CW, BIN, GEO)
-            return template('static/templates/companiesbook_inherit.html', name = name, edition = edition)
+            return template('static/templates/companiesbook_inherit.html', edition = edition, name=request.session.get('logged_in'))
         else:
             bottle.redirect('/unauthorized')
     except KeyError:
@@ -234,7 +246,7 @@ def upload(name):
 
     session = bottle.request.environ.get('beaker.session')
     try:
-        if(session[name] == True):
+        if(session["logged_in"] == name):
             img = request.files.logo
 
             if img:
@@ -256,7 +268,7 @@ def update_(name, column):
 
     session = bottle.request.environ.get('beaker.session')
     try:
-        if(session[name] == True):
+        if(session["logged_in"] == name):
             value = request.forms.get('value')
             update(name, value, column)
             bottle.redirect('/company/%s' % name)
@@ -271,7 +283,7 @@ def enlist_form(name):
 
     session = bottle.request.environ.get('beaker.session')
     try:
-        if(session[name] == True):
+        if(session["logged_in"] == name):
             participating = is_participant(name, edition)
             state = None
             stateID = None
@@ -300,7 +312,7 @@ def enlist_form(name):
                 high = participant[7]
 
 
-            return template('static/templates/enlist_inherit.html', options = get_formulas(), name = name, \
+            return template('static/templates/enlist_inherit.html', options = get_formulas(), \
                                                                     participant = participating, \
                                                                     state = state, \
                                                                     stateID = stateID, \
@@ -311,7 +323,7 @@ def enlist_form(name):
                                                                     promo = promo, \
                                                                     remarks = remarks, \
                                                                     high = high, \
-                                                                    edition = edition)
+                                                                    edition = edition, name=request.session.get('logged_in'))
         else:
             bottle.redirect('/unauthorized')
     except KeyError:
@@ -325,7 +337,7 @@ def enlist(name):
 
     session = bottle.request.environ.get('beaker.session')
     try:
-        if(session[name] == True):
+        if(session["logged_in"] == name):
             formula = request.forms.get('formula')
             high = request.forms.get('high')
             print "enlist", formula, high
@@ -352,7 +364,7 @@ def confirm(name):
 
     session = bottle.request.environ.get('beaker.session')
     try:
-        if(session[name] == True):
+        if(session["logged_in"] == name):
 
             state = participant_converter.state_to_id(get_status(name, edition))
 
@@ -360,7 +372,7 @@ def confirm(name):
             if state == 2:
                 change_participant_status(name, edition, participant_converter.id_to_state(3))
             else:
-                return template('static/templates/error_inherit.html', error = "You can't request your contract in your current state" , edition = edition)
+                return template('static/templates/error_inherit.html', error = "You can't request your contract in your current state" , edition = edition, name=request.session.get('logged_in'))
             
             bottle.redirect('''/company/%s/enlist''' % (name,))
 
@@ -373,7 +385,7 @@ def confirm(name):
 @bottle.route('/unauthorized')
 def unauthorized():
     '''retuns the page showing the unauthorized message'''
-    return template('static/templates/error_inherit.html', error = "You don't have the right permission", edition = edition)
+    return template('static/templates/error_inherit.html', error = "You don't have the right permission", edition = edition, name=request.session.get('logged_in'))
 
 @bottle.route('/register', method='post')
 def register():
@@ -385,10 +397,10 @@ def register():
     retype_password = request.forms.get('retype_password')
     
     if (not is_equal(hashed_password, retype_password)):
-        return template('static/templates/register_inherit.html', error = True, message = "Passwords did not match", edition = edition)
+        return template('static/templates/register_inherit.html', error = True, message = "Passwords did not match", edition = edition, name=request.session.get('logged_in'))
     company_ = company(name)
     if company_:
-        return template('static/templates/register_inherit.html', error = True, message = "An account with this company already exists", edition = edition)
+        return template('static/templates/register_inherit.html', error = True, message = "An account with this company already exists", edition = edition, name=request.session.get('logged_in'))
     else:
         
         address = request.forms.get('address')
@@ -403,21 +415,21 @@ def register():
         website = request.forms.get('website')
         
         if name == "":
-           return template('static/templates/register_inherit.html', error = True, message = "The name field may not be empty")
+           return template('static/templates/register_inherit.html', error = True, message = "The name field may not be empty", name=request.session.get('logged_in'))
         elif address == "":
-           return template('static/templates/register_inherit.html', error = True, message = "The address field may not be empty")
+           return template('static/templates/register_inherit.html', error = True, message = "The address field may not be empty", name=request.session.get('logged_in'))
         elif zipcode == "":
-           return template('static/templates/register_inherit.html', error = True, message = "The postal code field may not be empty")
+           return template('static/templates/register_inherit.html', error = True, message = "The postal code field may not be empty", name=request.session.get('logged_in'))
         elif city == "":
-           return template('static/templates/register_inherit.html', error = True, message = "The city field may not be empty")
+           return template('static/templates/register_inherit.html', error = True, message = "The city field may not be empty", name=request.session.get('logged_in'))
         elif country == "":
-           return template('static/templates/register_inherit.html', error = True, message = "The country field may not be empty")
+           return template('static/templates/register_inherit.html', error = True, message = "The country field may not be empty", name=request.session.get('logged_in'))
         elif tav == "":
-           return template('static/templates/register_inherit.html', error = True, message = "The contact person field may not be empty")
+           return template('static/templates/register_inherit.html', error = True, message = "The contact person field may not be empty", name=request.session.get('logged_in'))
         elif email == "":
-           return template('static/templates/register_inherit.html', error = True, message = "The email field may not be empty")
+           return template('static/templates/register_inherit.html', error = True, message = "The email field may not be empty", name=request.session.get('logged_in'))
         elif website == "":
-           return template('static/templates/register_inherit.html', error = True, message = "The website field may not be empty")
+           return template('static/templates/register_inherit.html', error = True, message = "The website field may not be empty", name=request.session.get('logged_in'))
         else:
             add_company(name, address, zipcode, city, country, tav, email, tel, fax, cell, website)
             add_login(name, hashed_password)
@@ -427,7 +439,7 @@ def register():
 def login_form():
     '''shows the login form'''
 
-    return template('static/templates/login_inherit.html', edition = edition)
+    return template('static/templates/login_inherit.html', edition = edition, name=request.session.get('logged_in'))
 
 @bottle.route('/login', method='post')
 def login_():
@@ -439,19 +451,17 @@ def login_():
     route_address = '/company/%s'
     route_address = route_address % name
     
-    if (name == 'ig'):
-        name = 'infogroep'
-        route_address = '/' + name
-    if (name == 'wk'):
-        name = 'wetenschappelijke kring'
-        route_address = '/' + name
+    if name in admin_users:
+        route_address = '/' + admin_users[name]
+        name = admin_users[name]
     
     if(login(name, password)):
         session = bottle.request.environ.get('beaker.session')
-        session[name] = True
+        session["logged_in"] = name
         bottle.redirect(route_address)
     else:
-        return template('static/templates/login_inherit', error=True, msg = "The given combination was incorrect")
+        message_flash.flash('The company/password combination is incorrect', 'alert')
+        bottle.redirect('/login')
 
 @bottle.route('/<name>')
 def admin_page(name):
@@ -459,7 +469,7 @@ def admin_page(name):
 
     session = bottle.request.environ.get('beaker.session')
     try:
-        if(session[name] == True):
+        if(name in admin_users.values() and session["logged_in"] == name):
             return template('static/templates/infogroep_inherit.html', name = "infogroep", edition = edition)
         else:
             bottle.redirect('/unauthorized')
@@ -483,8 +493,8 @@ def admin_participants(name):
 
     session = bottle.request.environ.get('beaker.session')
     try:
-        if(session[name] == True):
-            return template('static/templates/admin_participants.html', name = name, edition = edition, participants = get_participants(edition))
+        if(name in admin_users.values() and session["logged_in"] == name):
+            return template('static/templates/admin_participants.html', edition = edition, participants = get_participants(edition), name=request.session.get('logged_in'))
         else:
             bottle.redirect('/unauthorized')
     except KeyError:
@@ -496,7 +506,7 @@ def set_state(name, company, state):
 
     session = bottle.request.environ.get('beaker.session')
     try:
-        if(session[name] == True):
+        if(name in admin_users.values() and session["logged_in"] == name):
             state = participant_converter.id_to_state(state)
             
             change_participant_status(company, edition, state)

@@ -26,5 +26,5 @@ sudo apt-get install python-pip
 * virtual-env the directory
 * go inside the directory
 * pip install -r requirements
-
+* This will fail for bottle-flash. Fix: pip install --no-install bottle-flash; touch build/bottle-flash/README.rst;pip install --no-download bottle-flash
 

@@ -173,7 +173,7 @@ def login(user, password):
         return False
     else:
         stored = result[0]
-        if is_equal(stored, password):
+        if is_equal(stored.encode('utf-8'), password):
             return True
         else:
             return False
@@ -379,7 +379,7 @@ def get_participants(year):
     connection = open_companies_connection()
     cursor = connection.cursor()
 
-    cursor.execute('''SELECT companyID, formulaID, state, tables, promotion_wands,high_stand, remarks FROM participants where year = %s''' % (year,))
+    cursor.execute('''SELECT companyID, formulaID, state, tables, promotion_wand, high_stand, remarks FROM participants where year = %s''' % (year,))
 
     result = cursor.fetchall()
     close_connection(connection)

@@ -8,4 +8,8 @@
 *.sh
 *.swp
 *.db
-
+/.DS_Store
+/.Python
+/lib
+/source/session/
+/source/resumes/

@@ -14,13 +14,17 @@ event_close_down = "18:00"
 
 logo_original = "static/original"
 logo_resized = "static/resized"
+secret_key ="sPXLrcuPG1"
 
 edition = "2014"
 
 database_name = "website-data.db"
 
-fields_of_study = (("computerwetenschappen", "computer science"),
-				   ("bio-ingenieur", "Bioscience engineering"),
+admin_users = {"ig": "infogroep", 
+			   "wk": "wetenschappelijke kring"}
+
+fields_of_study = (("computerwetenschappen", "Computer Science"),
+				   ("bio-ingenieur", "Bioscience Engineering"),
         		   ("fysica", "Physics"),
         		   ("chemie", "Chemistry"),
         		   ("wiskunde", "Mathematics"),
