@@ -113,7 +113,7 @@ def company_page(name):
             if logo:
                 logo = '''<img src="/%s">''' % logo
             else:
-                logo = '''You have yet to upload your logo'''
+                logo = '''You have yet to upload your logo, go to the <a href="edit">edit page</a>'''
              
             if fax is None:
                 fax = ""
