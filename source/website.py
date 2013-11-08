@@ -452,7 +452,7 @@ def login_():
     
     if(login(name, password)):
         session = bottle.request.environ.get('beaker.session')
-        session[name] = True
+        session[admin_users[name]] = True
         bottle.redirect(route_address)
     else:
         message_flash.flash('The company/password combination is incorrect', 'alert')
