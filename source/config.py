@@ -20,6 +20,9 @@ edition = "2014"
 
 database_name = "website-data.db"
 
+admin_users = {"ig": "infogroep", 
+			   "wk": "wetenschappelijke kring"}
+
 fields_of_study = (("computerwetenschappen", "Computer Science"),
 				   ("bio-ingenieur", "Bioscience Engineering"),
         		   ("fysica", "Physics"),
