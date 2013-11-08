@@ -54,7 +54,12 @@
                     <li><a href="/">Tombola</a></li>
                     <li class="divider"></li>
                     <li class ="nav-header">Companies</li>
-                    <li><a href="/login">Login</a></li>
+                    {% if name == None or name is not defined %}
+                        <li><a href="/login">Login</a></li>
+                        
+                    {% else %}
+                        <li><a href="/company/{{ name }}">{{ name }}</a></li>
+                    {% endif %}
                     <li><a href="/register">Create account</a></li>
                     <li><a href="/pricelist">Price list</a></li>
                 </div>
