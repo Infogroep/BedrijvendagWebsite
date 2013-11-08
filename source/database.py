@@ -173,7 +173,7 @@ def login(user, password):
         return False
     else:
         stored = result[0]
-        if is_equal(stored, password):
+        if is_equal(stored.encode('utf-8'), password):
             return True
         else:
             return False
