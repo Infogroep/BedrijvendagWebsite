@@ -20,8 +20,8 @@ edition = "2014"
 
 database_name = "website-data.db"
 
-fields_of_study = (("computerwetenschappen", "computer science"),
-				   ("bio-ingenieur", "Bioscience engineering"),
+fields_of_study = (("computerwetenschappen", "Computer Science"),
+				   ("bio-ingenieur", "Bioscience Engineering"),
         		   ("fysica", "Physics"),
         		   ("chemie", "Chemistry"),
         		   ("wiskunde", "Mathematics"),
