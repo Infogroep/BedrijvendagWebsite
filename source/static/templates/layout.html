@@ -57,6 +57,8 @@
                     {% if name == None or name is not defined %}
                         <li><a href="/login">Login</a></li>
                         
+                    {% elif admin %}
+                        <li><a href="/{{ name }}">{{ name }}</a></li>
                     {% else %}
                         <li><a href="/company/{{ name }}">{{ name }}</a></li>
                     {% endif %}
