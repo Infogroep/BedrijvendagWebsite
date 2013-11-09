@@ -15,7 +15,7 @@ def open_connection():
 
 def open_companies_connection():
     '''Opens connection to the companies database'''
-    return mysql.connect('127.0.0.1', 'bedrijvendag', 'groenwater', 'bedrijvendagDEV')
+    return mysql.connect('127.0.0.1', 'bedrijvendag', 'groenwater', 'bedrijvendag-dev')
 
 # Closes the connection
 # First commits the changes

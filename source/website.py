@@ -115,7 +115,7 @@ def company_page(name):
         if logo:
             logo = '''<img src="/%s">''' % logo
         else:
-            logo = '''You have yet to upload your logo, go to the <a href="edit">edit page</a>'''
+            logo = '''You have yet to upload your logo, go to the <a href="/company/%s/edit">edit page</a>''' % name
          
         if fax is None:
             fax = ""
@@ -364,10 +364,12 @@ def register():
     retype_password = request.forms.get('retype_password')
     
     if (not is_equal(hashed_password, retype_password)):
-        return template('static/templates/register_inherit.html', error = True, message = "Passwords did not match", edition = edition, name=request.session.get('logged_in'), admin=(True if request.session.get('logged_in') in admin_users.values() else False))
+        message_flash.flash("Passwords did not match", 'error')
+        bottle.redirect('/register')
     company_ = company(name)
     if company_:
-        return template('static/templates/register_inherit.html', error = True, message = "An account with this company already exists", edition = edition, name=request.session.get('logged_in'), admin=(True if request.session.get('logged_in') in admin_users.values() else False))
+        message_flash.flash("An account for this company already exists", 'danger')
+        bottle.redirect('/register')
     else:
         
         address = request.forms.get('address')
@@ -415,29 +417,27 @@ def register():
         if tel != "":
             tel = re.sub('\s*', '', tel)
             if not (tel_pattern.match(tel)):
-                error += "Given telephone number appeared to be incorrect </br>"
+                error += "Given telephone number appeared to be incorrect, format: xx/xxx.xx(x).xx(x) </br>"
         if fax != "":
             fax = re.sub('\s*', '', fax)
             if not (tel_pattern.match(fax)):
-                error += "Given fax number appeared to be incorrect </br>"
+                error += "Given fax number appeared to be incorrect, format: xx/xxx.xx(x).xx(x) </br>"
         if cell != "":
             cell = re.sub('\s*', '', cell)
             if not (tel_pattern.match(cell)):
-                error += "Given cellphone number appeared to be incorrect </br>"
+                error += "Given cellphone number appeared to be incorrect, format: xx/xxx.xx(x).xx(x) </br>"
 
         if error == "":
-            try:
-                if int(zipcode) > 0:
-                    add_company(name, address, zipcode, city, country, tav, email, tel, fax, cell, website)
-                    add_login(name, hashed_password)
-                    bottle.redirect('/login')
-                else:
-                    return template('static/templates/register_inherit.html', error = True, message = "The postal code may not be a negative number", name=request.session.get('logged_in'), admin=(True if request.session.get('logged_in') in admin_users.values() else False))
-            except:
-                return template('static/templates/register_inherit.html', error = True, message = "The postal code field must be a number", name=request.session.get('logged_in'), admin=(True if request.session.get('logged_in') in admin_users.values() else False))
+            if int(zipcode) > 0:
+                add_company(name, address, zipcode, city, country, tav, email, tel, fax, cell, website)
+                add_login(name, hashed_password)
+                bottle.redirect('/login')
+            else:
+                message_flash.flash("The postal code may not be a negative number", 'error')
+                bottle.redirect('/register')
         else:
-            return template('static/templates/register_inherit.html', error = True, message = error, name=request.session.get('logged_in'), admin=(True if request.session.get('logged_in') in admin_users.values() else False))
-
+            message_flash.flash(error, 'error')
+            bottle.redirect('/register')
 
 @bottle.route('/login')
 def login_form():

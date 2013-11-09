@@ -1,11 +1,15 @@
 {% extends "static/templates/layout.html" %}
 {% block main %}
 
-    {% if error %}
-        <div class="alert alert-danger">
-            <strong>{{message}}</strong>
-        </div>
-    {% endif %}
+    {% with messages = get_flashed_messages() %}
+        {%if messages %}
+            {% for message, type in messages %}
+                <div class="alert alert-{{ type }}">
+                    <strong>{{message}}</strong>
+                </div>
+            {% endfor %}
+        {% endif %}
+    {% endwith %}
 
     <form class="form-horizontal" action="/register" method="post">
         <div class="control-group">
