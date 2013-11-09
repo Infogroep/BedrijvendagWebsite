@@ -364,11 +364,11 @@ def register():
     retype_password = request.forms.get('retype_password')
     
     if (not is_equal(hashed_password, retype_password)):
-        message_flash.flash("Passwords did not match", 'error')
+        message_flash.flash("Passwords did not match", 'danger')
         bottle.redirect('/register')
     company_ = company(name)
     if company_:
-        message_flash.flash("An account for this company already exists", 'danger')
+        message_flash.flash("An account for this company already exists", 'warning')
         bottle.redirect('/register')
     else:
         
@@ -431,12 +431,13 @@ def register():
             if int(zipcode) > 0:
                 add_company(name, address, zipcode, city, country, tav, email, tel, fax, cell, website)
                 add_login(name, hashed_password)
+                message_flash.flash('Your account has been created.', 'succes')
                 bottle.redirect('/login')
             else:
-                message_flash.flash("The postal code may not be a negative number", 'error')
+                message_flash.flash("The postal code may not be a negative number", 'danger')
                 bottle.redirect('/register')
         else:
-            message_flash.flash(error, 'error')
+            message_flash.flash(error, 'danger')
             bottle.redirect('/register')
 
 @bottle.route('/login')
