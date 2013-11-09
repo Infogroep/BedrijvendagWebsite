@@ -415,6 +415,9 @@ def register():
         website = request.forms.get('website')
 
         error = ""
+
+        tel_pattern = re.compile('^[0-9]{2}/?[0-9]{3}.?[0-9]{2,3}.?[0-9]{2,3}$')
+
         
         if name == "":
            error += "The name field may not be empty <br>"
@@ -442,6 +445,18 @@ def register():
         if website == "":
            error += "The website field may not be empty <br>"
            #return template('static/templates/register_inherit.html', error = True, message = "The website field may not be empty", name=request.session.get('logged_in'))
+        if tel != "":
+            tel = re.sub('\s*', '', tel)
+            if not (tel_pattern.match(tel)):
+                error += "Given telephone number appeared to be incorrect </br>"
+        if fax != "":
+            fax = re.sub('\s*', '', fax)
+            if not (tel_pattern.match(fax)):
+                error += "Given fax number appeared to be incorrect </br>"
+        if cell != "":
+            cell = re.sub('\s*', '', cell)
+            if not (tel_pattern.match(cell)):
+                error += "Given cellphone number appeared to be incorrect </br>"
 
         if error == "":
             try:
