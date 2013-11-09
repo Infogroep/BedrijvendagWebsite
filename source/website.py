@@ -470,7 +470,7 @@ def admin_page(name):
     session = bottle.request.environ.get('beaker.session')
     try:
         if(name in admin_users.values() and session["logged_in"] == name):
-            return template('static/templates/infogroep_inherit.html', name = "infogroep", edition = edition)
+            return template('static/templates/infogroep_inherit.html', name = "infogroep", edition = edition, news_feed_query = get_news_feed())
         else:
             bottle.redirect('/unauthorized')
     except KeyError:
@@ -515,5 +515,20 @@ def set_state(name, company, state):
             bottle.redirect('/unauthorized')
     except KeyError:
         bottle.redirect('/unauthorized')
+
+@bottle.route('/infogroep/delete_news/<id>')
+def remove_news_item_site(id):
+
+    session = bottle.request.environ.get('beaker.session')
+    try:
+        if(session["logged_in"] == "infogroep"):
+            remove_news_item(id)
+            bottle.redirect('/infogroep')
+        else:
+            bottle.redirect('/unauthorized')
+    except KeyError:
+        bottle.redirect('/unauthorized')
+
+
 
 #bottle.run(app)

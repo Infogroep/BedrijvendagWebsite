@@ -16,4 +16,15 @@
         </div>
         <button class="btn btn-primary" type="submit">Add news item</button>
 </form>
+<hr>
+{% for newsrow in news_feed_query %}
+    <div class="panel panel-primary">
+        <div class="panel-heading">
+            <h4 class="panel-title">{{newsrow[2]}}   <small>{{newsrow[1]}}</small>
+            <a href="/infogroep/delete_news/{{newsrow[0]}}"><button type="button" class="close">&times;</button></a></h4>
+        </div>
+            <div class="panel-body">{{newsrow[3]}}</div>
+       </div>
+{% endfor%}
+
 {% endblock %}

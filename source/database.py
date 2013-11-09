@@ -45,7 +45,8 @@ def get_new_news_id():
     connection = open_connection()
     cursor = connection.cursor()
     
-    query = '''SELECT MAX(id) FROM Newsfeed'''
+    query = '''SELECT MAX(ID) FROM Newsfeed'''
+    cursor.execute(query)
     
     result = cursor.fetchone()
     
@@ -96,6 +97,8 @@ def get_news_feed():
         result[1] = date.strftime("%d %B %Y - %H:%M")
     
     return queryresult
+
+
 
 def set_logo(company, filename):
     '''set the path to the logo in the database'''
@@ -449,4 +452,14 @@ def get_formula(name, edition):
     close_connection(connection)
 
     return result[0]
+
+def remove_news_item(news_id):
+    '''Removes a news item by id'''
+
+    connection = open_connection()
+    cursor = connection.cursor()
+
+    cursor.execute('''DELETE FROM Newsfeed WHERE ID = ?''', (news_id,))
+
+    close_connection(connection)
 
