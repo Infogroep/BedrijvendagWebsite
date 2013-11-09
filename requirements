@@ -7,6 +7,7 @@ argparse==1.2.1
 bcrypt==1.0.2
 bottle==0.11.6
 bottle-flash==0.1
+Bottle-SSLify==0.0.1
 cffi==0.7.2
 distribute==0.7.3
 pycparser==2.10

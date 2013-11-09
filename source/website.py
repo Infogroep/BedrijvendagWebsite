@@ -413,27 +413,49 @@ def register():
         fax = request.forms.get('fax')
         cell = request.forms.get('cell')
         website = request.forms.get('website')
+
+        error = ""
         
         if name == "":
-           return template('static/templates/register_inherit.html', error = True, message = "The name field may not be empty", name=request.session.get('logged_in'))
-        elif address == "":
-           return template('static/templates/register_inherit.html', error = True, message = "The address field may not be empty", name=request.session.get('logged_in'))
-        elif zipcode == "":
-           return template('static/templates/register_inherit.html', error = True, message = "The postal code field may not be empty", name=request.session.get('logged_in'))
-        elif city == "":
-           return template('static/templates/register_inherit.html', error = True, message = "The city field may not be empty", name=request.session.get('logged_in'))
-        elif country == "":
-           return template('static/templates/register_inherit.html', error = True, message = "The country field may not be empty", name=request.session.get('logged_in'))
-        elif tav == "":
-           return template('static/templates/register_inherit.html', error = True, message = "The contact person field may not be empty", name=request.session.get('logged_in'))
-        elif email == "":
-           return template('static/templates/register_inherit.html', error = True, message = "The email field may not be empty", name=request.session.get('logged_in'))
-        elif website == "":
-           return template('static/templates/register_inherit.html', error = True, message = "The website field may not be empty", name=request.session.get('logged_in'))
+           error += "The name field may not be empty <br>"
+           #return template('static/templates/register_inherit.html', error = True, message = "The name field may not be empty", name=request.session.get('logged_in'))
+        if (password == ""):
+           error += "The password field may not be empty <br>"
+        if address == "":
+           error += "The address field may not be empty <br>"
+           #return template('static/templates/register_inherit.html', error = True, message = "The address field may not be empty", name=request.session.get('logged_in'))
+        if zipcode == "":
+           error += "The postal code field may not be empty <br>"
+           #return template('static/templates/register_inherit.html', error = True, message = "The postal code field may not be empty", name=request.session.get('logged_in'))
+        if city == "":
+           error += "The city field may not be empty <br>"
+           #return template('static/templates/register_inherit.html', error = True, message = "The city field may not be empty", name=request.session.get('logged_in'))
+        if country == "":
+           error += "The country field may not be empty <br>"
+           #return template('static/templates/register_inherit.html', error = True, message = "The country field may not be empty", name=request.session.get('logged_in'))
+        if tav == "":
+           error += "The contact person field may not be empty <br>"
+           #return template('static/templates/register_inherit.html', error = True, message = "The contact person field may not be empty", name=request.session.get('logged_in'))
+        if email == "":
+           error += "The email field may not be empty <br>"
+           #return template('static/templates/register_inherit.html', error = True, message = "The email field may not be empty", name=request.session.get('logged_in'))
+        if website == "":
+           error += "The website field may not be empty <br>"
+           #return template('static/templates/register_inherit.html', error = True, message = "The website field may not be empty", name=request.session.get('logged_in'))
+
+        if error == "":
+            try:
+                if int(zipcode) > 0:
+                    add_company(name, address, zipcode, city, country, tav, email, tel, fax, cell, website)
+                    add_login(name, hashed_password)
+                    bottle.redirect('/login')
+                else:
+                    return template('static/templates/register_inherit.html', error = True, message = "The postal code may not be a negative number", name=request.session.get('logged_in'))
+            except:
+                return template('static/templates/register_inherit.html', error = True, message = "The postal code field must be a number", name=request.session.get('logged_in'))
         else:
-            add_company(name, address, zipcode, city, country, tav, email, tel, fax, cell, website)
-            add_login(name, hashed_password)
-            bottle.redirect('/login')
+            return template('static/templates/register_inherit.html', error = True, message = error, name=request.session.get('logged_in'))
+
 
 @bottle.route('/login')
 def login_form():
