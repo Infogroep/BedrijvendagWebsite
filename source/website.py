@@ -43,6 +43,11 @@ def about():
     '''Returns the about page'''
     return template('static/templates/about_inherit.html', edition = edition, name = request.session.get('logged_in'), admin=(True if request.session.get('logged_in') in admin_users.values() else False))
 
+@bottle.route('/when_and_where')
+def when_and_where():
+    '''Returns the when and where page'''
+    return template('static/templates/when_where_inherit.html', edition = edition, name = request.session.get('logged_in'), admin=(True if request.session.get('logged_in') in admin_users.values() else False))
+
 @bottle.route('/pricelist')
 def pricelist():
     '''retuns static template pricelist'''
