@@ -53,6 +53,12 @@ def when_and_where():
     '''Returns the when and where page'''
     return template('static/templates/tombola_inherit.html', edition = edition, name = request.session.get('logged_in'), admin=(True if request.session.get('logged_in') in admin_users.values() else False))
 
+@bottle.route('/participants')
+def participants():
+    '''retuns all the participating companies (after signed contract has been received)'''
+    return template('static/templates/participants_inherit.html', edition = edition, name = request.session.get('logged_in'), admin=(True if request.session.get('logged_in') in admin_users.values() else False))
+
+
 @bottle.route('/pricelist')
 def pricelist():
     '''retuns static template pricelist'''
