@@ -450,8 +450,7 @@ def register():
 
         if error == "":
             if int(zipcode) > 0:
-                add_company(name, address, zipcode, city, country, tav, email, tel, fax, cell, website)
-                add_login(name, hashed_password)
+                add_company(name, address, zipcode, city, country, tav, email, tel, fax, cell, website, hashed_password)
                 message_flash.flash('Your account has been created.', 'succes')
                 bottle.redirect('/login')
             else:
