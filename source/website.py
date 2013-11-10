@@ -478,7 +478,6 @@ def login_():
     
     if name in admin_users:
         route_address = '/' + admin_users[name]
-        name = admin_users[name]
     
     if(login(name, password)):
         
