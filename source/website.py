@@ -481,7 +481,7 @@ def login_():
     
     if(login(name, password)):
         
-        request.session["logged_in"] = name
+        request.session["logged_in"] = (name if name not in admin_users else admin_users[name])
         bottle.redirect(route_address)
     else:
         message_flash.flash('The company/password combination is incorrect', 'alert')
