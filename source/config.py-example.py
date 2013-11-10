@@ -19,6 +19,10 @@ secret_key ="sPXLrcuPG1"
 edition = "2014"
 
 database_name = "website-data.db"
+database_host = "127.0.0.1"
+database_user = "bedrijvendag"
+database_password = "groenwater"
+
 
 admin_users = {"ig": "infogroep", 
 			   "wk": "wetenschappelijke kring"}
