@@ -27,10 +27,13 @@ def  initialise_field_folders():
 
 	if (not(os.path.exists(ROOT + "/" + field_directory))):
 		os.mkdir(ROOT + "/" + field_directory)
+
+	if (not(os.path.exists(ROOT + "/" + field_directory + "/" + edition))):
+		os.mkdir(ROOT + "/" + field_directory + "/" + edition)
 	
 	for field in fields_of_study:
 		
-		direcory_name = ROOT + "/" + field_directory + "/" + field[0]
+		direcory_name = ROOT + "/" + field_directory + "/" + edition + "/" + field[0]
 
 		if (not (os.path.exists(direcory_name))):
 			os.mkdir(direcory_name)

@@ -6,7 +6,7 @@ def upload(field, enrollment_number, raw):
 	pdf file the file gets saved in the directory
 	of the corresponding file'''
 
-	filename = config.ROOT + "/" + config.field_directory + "/" + field + "/" + str(enrollment_number) + ".pdf"
+	filename = config.ROOT + "/" + config.field_directory + "/" + config.edition + "/" + field + "/" + str(enrollment_number) + ".pdf"
 	resume = open(filename, "w")
 
 	resume.write(raw)
