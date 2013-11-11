@@ -388,7 +388,36 @@ def remove_news_item(news_id):
     connection = open_connection()
     cursor = connection.cursor()
 
-    cursor.execute('''DELETE FROM newsfeed WHERE newsID = %s''', (news_id,))
+    cursor.execute('''DELETE FROM newsfeed WHERE newsID = %s''' % (news_id,))
 
     close_connection(connection)
+
+def find_password_hash(hash):
+    connection = open_connection()
+    cursor = connection.cursor()
+
+    cursor.execute('''SELECT companies.name FROM recover_password INNER JOIN companies ON recover_password.companyID = companies.ID WHERE password_url = "%s"''' % hash)
+
+    result = cursor.fetchone()
+
+    close_connection(connection)
+
+    return result[0]
+
+def delete_password_hash(hash):
+    connection = open_connection()
+    cursor = connection.cursor()
+
+    cursor.execute('''DELETE FROM recover_password WHERE password_url="%s"''' % hash)
+
+    close_connection(connection)
+
+def change_password(company_name, hashed_password):
+    connection = open_connection()
+    cursor = connection.cursor()
+
+    cursor.execute('''UPDATE companies SET password = "%s" where name = "%s"''' % (hashed_password, company_name))
+
+    close_connection(connection)
+
 

@@ -60,3 +60,10 @@ CREATE TABLE financial(
                 paid BIT,
                 refunded BIT,
                 PRIMARY KEY(ID));
+
+CREATE TABLE recover_password(
+                recoverID int NOT NULL AUTO_INCREMENT,
+                companyID int,
+                password_url BLOB,
+                PRIMARY KEY(recoverID),
+                FOREIGN KEY(companyID) REFERENCES companies(ID));

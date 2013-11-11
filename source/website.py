@@ -487,6 +487,33 @@ def login_():
         message_flash.flash('The company/password combination is incorrect', 'alert')
         bottle.redirect('/login')
 
+@bottle.route('/recover/<hash>')
+def recover_password(hash):
+    company_ = find_password_hash(hash)
+
+    if company:
+        return template('static/templates/password_recovery_inherit.html', edition = edition, name=request.session.get('logged_in'), admin=(True if request.session.get('logged_in') in admin_users.values() else False), hash=hash)
+    else:
+        bottle.redirect('/unauthorized')
+
+@bottle.route('/recover/<hash>', method='post')
+def change_password_url(hash):
+    company_ = find_password_hash(hash)
+
+    password = request.forms.get('password')
+    hashed_password = encrypt(password)
+    retype_password = request.forms.get('password_confirm')
+    if (not is_equal(hashed_password, retype_password)):
+        message_flash.flash("Passwords did not match", 'danger')
+        bottle.redirect('/recover/%s' % hash)
+    elif company_:
+        change_password(company_, hashed_password)
+        delete_password_hash(hash)
+        message_flash.flash("Password changed successfully", 'success')
+        bottle.redirect('/login')
+    else:
+        bottle.redirect('/unauthorized')
+
 @bottle.route('/<name>')
 def admin_page(name):
     '''returns the admin page'''
