@@ -393,95 +393,11 @@ def register():
         message_flash.flash('Your account has been created.', 'succes')
         bottle.redirect('/login')
     else:
-        #print form.errors
         for field_name in form.errors:
             for error in form.errors[field_name]:
                 message_flash.flash(error, 'danger')
-         #   for error in field_errors:
-         #       message_flash.flash("%s: %s" % (form[field_name.label], error), 'danger')
         return template('static/templates/register_inherit.html', edition = edition, form = form, name=request.session.get('logged_in'), admin=(True if request.session.get('logged_in') in admin_users.values() else False))
 
-
-#    name = request.forms.get('name')
-#    password = request.forms.get('password')
-#    hashed_password = encrypt(password)
-#    retype_password = request.forms.get('retype_password')
-    #
-#    if (not is_equal(hashed_password, retype_password)):
-#        message_flash.flash("Passwords did not match", 'danger')
-#        bottle.redirect('/register')
-#    company_ = company(name)
-#    if company_:
-#        message_flash.flash("An account for this company already exists", 'warning')
-#        bottle.redirect('/register')
-#    else:
-        #
-#        address = request.forms.get('address')
-#        zipcode = request.forms.get('zipcode')
-#        city = request.forms.get('city')
-#        country = request.forms.get('country')
-#        tav = request.forms.get('tav')
-#        email = request.forms.get('email')
-#        tel = request.forms.get('tel')
-#        fax = request.forms.get('fax')
-#        cell = request.forms.get('cell')
-#        website = request.forms.get('website')
-#
-#        error = ""
-#
-#        tel_pattern = re.compile('^[0-9]{2}/?[0-9]{3}.?[0-9]{2,3}.?[0-9]{2,3}$')
-#
-        #
-#        if name == "":
-#           error += "The name field may not be empty <br>"
-#           #return template('static/templates/register_inherit.html', error = True, message = "The name field may not be empty", name=request.session.get('logged_in'), admin=(True if request.session.get('logged_in') in admin_users.values() else False))
-#        if (password == ""):
-#           error += "The password field may not be empty <br>"
-#        if address == "":
-#           error += "The address field may not be empty <br>"
-#           #return template('static/templates/register_inherit.html', error = True, message = "The address field may not be empty", name=request.session.get('logged_in'), admin=(True if request.session.get('logged_in') in admin_users.values() else False))
-#        if zipcode == "":
-#           error += "The postal code field may not be empty <br>"
-#           #return template('static/templates/register_inherit.html', error = True, message = "The postal code field may not be empty", name=request.session.get('logged_in'), admin=(True if request.session.get('logged_in') in admin_users.values() else False))
-#        if city == "":
-#           error += "The city field may not be empty <br>"
-#           #return template('static/templates/register_inherit.html', error = True, message = "The city field may not be empty", name=request.session.get('logged_in'), admin=(True if request.session.get('logged_in') in admin_users.values() else False))
-#        if country == "":
-#           error += "The country field may not be empty <br>"
-#           #return template('static/templates/register_inherit.html', error = True, message = "The country field may not be empty", name=request.session.get('logged_in'), admin=(True if request.session.get('logged_in') in admin_users.values() else False))
-#        if tav == "":
-#           error += "The contact person field may not be empty <br>"
-#           #return template('static/templates/register_inherit.html', error = True, message = "The contact person field may not be empty", name=request.session.get('logged_in'), admin=(True if request.session.get('logged_in') in admin_users.values() else False))
-#        if email == "":
-#           error += "The email field may not be empty <br>"
-#           #return template('static/templates/register_inherit.html', error = True, message = "The email field may not be empty", name=request.session.get('logged_in'), admin=(True if request.session.get('logged_in') in admin_users.values() else False))
-#        if website == "":
-#           error += "The website field may not be empty <br>"
-#           #return template('static/templates/register_inherit.html', error = True, message = "The website field may not be empty", name=request.session.get('logged_in'), admin=(True if request.session.get('logged_in') in admin_users.values() else False))
-#        if tel != "":
-#            tel = re.sub('\s*', '', tel)
-#            if not (tel_pattern.match(tel)):
-#                error += "Given telephone number appeared to be incorrect, format: xx/xxx.xx(x).xx(x) </br>"
-#        if fax != "":
-#            fax = re.sub('\s*', '', fax)
-#            if not (tel_pattern.match(fax)):
-#                error += "Given fax number appeared to be incorrect, format: xx/xxx.xx(x).xx(x) </br>"
-#        if cell != "":
-#            cell = re.sub('\s*', '', cell)
-#            if not (tel_pattern.match(cell)):
-#                error += "Given cellphone number appeared to be incorrect, format: xx/xxx.xx(x).xx(x) </br>"
-#
-#        if error == "":
-#            if int(zipcode) > 0:
-#                add_company(name, address, zipcode, city, country, tav, email, tel, fax, cell, website, hashed_password)
-#                message_flash.flash('Your account has been created.', 'succes')
-#                bottle.redirect('/login')
-#            else:
-#                message_flash.flash("The postal code may not be a negative number", 'danger')
-#                bottle.redirect('/register')
-#        else:
-#            message_flash.flash(error, 'danger')
-#            bottle.redirect('/register')
 
 @bottle.route('/login')
 def login_form():
