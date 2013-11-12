@@ -8,7 +8,6 @@ def encrypt(password):
 
 def is_equal(hashed, password):
 	'''Does given password correspondend to given salted password'''
-	try:
-		return (bcrypt.hashpw(password, hashed) == hashed)
-	except:
-		return False
+	
+	return (bcrypt.hashpw(password, hashed) == hashed)
+	
