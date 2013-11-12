@@ -11,88 +11,62 @@
         {% endif %}
     {% endwith %}
 
-    <form class="form-horizontal" action="/register" method="post">
-        <div class="control-group">
+    <form role="form" action="/register" method="post">
+        <div class="form-group">
             <label class="control-label" for="name">Company name</label>
-            <div class="controls">
-                <input type="text" id="name" name="name">
-            </div>
+            <input type="text" class="form-control" id="name" name="name">
         </div>
-        <div class="control-group">
+        <div class="form-group">
             <label class="control-label" for="password">Password</label>
-            <div class="controls">
-                <input type="password" id="password" name="password">
-            </div>
+            <input type="password" class="form-control" id="password" name="password">
         </div>
-        <div class="control-group">
+        <div class="form-group">
             <label class="control-label" for="retype_password">Retype password</label>
-            <div class="controls">
-                <input type="password" id="retype_password" name="retype_password">
-            </div>
+            <input class="form-control" type="password" id="retype_password" name="retype_password">
         </div>
-        <div class="control-group">
+        <div class="form-group">
             <label class="control-label" for="address">Address</label>
-            <div class="controls">
-                <input type="text" id="adress" name="address" placeholder="street name, number">
-            </div>
+            <input class="form-control" type="text" id="adress" name="address" placeholder="street name, number">
         </div>
-        <div class="control-group">
+        <div class="form-group">
             <label class="control-label" for="postal">Postal</label>
-            <div class="controls">
-                <input type="number" id="zipcode" name="zipcode"  placeholder="Zipcode">
-            </div>
+            <input class="form-control" type="number" id="zipcode" name="zipcode"  placeholder="Zipcode">
         </div>
-        <div class="control-group">
+        <div class="form-group">
             <label class="control-label" for="city">City</label>
-            <div class="controls">
-                <input type="text" id="city" name="city" placeholder="City">
-            </div>
+            <input class="form-control" type="text" id="city" name="city" placeholder="City">
         </div>
-        <div class="control-group">
+        <div class="form-group">
             <label class="control-label" for="country">Country</label>
-            <div class="controls">
-                <input type="text" id="country" name="country" placeholder="Country">
-            </div>
+            <input class="form-control" type="text" id="country" name="country" placeholder="Country">
         </div>
-        <div class="control-group">
+        <div class="form-group">
             <label class="control-label" for="contact">Contact person</label>
-            <div class="controls">
-                <input type="text" id="tav" name="tav" placeholder="contact">
-            </div>
+            <input class="form-control" type="text" id="tav" name="tav" placeholder="contact">
         </div>
-        <div class="control-group">
+        <div class="form-group">
             <label class="control-label" for="email">Email</label>
-            <div class="controls">
-                <input type="email" id="email" name="email" placeholder="contact@company.be">
-            </div>
+            <input class="form-control" type="email" id="email" name="email" placeholder="contact@company.be">
         </div>
-        <div class="control-group">
+        <div class="form-group">
             <label class="control-label" for="tel">Telephone number</label>
-            <div class="controls">
-                <input type="tel" id="tel" name="tel" placeholder="02/629.33.56">
-            </div>
+            <input class="form-control" type="tel" id="tel" name="tel" placeholder="02/629.33.56">
         </div>
-        <div class="control-group">
+        <div class="form-group">
             <label class="control-label" for="fax">Fax number</label>
-            <div class="controls">
-                <input type="tel" id="fax" name="fax" placeholder="02/629.33.56">
-            </div>
+            <input class="form-control" type="tel" id="fax" name="fax" placeholder="02/629.33.56">
         </div>
-        <div class="control-group">
+        <div class="form-group">
             <label class="control-label" for="cell">Cellphone number</label>
-            <div class="controls">
-                <input type="tel" id="cell" name="cell" placeholder="02/629.33.56">
-            </div>
+            <input class="form-control" type="tel" id="cell" name="cell" placeholder="02/629.33.56">
         </div>
-        <div class="control-group">
+        <div class="form-group">
             <label class="control-label" for="website">Website</label>
-            <div class="controls">
-                <input type="url" id="website" name="website">
-            </div>
+            <input class="form-control" type="url" id="website" name="website">
         </div>
-        <div class="control-group">
+        <div class="form-group">
             <br>
-            <button type="submit" class="btn">Register</button>
+            <button type="submit" class="btn btn-primary">Register</button>
 
         </div>
         <br>
