@@ -5,7 +5,7 @@
     {% with messages = get_flashed_messages() %}
         {%if messages %}
             {% for message, type in messages %}
-                <div class="alert-danger {{ type }} ">
+                <div class="alert-{{ type }} ">
                     <strong>{{message}}</strong>
                 </div>
             {% endfor %}
