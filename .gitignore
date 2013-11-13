@@ -20,3 +20,16 @@
 
 /source/config.py
 
+/bedrijvendagboek
+
+/source/bedrijvendagboek
+
+/build
+
+/source/static/original
+
+/source/static/resized
+
+/source/logos
+
+/source/*.log
