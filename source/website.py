@@ -385,9 +385,11 @@ def register():
         message_flash.flash('Your account has been created.', 'succes')
         bottle.redirect('/login')
     else:
+        message = ''
         for field_name in form.errors:
             for error in form.errors[field_name]:
-                message_flash.flash(error, 'danger')
+                message += '%s </br>' % error
+        message_flash.flash(message, 'danger')
         return template('static/templates/register_inherit.html', edition = edition, form = form, name=request.session.get('logged_in'), admin=(True if request.session.get('logged_in') in admin_users.values() else False))
 
 
