@@ -10,8 +10,10 @@ from bottle import jinja2_view as view, jinja2_template as template, static_file
 from bottle_flash import FlashPlugin
 from bottle import Jinja2Template
 from os.path import dirname, abspath
+# import <directory>.<filename>
+# Directory must contain an empty __init__.py file
 import forms.registration_form as registration_form, forms.resume_form as resume_form
-import forms.login_form as login_form
+import forms.login_form as login_form, forms.news_form as news_form
 
 #app = bottle.Bottle()
 
@@ -466,7 +468,8 @@ def admin_page(name):
     '''returns the admin page'''
 
     if(name in admin_users.values() and request.session.get('logged_in') == name):
-        return template('static/templates/infogroep_inherit.html', edition = edition, news_feed_query = get_news_feed(), name=request.session.get('logged_in'), admin=(True if request.session.get('logged_in') in admin_users.values() else False))
+        form=news_form.news_form()
+        return template('static/templates/infogroep_inherit.html',form=form, edition = edition, news_feed_query = get_news_feed(), name=request.session.get('logged_in'), admin=(True if request.session.get('logged_in') in admin_users.values() else False))
     else:
         bottle.redirect('/unauthorized')
 
@@ -475,12 +478,19 @@ def admin_page(name):
 def addnews():
     '''Add a new news item'''
 
-    short = request.forms.get('short')
-    news = request.forms.get('news')
-    
-    add_news_item(short, news)
-    
-    bottle.redirect('/infogroep')
+    form = news_form.news_form(request.POST)
+
+    if form.validate():
+        add_news_item(form.title.data, form.news.data)
+        message_flash.flash('Successfully added news item to the front page', 'success')
+        bottle.redirect('/infogroep')
+    else:
+        message = ''
+        for field_name in form.errors:
+            for error in form.errors[field_name]:
+                message += '%s </br>' % error
+        message_flash.flash(error, 'danger')
+        return template('static/templates/infogroep_inherit.html',form=form, edition = edition, news_feed_query = get_news_feed(), name=request.session.get('logged_in'), admin=(True if request.session.get('logged_in') in admin_users.values() else False))
 
 @bottle.route('/<name>/participants')
 def admin_participants(name):
