@@ -10,7 +10,7 @@ from bottle import jinja2_view as view, jinja2_template as template, static_file
 from bottle_flash import FlashPlugin
 from bottle import Jinja2Template
 from os.path import dirname, abspath
-import registration_form, resume_form
+import forms.registration_form as registration_form, forms.resume_form as resume_form
 
 #app = bottle.Bottle()
 
