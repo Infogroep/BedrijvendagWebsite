@@ -10,7 +10,7 @@ from bottle import jinja2_view as view, jinja2_template as template, static_file
 from bottle_flash import FlashPlugin
 from bottle import Jinja2Template
 from os.path import dirname, abspath
-import registration_form
+import registration_form, resume_form
 
 #app = bottle.Bottle()
 
@@ -85,9 +85,11 @@ def register_form():
     return template('static/templates/register_inherit.html', edition = edition, form = form, name=request.session.get('logged_in'), admin=(True if request.session.get('logged_in') in admin_users.values() else False))
 
 @bottle.route('/resume')
-def resume_form():
+def resume_form_route():
     '''returns the static resume form'''
-    return template('static/templates/resume_inherit.html', fields = fields_of_study, edition = edition, name=request.session.get('logged_in'), admin=(True if request.session.get('logged_in') in admin_users.values() else False)) 
+
+    form = resume_form.resume_form()
+    return template('static/templates/resume_inherit.html', form=form, edition = edition, name=request.session.get('logged_in'), admin=(True if request.session.get('logged_in') in admin_users.values() else False)) 
 
 @bottle.route('/resume', method="post")
 def resume_upload():
@@ -97,29 +99,18 @@ def resume_upload():
     field of study
     '''
 
-    resume_file = request.files.resume
-    field = request.forms.get('studierichting')
-    enrollment_number = request.forms.get('rolnummer')
-    pattern = re.compile('[0-9]+')
+    form=resume_form.resume_form(request.POST)
 
-    if enrollment_number == "":
-        message_flash.flash("Please fill in your enrollment number", 'error')
+    if form.validate():
+        resume.upload(form.field_of_study.data, form.enrollment_number.data, form.resume.data.file.read())
+        message_flash.flash('Thank you for uploading your resume', 'success')
         bottle.redirect('/resume')
-    elif (not pattern.match(enrollment_number)):
-        message_flash.flash("This field is numbers only", 'error')
-        bottle.redirect('/resume')
-    if resume_file:
-        if (not resume_file.filename.endswith("pdf")):
-            message_flash.flash("Your resume must be a pdf", 'error')
-            bottle.redirect('/resume')
-        else:
-            resume.upload(field, enrollment_number, resume_file.file.read())
-            message_flash.flash("Thank you for uploading your resume", 'success')
-            bottle.redirect('/resume')
     else:
-        message_flash.flash("You forgot to upload your resume", 'error')
-        bottle.redirect('/resume')
- 
+        for field_name in form.errors:
+            for error in form.errors[field_name]:
+                message_flash.flash(error, 'danger')
+        return template('static/templates/resume_inherit.html', form=form, edition = edition, name=request.session.get('logged_in'), admin=(True if request.session.get('logged_in') in admin_users.values() else False))
+
 @bottle.route('/company/<name>')
 def company_page(name):
     '''routing to company's page where he can view it's information'''

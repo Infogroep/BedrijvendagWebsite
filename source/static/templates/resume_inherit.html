@@ -14,20 +14,16 @@
 
 <form role="form" method="post" action="/resume" enctype="multipart/form-data">
     <div class="form-group">
-        <label class="control-label" for="rolnummer">Enrollment number</label>
-        <input class="form-control" type="text" pattern="[0-9]*" id="rolnummer" name="rolnummer" title="(eg. 10000)">
+        <label class="control-label" for="rolnummer">{{form.enrollment_number.label}}</label>
+        {{form.enrollment_number(class_="form-control")}}
     </div>
     <div class="form-group">
-        <label class="control-label" for="studierichting">Field of study</label>
-        <select class="form-control" id="studierichting" name="studierichting">
-            {% for field in fields %}
-            <option value="{{field[0]}}">{{field[1]}}</option>
-            {% endfor %}
-        </select>
+        <label class="control-label" for="studierichting">{{form.field_of_study.label}}</label>
+        {{form.field_of_study(class_="form-control")}}
     </div>
     <div class="form-group">
         <label class="control-label" for="resume ">Résumé</label>
-        <input class="form-control" type="file" name="resume" id="resume" placeholder="Résumé">
+        {{form.resume}}
     </div>
     <div class="form-group">
         <button class="btn btn-primary" type="submit">Upload</button>
