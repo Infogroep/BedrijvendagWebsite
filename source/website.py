@@ -11,6 +11,7 @@ from bottle_flash import FlashPlugin
 from bottle import Jinja2Template
 from os.path import dirname, abspath
 import forms.registration_form as registration_form, forms.resume_form as resume_form
+import forms.login_form as login_form
 
 #app = bottle.Bottle()
 
@@ -391,31 +392,45 @@ def register():
 
 
 @bottle.route('/login')
-def login_form():
+def login_form_route():
     '''shows the login form'''
+    form = login_form.login_form()
 
-    return template('static/templates/login_inherit.html', edition = edition, name=request.session.get('logged_in'), admin=(True if request.session.get('logged_in') in admin_users.values() else False))
+    return template('static/templates/login_inherit.html', form=form, edition = edition, name=request.session.get('logged_in'), admin=(True if request.session.get('logged_in') in admin_users.values() else False))
 
 @bottle.route('/login', method='post')
 def login_():
     '''Start a new session'''
+
+    form = login_form.login_form(request.POST)
     
-    name = request.forms.get('name')
-    password = request.forms.get('password')
-    
-    route_address = '/company/%s'
-    route_address = route_address % name
-    
-    if name in admin_users:
-        route_address = '/' + admin_users[name]
-    
-    if(login(name, password)):
+    if form.validate():
+        name = form.company_name.data
+        password = form.password.data
         
-        request.session["logged_in"] = (name if name not in admin_users else admin_users[name])
-        bottle.redirect(route_address)
+        route_address = '/company/%s'
+        route_address = route_address % name
+        
+        if name in admin_users:
+            route_address = '/' + admin_users[name]
+        
+        if(login(name, password)):
+            
+            request.session["logged_in"] = (name if name not in admin_users else admin_users[name])
+            bottle.redirect(route_address)
+        else:
+            message_flash.flash('The company/password combination is incorrect', 'danger')
+            return template('static/templates/login_inherit.html', form=form, edition = edition, name=request.session.get('logged_in'), admin=(True if request.session.get('logged_in') in admin_users.values() else False))
+
     else:
-        message_flash.flash('The company/password combination is incorrect', 'alert')
+        message=""
+        for field_name in form.errors:
+            for error in form.errors[field_name]:
+                message += error
+                message += '</br>'
+        message_flash.flash(message, 'danger')
         bottle.redirect('/login')
+
 
 @bottle.route('/recover/<hash>')
 def recover_password(hash):
