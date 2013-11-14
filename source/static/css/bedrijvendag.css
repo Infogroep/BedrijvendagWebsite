@@ -23,3 +23,18 @@ body {
 #right-menu{
 	background-color: rgb(238, 238, 238);
 }
+
+h1 small,
+h2 small,
+h3 small,
+h4 small,
+h5 small,
+h6 small,
+.h1 small,
+.h2 small,
+.h3 small,
+.h4 small,
+.h5 small,
+.h6 small {
+	color:#D7D7D7;
+}
