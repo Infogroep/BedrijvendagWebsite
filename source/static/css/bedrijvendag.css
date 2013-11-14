@@ -23,3 +23,7 @@ body {
 #right-menu{
 	background-color: rgb(238, 238, 238);
 }
+
+.participant-box{
+	margin-bottom: 5px;
+}

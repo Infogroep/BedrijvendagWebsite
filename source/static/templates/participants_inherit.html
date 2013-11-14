@@ -1,11 +1,27 @@
 {% extends "static/templates/layout.html" %}
 
 {% block main %}
-
-	<p class="lead">Participants of Bedrijvendag {{ edition }}</p>
-	<p>
-		currently just a placeholder
-	</p>
-
+	<div class="panel panel-default">
+        <div class="panel-heading">
+        	<h3 class="panel-title">Participants of Bedrijvendag {{ edition }}</h3>
+        </div>
+	    <div class="panel-body">
+	    	
+			<div class="row">
+				{% for participant in participants %}
+				<div class="col-sm-6 col-md-4 participant-box">
+					
+					<div class="thumbnail">
+						<img src="/{{participant[0]}}" alt="{{participant[1]}}" />
+						<div class="caption">
+							<h3>{{participant[1]}}</h3>
+						</div>
+					</div>				
+				</div>
+				{% endfor %}
+			</div>
+			
+		</div>
+	</div>
 
 {% endblock %}

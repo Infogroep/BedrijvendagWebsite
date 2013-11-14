@@ -185,6 +185,19 @@ def is_participant(name, year):
     else:
         return True
 
+def get_all_participants(year):
+    '''gets all participants and their corresponding logos'''
+    connection = open_connection()
+    cursor = connection.cursor()
+    cursor.execute('''SELECT c.filename,c.name FROM companies c,participants p WHERE c.id=p.companyID AND year = %s''' % (year))
+    queryresult = cursor.fetchall()
+    close_connection(connection)
+    
+    if(len(queryresult) == 0):
+        return []
+    else:
+        return queryresult
+
 def get_status(name, edition):
     '''Gets the current status of the participant.
     if it isn't a participant return None'''

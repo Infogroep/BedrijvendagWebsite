@@ -60,8 +60,8 @@ def when_and_where():
 @bottle.route('/participants')
 def participants():
     '''retuns all the participating companies (after signed contract has been received)'''
-    return template('static/templates/participants_inherit.html', edition = edition, name = request.session.get('logged_in'), admin=(True if request.session.get('logged_in') in admin_users.values() else False))
-
+    result = get_all_participants(edition)
+    return template('static/templates/participants_inherit.html', participants = result, edition = edition, name = request.session.get('logged_in'), admin=(True if request.session.get('logged_in') in admin_users.values() else False))
 
 @bottle.route('/pricelist')
 def pricelist():
