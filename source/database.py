@@ -243,7 +243,7 @@ def add_participant(company, year, formula, high):
         tables = 0
         promotion_wands = 0
 
-    cursor.execute('''INSERT INTO participants (year, formulaID, state, tables, promotion_wand, remarks, high_stand, number_of_pages) VALUES (%s, %s, "%s", %s, %s, "", %s)''' % (year, formula, state, tables, promotion_wands, high))
+    cursor.execute('''INSERT INTO participants (companyID, year, formulaID, state, tables, promotion_wand, high_stand) VALUES (%s, %s, "%s", "%s", %s, %s, %s)''' % (ID, year, formula, state, tables, promotion_wands, high))
     close_connection(connection)
 
 def get_participant(company_id, year):
