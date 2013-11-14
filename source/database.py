@@ -185,6 +185,19 @@ def is_participant(name, year):
     else:
         return True
 
+def get_all_participants(year):
+    '''gets all participants and their corresponding logos'''
+    connection = open_connection()
+    cursor = connection.cursor()
+    cursor.execute('''SELECT c.filename,c.name FROM companies c,participants p WHERE c.id=p.companyID AND year = %s''' % (year))
+    queryresult = cursor.fetchall()
+    close_connection(connection)
+    
+    if(len(queryresult) == 0):
+        return []
+    else:
+        return queryresult
+
 def get_status(name, edition):
     '''Gets the current status of the participant.
     if it isn't a participant return None'''
@@ -243,7 +256,7 @@ def add_participant(company, year, formula, high):
         tables = 0
         promotion_wands = 0
 
-    cursor.execute('''INSERT INTO participants (year, formulaID, state, tables, promotion_wand, remarks, high_stand, number_of_pages) VALUES (%s, %s, "%s", %s, %s, "", %s)''' % (year, formula, state, tables, promotion_wands, high))
+    cursor.execute('''INSERT INTO participants (companyID, year, formulaID, state, tables, promotion_wand, high_stand) VALUES (%s, %s, "%s", "%s", %s, %s, %s)''' % (ID, year, formula, state, tables, promotion_wands, high))
     close_connection(connection)
 
 def get_participant(company_id, year):
