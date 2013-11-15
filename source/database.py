@@ -238,16 +238,11 @@ def add_participant(company, year, formula, high):
     '''add a participant to the given edition with given formula and high flag
     company is also given. Checks if company isn't a participant yet '''
 
-    connection = open_connection()
-    cursor = connection.cursor()
-
     if(is_participant(company, year)):
         return False
 
     ID = get_companyID(company)
     state = participant_converter.id_to_state(0)
-
-    
 
     tables = 2
     promotion_wands = 2
@@ -255,6 +250,9 @@ def add_participant(company, year, formula, high):
     if((formula == 2) or (formula == 3)):
         tables = 0
         promotion_wands = 0
+
+    connection = open_connection()
+    cursor = connection.cursor()
 
     cursor.execute('''INSERT INTO participants (companyID, year, formulaID, state, tables, promotion_wand, high_stand) VALUES (%s, %s, "%s", "%s", %s, %s, %s)''' % (ID, year, formula, state, tables, promotion_wands, high))
     close_connection(connection)
