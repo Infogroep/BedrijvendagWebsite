@@ -33,3 +33,5 @@
 /source/logos
 
 /source/*.log
+
+.DS_Store

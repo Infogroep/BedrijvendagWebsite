@@ -10,6 +10,8 @@ from bottle import jinja2_view as view, jinja2_template as template, static_file
 from bottle_flash import FlashPlugin
 from bottle import Jinja2Template
 from os.path import dirname, abspath
+
+import mailing
 # import <directory>.<filename>
 # Directory must contain an empty __init__.py file
 import forms.registration_form as registration_form, forms.resume_form as resume_form
@@ -436,11 +438,29 @@ def login_():
         bottle.redirect('/login')
 
 
+@bottle.route('/recover')
+def init_recover_password():
+    return template('static/templates/init_password_recovery_inherit', edition=edition, name=request.session.get('logged_in'), admin=(True if request.session.get('logged_in') in admin_users.values() else False))
+
+@bottle.route('/recover', method='post')
+def post_recover_password():
+    company = request.forms.get('company')
+    email = request.forms.get('email')
+    if confirm_email_company_match(company, email):
+        hash = generate_recovery_hash()
+        add_password_hash(company, hash)
+        mailing.send_recovery_email(email, hash)
+        message_flash.flash('Email with further instructions sent', 'success')
+        bottle.redirect('/recover')
+    else:
+        message_flash.flash('No matching company found', 'danger')
+        bottle.redirect('/recover')
+
 @bottle.route('/recover/<hash>')
 def recover_password(hash):
     company_ = find_password_hash(hash)
 
-    if company:
+    if company_:
         return template('static/templates/password_recovery_inherit.html', edition = edition, name=request.session.get('logged_in'), admin=(True if request.session.get('logged_in') in admin_users.values() else False), hash=hash)
     else:
         bottle.redirect('/unauthorized')

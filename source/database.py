@@ -405,6 +405,20 @@ def remove_news_item(news_id):
 
     close_connection(connection)
 
+def confirm_email_company_match(company, email):
+    connection = open_connection()
+    cursor = connection.cursor()
+
+    cursor.execute('''SELECT companies.ID FROM companies WHERE companies.name = "%s" AND companies.email = "%s"''' % (company, email))
+
+    result = cursor.fetchone()
+    close_connection(connection)
+
+    if result:
+        return result[0]
+    else:
+        return False
+
 def find_password_hash(hash):
     connection = open_connection()
     cursor = connection.cursor()
@@ -414,9 +428,21 @@ def find_password_hash(hash):
     result = cursor.fetchone()
 
     close_connection(connection)
+    
+    if result:
+        return result[0]
+    else:
+        return False
 
-    return result[0]
+def add_password_hash(company, hash):
+    connection = open_connection()
+    cursor = connection.cursor()
 
+    companyid = get_companyID(company)
+
+    cursor.execute('''INSERT INTO recover_password (companyID, password_url) VALUES (%s, "%s")''' % (companyid, hash))
+    close_connection(connection)
+    
 def delete_password_hash(hash):
     connection = open_connection()
     cursor = connection.cursor()

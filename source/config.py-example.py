@@ -23,6 +23,12 @@ database_host = "127.0.0.1"
 database_user = "bedrijvendag"
 database_password = "groenwater"
 
+mail_from = "bedrijvendag@infogroep.be"
+mail_host = "infogroep.be"
+mail_port = 465
+mail_user = "ig"
+mail_password = "Really?"
+
 
 admin_users = {"ig": "infogroep", 
 			   "wk": "wetenschappelijke kring"}
