@@ -1,4 +1,4 @@
-import bcrypt
+import bcrypt, string, random
 
 def encrypt(password):
 	'''Encrypts the password
@@ -10,4 +10,7 @@ def is_equal(hashed, password):
 	'''Does given password correspondend to given salted password'''
 	
 	return (bcrypt.hashpw(password, hashed) == hashed)
+
+def generate_recovery_hash(size=30, chars=string.ascii_uppercase + string.digits + string.ascii_lowercase):
+	return ''.join(random.choice(chars) for x in range(size))
 	
