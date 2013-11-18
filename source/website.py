@@ -360,11 +360,15 @@ def confirm(name):
 
         state = participant_converter.state_to_id(get_status(name, edition))
 
+        msg = """<p class="lead">You can't request your contract in your current state</p><hr>your current state: %s<br>
+        We must first confirm if there is enough place to meet your needs. If you are currently in queue, this means we can not satisfy all your needs.<br>
+        You will be contacted soon to discuss your options""" % (get_status(name, edition))
+
         # if subscription confirmed
         if state == 2:
             change_participant_status(name, edition, participant_converter.id_to_state(3))
         else:
-            return template('static/templates/error_inherit.html', error = "You can't request your contract in your current state" , edition = edition, name=request.session.get('logged_in'), admin=(True if request.session.get('logged_in') in admin_users.values() else False))
+            return template('static/templates/error_inherit.html', error = msg , edition = edition, name=request.session.get('logged_in'), admin=(True if request.session.get('logged_in') in admin_users.values() else False))
         
         bottle.redirect('''/company/%s/enlist''' % (name,))
 
