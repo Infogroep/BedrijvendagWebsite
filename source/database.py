@@ -304,7 +304,7 @@ def edit_participant(company, year, formula, high, tables, promotion_wands, rema
     connection = open_connection()
     cursor = connection.cursor()
 
-    cursor.execute('''UPDATE participants SET formulaID = %s, state = "%s", tables = %s, promotion_wands = %s, high_stand = %s, remarks = "%s" WHERE companyID = %s''' % \
+    cursor.execute('''UPDATE participants SET formulaID = %s, state = "%s", tables = %s, promotion_wand = %s, high_stand = %s, remarks = "%s" WHERE companyID = %s''' % \
                       (formula, state, tables, promotion_wands, high, remarks, ID))
 
     close_connection(connection)
