@@ -279,7 +279,7 @@ def update_(name, column):
         bottle.redirect('/unauthorized')
 
 @bottle.route('/company/<name>/enlist')
-def enlist_form(name):
+def enlist_form_route(name):
     '''returns the enlist form'''
 
 
@@ -293,7 +293,7 @@ def enlist_form(name):
         promo = None
         remarks = None
         high = None
-        
+
         if participating:
             state = get_status(name, edition)
             formulaID = get_formula(name, edition)
@@ -310,7 +310,7 @@ def enlist_form(name):
             promo = participant[5]
             remarks = participant[6]
             high = participant[7]
-
+            
 
         return template('static/templates/enlist_inherit.html', options = get_formulas(), \
                                                                 participant = participating, \
