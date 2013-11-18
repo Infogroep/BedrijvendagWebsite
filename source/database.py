@@ -4,7 +4,7 @@ from password import *
 from participant_state import *
 from config import database_name, database_user, database_password, database_host
 import MySQLdb as mysql
-import time, datetime
+import time, datetime, mailing
 
 
 # Opens the connection to the website data.
@@ -256,6 +256,10 @@ def add_participant(company, year, formula, high):
 
     cursor.execute('''INSERT INTO participants (companyID, year, formulaID, state, tables, promotion_wand, high_stand) VALUES (%s, %s, "%s", "%s", %s, %s, %s)''' % (ID, year, formula, state, tables, promotion_wands, high))
     close_connection(connection)
+
+    mailing.send_enlist_mail(company)
+
+    
 
 def get_participant(company_id, year):
     '''get participant information of given company of given year'''
