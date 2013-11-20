@@ -24,7 +24,7 @@ class RegistrationForm(Form):
 	country = StringField('Country', validators=[validators.input_required(message="Country is required")])
 	contact = StringField('Contact person', validators=[validators.input_required(message="Contact is required")])
 	email = StringField('Email address', validators=[validators.input_required(message="Email is required"), validators.Email(message="Invalid email address")])
-	website = StringField('Website', validators=[validators.input_required(message="Website is required"), validators.URL(message="Invalid website")])
+	website = StringField('Website', validators=[validators.input_required(message="Website is required"), validators.URL(message="Invalid website. A website must start with http://. E.g. http://bedrijvendag.infogroep.be")])
 	tel = StringField('Telephone number', validators=[validators.required(message="Telephone number is required, numbers only"), validators.Length(min=9, max=12, message="Length doesn't match telephone number length")])
 	fax = StringField('Fax number', validators=[validators.optional(), validators.Length(min=9, max=12, message="Length doesn't match fax number length")])
 	cel = StringField('Cellphone number', validators=[validators.optional(), validators.Length(min=9, max=12, message="Length doesn't match cellphone number length")])
