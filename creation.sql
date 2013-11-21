@@ -26,6 +26,7 @@ CREATE TABLE formula(
                 ID int NOT NULL AUTO_INCREMENT,
                 name varchar(255),
                 price int,
+                number_of_pages int,
                 description varchar(255),
                 PRIMARY KEY(ID)
                 );
