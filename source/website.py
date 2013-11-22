@@ -390,7 +390,7 @@ def register():
 
         add_company(form.company_name.data, form.address.data, form.postal.data, form.city.data, form.country.data,\
                     form.contact.data, form.email.data, form.tel.data, form.fax.data, form.cel.data, form.website.data, encrypt(form.password.data))
-        message_flash.flash('Your account has been created.', 'succes')
+        message_flash.flash('Your account has been created.', 'success')
         bottle.redirect('/login')
     else:
         message = ''
