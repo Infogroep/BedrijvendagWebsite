@@ -563,4 +563,8 @@ def remove_news_item_site(id):
     else:
         bottle.redirect('/unauthorized')
 
+@bottle.route('/company/<name>/resumes')
+def show_resumes(name):
+    return template('static/templates/company_resume_inherit.html', edition = edition, name=request.session.get('logged_in'), admin=(True if request.session.get('logged_in') in admin_users.values() else False))
+
 #bottle.run(app)
