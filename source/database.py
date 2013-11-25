@@ -298,6 +298,9 @@ def edit_participant(company, year, formula, high, tables, promotion_wands, page
     elif ((formula == 2) or (formula ==3)):
         tables = promotion_wands = 0
 
+    ## Rounds to the nearest 0,5
+    pages = round(pages * 20, -1) /20
+
     if tables is None:
         tables = 2
     if promotion_wands is None:

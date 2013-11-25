@@ -20,6 +20,7 @@ import forms.login_form as login_form, forms.news_form as news_form
 #app = bottle.Bottle()
 
 STATIC = ROOT + '/static'
+BEDRIJVENDAGBOEK = ROOT + '/bedrijvendagboek'
 
 session_opts = {
     'session.type': 'file',
@@ -79,6 +80,11 @@ def server_static(filepath):
 def server_log(filepath):
     '''routing to logos'''
     return static_file(filepath, root = STATIC)
+
+@bottle.route('/bedrijvendagboek/<filepath:path>')
+def server_log(filepath):
+    '''routing to company pages'''
+    return static_file(filepath, root = BEDRIJVENDAGBOEK)
 
 @bottle.route('/register')
 def register_form():
@@ -205,9 +211,14 @@ def logout(name):
 @bottle.route('/company/<name>/companiesbook')
 def companiesbook(name):
     '''returns the companies book form'''
+
+    company_template_page = None
+
+    if has_page(name):
+        company_template_page = local_path(name)
     
     if(request.session.get('logged_in') == name):
-        return template('static/templates/companiesbook_inherit.html', edition = edition, name=request.session.get('logged_in'), admin=(True if request.session.get('logged_in') in admin_users.values() else False))
+        return template('static/templates/companiesbook_inherit.html', edition = edition, company_page = company_template_page, name=request.session.get('logged_in'), admin=(True if request.session.get('logged_in') in admin_users.values() else False))
     else:
         bottle.redirect('/unauthorized')
 
