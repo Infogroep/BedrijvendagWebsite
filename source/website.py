@@ -309,6 +309,7 @@ def enlist_form_route(name):
             tables = participant[4]
             promo = participant[5]
             remarks = participant[6]
+            pages = participant[8]
             high = participant[7]
             
 
@@ -321,6 +322,7 @@ def enlist_form_route(name):
                                                                 confirmed = requested_contract(name), \
                                                                 tables = tables, \
                                                                 promo = promo, \
+                                                                pages = pages, \
                                                                 remarks = remarks, \
                                                                 high = high, \
                                                                 edition = edition, name=request.session.get('logged_in'), admin=(True if request.session.get('logged_in') in admin_users.values() else False))
@@ -337,7 +339,7 @@ def enlist(name):
     if(request.session.get('logged_in') == name):
         formula = request.forms.get('formula')
         high = request.forms.get('high')
-        print "enlist", formula, high
+        
         if (not high == "1"):
             high = 0
 
@@ -345,7 +347,9 @@ def enlist(name):
             tables = request.forms.get('table')
             promo_wands = request.forms.get('promo_wand')
             remarks = request.forms.get('remarks')
-            edit_participant(name, edition, formula, high, tables, promo_wands, remarks)
+            pages = request.forms.get('pages')
+            print pages
+            edit_participant(name, edition, formula, high, tables, promo_wands, pages, remarks)
         else: 
             add_participant(name, edition, formula, high)
         bottle.redirect('/company/%s/enlist' % (name,))

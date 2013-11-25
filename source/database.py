@@ -246,7 +246,7 @@ def add_participant(company, year, formula, high):
 
     tables = 2
     promotion_wands = 2
-    number_of_pages = get_formula_default_pages(formula)
+    number_of_pages = 0
 
     if((formula == 2) or (formula == 3)):
         tables = 0
@@ -277,7 +277,7 @@ def get_participant(company_id, year):
     return res
 
 
-def edit_participant(company, year, formula, high, tables, promotion_wands, remarks):
+def edit_participant(company, year, formula, high, tables, promotion_wands, pages, remarks):
     '''edit the participant information'''
     ID = get_companyID(company)
     participant_information = get_participant(ID, year)
@@ -288,7 +288,7 @@ def edit_participant(company, year, formula, high, tables, promotion_wands, rema
 
     formula = int(formula)
 
-    if ((current_high != high) or (current_formula != formula)):
+    if (((current_high != high) and high == 1) or (current_formula != formula)):
         print "different"
         state = participant_converter.id_to_state(0)
 
@@ -302,13 +302,15 @@ def edit_participant(company, year, formula, high, tables, promotion_wands, rema
         tables = 2
     if promotion_wands is None:
         promotion_wands = 2
+    if remarks is None:
+        remarks = ""
 
 
     connection = open_connection()
     cursor = connection.cursor()
 
-    cursor.execute('''UPDATE participants SET formulaID = %s, state = "%s", tables = %s, promotion_wand = %s, high_stand = %s, remarks = "%s" WHERE companyID = %s''' % \
-                      (formula, state, tables, promotion_wands, high, remarks, ID))
+    cursor.execute('''UPDATE participants SET formulaID = %s, state = "%s", tables = %s, promotion_wand = %s, high_stand = %s, number_of_pages = %s, remarks = "%s" WHERE companyID = %s''' % \
+                      (formula, state, tables, promotion_wands, high, pages, remarks, ID))
 
     close_connection(connection)
 
