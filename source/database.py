@@ -189,7 +189,7 @@ def get_all_participants(year):
     '''gets all participants and their corresponding logos'''
     connection = open_connection()
     cursor = connection.cursor()
-    cursor.execute('''SELECT c.filename,c.name FROM companies c,participants p WHERE c.id=p.companyID AND year = %s''' % (year))
+    cursor.execute('''SELECT c.filename,c.name, c.website FROM companies c,participants p WHERE c.id=p.companyID AND year = %s''' % (year))
     queryresult = cursor.fetchall()
     close_connection(connection)
     
@@ -246,7 +246,7 @@ def add_participant(company, year, formula, high):
 
     tables = 2
     promotion_wands = 2
-    number_of_pages = 2
+    number_of_pages = 0
 
     if((formula == 2) or (formula == 3)):
         tables = 0
@@ -255,7 +255,9 @@ def add_participant(company, year, formula, high):
     connection = open_connection()
     cursor = connection.cursor()
 
-    cursor.execute('''INSERT INTO participants (companyID, year, formulaID, state, tables, promotion_wand, high_stand, number_of_pages) VALUES (%s, %s, "%s", "%s", %s, %s, %s, %s)''' % (ID, year, formula, state, tables, promotion_wands, high, number_of_pages))
+    cursor.execute('''INSERT INTO participants (companyID, year, formulaID, state, tables, promotion_wand, high_stand, number_of_pages) VALUES \
+                                               (%s, %s, %s, "%s", %s, %s, %s, %s)''' % \
+                                               (ID, year, formula, state, tables, promotion_wands, high, number_of_pages))
     close_connection(connection)
 
     mailing.send_enlist_mail(company)
@@ -275,7 +277,7 @@ def get_participant(company_id, year):
     return res
 
 
-def edit_participant(company, year, formula, high, tables, promotion_wands, remarks):
+def edit_participant(company, year, formula, high, tables, promotion_wands, pages, remarks):
     '''edit the participant information'''
     ID = get_companyID(company)
     participant_information = get_participant(ID, year)
@@ -286,7 +288,7 @@ def edit_participant(company, year, formula, high, tables, promotion_wands, rema
 
     formula = int(formula)
 
-    if ((current_high != high) or (current_formula != formula)):
+    if (((current_high != high) and high == 1) or (current_formula != formula)):
         print "different"
         state = participant_converter.id_to_state(0)
 
@@ -296,17 +298,22 @@ def edit_participant(company, year, formula, high, tables, promotion_wands, rema
     elif ((formula == 2) or (formula ==3)):
         tables = promotion_wands = 0
 
+    ## Rounds to the nearest 0,5
+    pages = round(pages * 20, -1) /20
+
     if tables is None:
         tables = 2
     if promotion_wands is None:
         promotion_wands = 2
+    if remarks is None:
+        remarks = ""
 
 
     connection = open_connection()
     cursor = connection.cursor()
 
-    cursor.execute('''UPDATE participants SET formulaID = %s, state = "%s", tables = %s, promotion_wand = %s, high_stand = %s, remarks = "%s" WHERE companyID = %s''' % \
-                      (formula, state, tables, promotion_wands, high, remarks, ID))
+    cursor.execute('''UPDATE participants SET formulaID = %s, state = "%s", tables = %s, promotion_wand = %s, high_stand = %s, number_of_pages = %s, remarks = "%s" WHERE companyID = %s''' % \
+                      (formula, state, tables, promotion_wands, high, pages, remarks, ID))
 
     close_connection(connection)
 
@@ -391,6 +398,20 @@ def get_formula(name, edition):
     ID = get_companyID(name)
 
     cursor.execute('''SELECT formulaID FROM participants where companyID = %s and year = %s''' % (ID, edition))
+
+    result = cursor.fetchone()
+
+    close_connection(connection)
+
+    return result[0]
+
+def get_formula_default_pages(id):
+    '''Get the number of pages included in this formula'''
+
+    connection = open_connection()
+    cursor = connection.cursor()
+
+    cursor.execute('''SELECT number_of_pages from formula where ID = %s''' %(id))
 
     result = cursor.fetchone()
 

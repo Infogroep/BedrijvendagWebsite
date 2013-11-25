@@ -20,6 +20,7 @@ import forms.login_form as login_form, forms.news_form as news_form
 #app = bottle.Bottle()
 
 STATIC = ROOT + '/static'
+BEDRIJVENDAGBOEK = ROOT + '/bedrijvendagboek'
 
 session_opts = {
     'session.type': 'file',
@@ -79,6 +80,11 @@ def server_static(filepath):
 def server_log(filepath):
     '''routing to logos'''
     return static_file(filepath, root = STATIC)
+
+@bottle.route('/bedrijvendagboek/<filepath:path>')
+def server_log(filepath):
+    '''routing to company pages'''
+    return static_file(filepath, root = BEDRIJVENDAGBOEK)
 
 @bottle.route('/register')
 def register_form():
@@ -205,9 +211,14 @@ def logout(name):
 @bottle.route('/company/<name>/companiesbook')
 def companiesbook(name):
     '''returns the companies book form'''
+
+    company_template_page = None
+
+    if has_page(name):
+        company_template_page = local_path(name)
     
     if(request.session.get('logged_in') == name):
-        return template('static/templates/companiesbook_inherit.html', edition = edition, name=request.session.get('logged_in'), admin=(True if request.session.get('logged_in') in admin_users.values() else False))
+        return template('static/templates/companiesbook_inherit.html', edition = edition, company_page = company_template_page, name=request.session.get('logged_in'), admin=(True if request.session.get('logged_in') in admin_users.values() else False))
     else:
         bottle.redirect('/unauthorized')
 
@@ -309,6 +320,7 @@ def enlist_form_route(name):
             tables = participant[4]
             promo = participant[5]
             remarks = participant[6]
+            pages = participant[8]
             high = participant[7]
             
 
@@ -321,6 +333,7 @@ def enlist_form_route(name):
                                                                 confirmed = requested_contract(name), \
                                                                 tables = tables, \
                                                                 promo = promo, \
+                                                                pages = pages, \
                                                                 remarks = remarks, \
                                                                 high = high, \
                                                                 edition = edition, name=request.session.get('logged_in'), admin=(True if request.session.get('logged_in') in admin_users.values() else False))
@@ -337,7 +350,7 @@ def enlist(name):
     if(request.session.get('logged_in') == name):
         formula = request.forms.get('formula')
         high = request.forms.get('high')
-        print "enlist", formula, high
+        
         if (not high == "1"):
             high = 0
 
@@ -345,7 +358,9 @@ def enlist(name):
             tables = request.forms.get('table')
             promo_wands = request.forms.get('promo_wand')
             remarks = request.forms.get('remarks')
-            edit_participant(name, edition, formula, high, tables, promo_wands, remarks)
+            pages = request.forms.get('pages')
+            print pages
+            edit_participant(name, edition, formula, high, tables, promo_wands, pages, remarks)
         else: 
             add_participant(name, edition, formula, high)
         bottle.redirect('/company/%s/enlist' % (name,))
@@ -390,7 +405,7 @@ def register():
 
         add_company(form.company_name.data, form.address.data, form.postal.data, form.city.data, form.country.data,\
                     form.contact.data, form.email.data, form.tel.data, form.fax.data, form.cel.data, form.website.data, encrypt(form.password.data))
-        message_flash.flash('Your account has been created.', 'succes')
+        message_flash.flash('Your account has been created.', 'success')
         bottle.redirect('/login')
     else:
         message = ''
@@ -547,5 +562,9 @@ def remove_news_item_site(id):
         bottle.redirect('/infogroep')
     else:
         bottle.redirect('/unauthorized')
+
+@bottle.route('/company/<name>/resumes')
+def show_resumes(name):
+    return template('static/templates/company_resume_inherit.html', edition = edition, name=request.session.get('logged_in'), admin=(True if request.session.get('logged_in') in admin_users.values() else False))
 
 #bottle.run(app)

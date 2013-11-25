@@ -22,7 +22,13 @@ def stringvalue(boolean):
 
 def bedrijvendagboek_path(name):
     '''returns the path where the file should be saved'''
-    return '''%s/%s.pdf''' % path, name
+    return '''%s/%s.pdf''' % (path, name)
+
+def local_path(name):
+    return '''/bedrijvendagboek/%s.pdf''' % (name,)
+
+def has_page(name):
+    return os.path.exists(bedrijvendagboek_path(name))
 
 def compile_tex(name):
     '''compiles the tex file to pdf'''
@@ -39,6 +45,8 @@ def create_tex_file(name, location, slogan, why, NL, ENG, FR, DE, jobs, stage, s
     website = latexify(website)
     field = latexify(field)
     develop = latexify(develop)
+    logo = get_logo(name)
+
     
     read_file = open('''%s/bbentry.tex''' % path, 'r')
     texstring = read_file.read()

@@ -3,8 +3,9 @@
 
 #push{
 height: 90px;}
+
 #footer {
-	height: 60px;}
+	height: 45px;}
 	
 #wrap{
 	min-height: 100%;
@@ -38,6 +39,20 @@ h6 small,
 .h6 small {
 	color:#D7D7D7;
 }
+
+.jumbotron{
+	margin-bottom: 45px;
+}
+
+.jumbotron h1 {
+	font-size: 38px;
+}
+
+@media screen and (min-width: 768px) {
+  .jumbotron {
+    padding-top: 15px;
+    padding-bottom: 15px;
+  }
 
 .participant-box{
 	margin-bottom: 5px;
