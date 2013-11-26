@@ -12,7 +12,7 @@ import time, datetime, mailing
 
 def open_connection():
     '''Opens connection to the companies database'''
-    return mysql.connect(database_host, database_user, database_password, database_name)
+    return mysql.connect(database_host, database_user, database_password, database_name, charset='utf8')
 
 # Closes the connection
 # First commits the changes

@@ -20,7 +20,7 @@
  <tr>
   <td><a href="{{website}}">website: {{website}}</a></td>
   <td>
-   <form class="pull-right" method="post" action="{{name}}/update/website">
+   <form class="pull-right" method="post" action="/company/{{name}}/update/website">
        <input type="url" name="value" id="value" placeholder="{{website}}">
        <button class="btn">Update</button>
    </form>
@@ -33,7 +33,7 @@
  <tr>
   <td>Address: {{address}}</td>
   <td>
-   <form class="pull-right" method="post" action="{{name}}/update/address">
+   <form class="pull-right" method="post" action="/company/{{name}}/update/address">
        <input type="text" name="value" id="value" placeholder="{{address}}">
        <button class="btn">Update</button>
    </form>
@@ -42,13 +42,13 @@
  <tr>
   <td>Area code, City{{postal}}, {{place}}</td>
   <td>
-   <form class="pull-right" method="post" action="{{name}}/update/area_code">
+   <form class="pull-right" method="post" action="/company/{{name}}/update/area_code">
        <input type="text" name="value" id="value" placeholder="{{postal}}">
        <button class="btn">Update</button>
    </form>
   </td>
   <td>
-   <form class="pull-right" method="post" action="{{name}}/update/place">
+   <form class="pull-right" method="post" action="/company/{{name}}/update/place">
        <input type="text" name="value" id="value" placeholder="{{place}}">
        <button class="btn">Update</button>
    </form>
@@ -57,7 +57,7 @@
  <tr>
   <td>country: {{country}}</td>
   <td>
-   <form class="pull-right" method="post" action="{{name}}/update/country">
+   <form class="pull-right" method="post" action="/company/{{name}}/update/country">
        <input type="text" name="value" id="value" placeholder="{{country}}">
        <button class="btn">Update</button>
    </form>
@@ -70,7 +70,7 @@
  <tr>
   <td>Contact person: {{tav}}</td>
   <td class="pull-right">
-   <form method="post" action="{{name}}/update/tav">
+   <form method="post" action="/company/{{name}}/update/tav">
       <input type="text" name="value" id="value" placeholder="{{tav}}">
       <button class="btn">Update</button>
    </form>
@@ -79,7 +79,7 @@
  <tr>
   <td>Email: {{email}}</td>
   <td class="pull-right">
-   <form method="post" action="{{name}}/update/email">
+   <form method="post" action="/company/{{name}}/update/email">
       <input type="text" name="value" id="value" placeholder="{{email}}">
       <button class="btn">Update</button>
    </form>
@@ -88,7 +88,7 @@
  <tr>
   <td>Telephone number: {{tel}}</td>
   <td class="pull-right">
-   <form method="post" action="{{name}}/update/telephone_number">
+   <form method="post" action="/company/{{name}}/update/telephone_number">
       <input type="text" name="value" id="value" placeholder="{{tel}}">
       <button class="btn">Update</button>
    </form>
@@ -97,7 +97,7 @@
  <tr>
   <td>Fax number: {{fax}}</td>
   <td class="pull-right">
-   <form method="post" action="{{name}}/update/fax_number">
+   <form method="post" action="/company/{{name}}/update/fax_number">
       <input type="text" name="value" id="value" placeholder="{{fax}}">
       <button class="btn">Update</button>
    </form>
@@ -106,7 +106,7 @@
  <tr>
   <td>Cellphone number: {{cell}}</td>
   <td class="pull-right">
-   <form method="post" action="{{name}}/update/cellphone_number">
+   <form method="post" action="/company/{{name}}/update/cellphone_number">
       <input type="text" name="value" id="value" placeholder="{{cell}}">
       <button class="btn">Update</button>
    </form>
