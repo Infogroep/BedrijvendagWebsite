@@ -215,12 +215,22 @@ def companiesbook(name):
     '''returns the companies book form'''
 
     company_template_page = None
+    pages = number_of_pages(name, edition) + 1
+
+    page_links = {}
+
+    for index in range(pages):
+        if has_free_page(name, index):
+            page_links[index] = local_path_free_page(name, index)
+        else:
+            page_links[index] = None
+
 
     if has_page(name):
         company_template_page = local_path(name)
     
     if(request.session.get('logged_in') == name):
-        return template('static/templates/companiesbook_inherit.html', edition = edition, company_page = company_template_page, name=request.session.get('logged_in'), admin=(True if request.session.get('logged_in') in admin_users.values() else False))
+        return template('static/templates/companiesbook_inherit.html', edition = edition, company_page = company_template_page, pages = pages, page_links = page_links, name=request.session.get('logged_in'), admin=(True if request.session.get('logged_in') in admin_users.values() else False))
     else:
         bottle.redirect('/unauthorized')
 
@@ -305,6 +315,7 @@ def enlist_form_route(name):
         tables = None
         promo = None
         remarks = None
+        pages = None
         high = None
 
         if participating:
@@ -576,5 +587,18 @@ def remove_news_item_site(id):
 @bottle.route('/company/<name>/resumes')
 def show_resumes(name):
     return template('static/templates/company_resume_inherit.html', edition = edition, name=request.session.get('logged_in'), admin=(True if request.session.get('logged_in') in admin_users.values() else False))
+
+
+@bottle.route('/company/<name>/upload/<index>', method='post')
+def upload_free_page(name, index):
+
+    if(request.session.get('logged_in') == name):
+
+        raw = request.files.free_page.file.read()
+
+        free_page_upload(name, index, raw)
+        bottle.redirect('''/company/%s/companiesbook''' % (name,))
+    else:
+        bottle.redirect('/unauthorized')
 
 #bottle.run(app)

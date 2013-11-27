@@ -89,7 +89,20 @@
     </div>
     <div class="form-group">
         <button class="btn btn-primary" type="submit">Submit</button>
-    </div> 
+    </div>
+</form>
+
+{% for index in range(pages)%}
+<hr/>
+<form action="/company/{{name}}/upload/{{index}}" method="post" enctype="multipart/form-data">
+    <label for="free_page" class="control-group">Free page {{index}}</label>
+    <div class="col-lg-5">
+        <input type="file" class="form-control" id="free_page" name="free_page">
+    </div>
+        <p class="help-block">Page must be a pdf file! {% if page_links[index] %} watch current page <a href="{{page_links[index]}}">here</a></p>{% endif %}
+  <input type="submit" value="Upload" />
+{% endfor %}
+</form>
 
 
 {% endblock %}

@@ -24,11 +24,20 @@ def bedrijvendagboek_path(name):
     '''returns the path where the file should be saved'''
     return '''%s/%s.pdf''' % (path, name)
 
+def bedrijvendagboek_path_free_page(name, number):
+    return '''%s/%s/%s.pdf''' % (path, name, number)
+
 def local_path(name):
     return '''/bedrijvendagboek/%s.pdf''' % (name,)
 
+def local_path_free_page(name, number):
+    return '''/bedrijvendagboek/%s/%s.pdf''' % (name, number)
+
 def has_page(name):
     return os.path.exists(bedrijvendagboek_path(name))
+
+def has_free_page(name, number):
+    return os.path.exists(bedrijvendagboek_path_free_page(name, number))
 
 def compile_tex(name):
     '''compiles the tex file to pdf'''
@@ -83,3 +92,14 @@ def create_tex_file(name, location, slogan, why, NL, ENG, FR, DE, jobs, stage, s
 
     compile_tex(tex_file_name)
 
+def free_page_upload(name, index, raw):
+    
+    filename = bedrijvendagboek_path_free_page(name, index)
+
+    if not(os.path.exists('/bedrijvendagboek/%s/' % (name))):
+        os.mkdir(path + '/' + name)
+
+    output_file = open(filename, 'w')
+
+    output_file.write(raw)
+    output_file.close()

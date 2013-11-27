@@ -299,6 +299,7 @@ def edit_participant(company, year, formula, high, tables, promotion_wands, page
         tables = promotion_wands = 0
 
     ## Rounds to the nearest 0,5
+    pages = float(pages)
     pages = round(pages * 20, -1) /20
 
     if tables is None:
@@ -484,3 +485,20 @@ def change_password(company_name, hashed_password):
     close_connection(connection)
 
 
+def number_of_pages(company_name, year):
+    connection = open_connection()
+    cursor = connection.cursor()    
+
+    company_id = get_companyID(company_name)
+
+    cursor.execute('''SELECT number_of_pages FROM participants WHERE companyID = %s AND year = %s''' % (company_id, year))
+
+    result = cursor.fetchone()
+
+    close_connection(connection)
+
+    
+    if result:
+        return result[0]
+    else:
+        return -1
