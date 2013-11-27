@@ -86,7 +86,15 @@ def server_log(filepath):
 @bottle.route('/bedrijvendagboek/<filepath:path>')
 def server_log(filepath):
     '''routing to company pages'''
-    return static_file(filepath, root = BEDRIJVENDAGBOEK)
+
+    name=request.session.get('logged_in')
+
+    if name is None:
+        bottle.redirect('/unauthorized')
+    elif name in filepath:
+        return static_file(filepath, root = BEDRIJVENDAGBOEK)
+    else:
+        bottle.redirect('/unauthorized')
 
 @bottle.route('/register')
 def register_form():
@@ -593,6 +601,13 @@ def show_resumes(name):
 def upload_free_page(name, index):
 
     if(request.session.get('logged_in') == name):
+
+        page = request.file.free_page
+        if page is None:
+            bottle.redirect('''/company/%s/companiesbook''' % (name,))
+        if not(page.filename.lower.endwith('.pdf')):
+            message_flash.flash('File must be a pdf', 'danger')
+            bottle.redirect('''/company/%s/companiesbook''' % (name,))
 
         raw = request.files.free_page.file.read()
 
