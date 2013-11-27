@@ -67,7 +67,7 @@ def create_tex_file(name, location, slogan, why, NL, ENG, FR, DE, jobs, stage, s
     texstring = texstring.replace('[WEBSITE]', website)
     texstring = texstring.replace('[WAAROM]', why)
     texstring = texstring.replace('[NL]', stringvalue(NL))
-    texstring = texstring.replace('[ENG]', stringvalue(ENG))
+    texstring = texstring.replace('[EN]', stringvalue(ENG))
     texstring = texstring.replace('[FR]', stringvalue(FR))
     texstring = texstring.replace('[DE]', stringvalue(DE))
     texstring = texstring.replace('[JOBS]', stringvalue(jobs))
