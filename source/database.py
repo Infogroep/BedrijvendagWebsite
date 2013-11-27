@@ -247,6 +247,7 @@ def add_participant(company, year, formula, high):
     tables = 2
     promotion_wands = 2
     number_of_pages = 0
+    remarks = ""
 
     if((formula == 2) or (formula == 3)):
         tables = 0
@@ -255,9 +256,9 @@ def add_participant(company, year, formula, high):
     connection = open_connection()
     cursor = connection.cursor()
 
-    cursor.execute('''INSERT INTO participants (companyID, year, formulaID, state, tables, promotion_wand, high_stand, number_of_pages) VALUES \
-                                               (%s, %s, %s, "%s", %s, %s, %s, %s)''' % \
-                                               (ID, year, formula, state, tables, promotion_wands, high, number_of_pages))
+    cursor.execute('''INSERT INTO participants (companyID, year, formulaID, state, tables, promotion_wand, high_stand, number_of_pages, remarks) VALUES \
+                                               (%s, %s, %s, "%s", %s, %s, %s, %s, "%s")''' % \
+                                               (ID, year, formula, state, tables, promotion_wands, high, number_of_pages, remarks))
     close_connection(connection)
 
     mailing.send_enlist_mail(company)
@@ -292,10 +293,10 @@ def edit_participant(company, year, formula, high, tables, promotion_wands, page
         print "different"
         state = participant_converter.id_to_state(0)
 
-    if formula == 1:
+    if formula == 2:
         tables = 2
         promotion_wands = 2
-    elif ((formula == 2) or (formula ==3)):
+    elif ((formula == 3) or (formula == 4)):
         tables = promotion_wands = 0
 
     ## Rounds to the nearest 0,5
