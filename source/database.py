@@ -288,7 +288,7 @@ def edit_participant(company, year, formula, high, tables, promotion_wands, page
 
     formula = int(formula)
 
-    if (((current_high != high) and high == 1) or (current_formula != formula)):
+    if (((int(current_high) != int(high)) and int(high) == 1) or (current_formula != formula)):
         print "different"
         state = participant_converter.id_to_state(0)
 
