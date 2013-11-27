@@ -45,7 +45,7 @@ def setup_session():
 @bottle.route('/')
 def index():
     '''returns static template index'''
-    return template('static/templates/index_inherit.html', news_feed_query = get_news_feed(), edition = edition, name=u"België", admin=(True if request.session.get('logged_in') in admin_users.values() else False))
+    return template('static/templates/index_inherit.html', news_feed_query = get_news_feed(), edition = edition, name=request.session.get('logged_in'), admin=(True if request.session.get('logged_in') in admin_users.values() else False))
 
 @bottle.route('/about')
 def about():
