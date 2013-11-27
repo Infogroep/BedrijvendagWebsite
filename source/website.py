@@ -602,10 +602,10 @@ def upload_free_page(name, index):
 
     if(request.session.get('logged_in') == name):
 
-        page = request.file.free_page
+        page = request.files.free_page
         if page is None:
             bottle.redirect('''/company/%s/companiesbook''' % (name,))
-        if not(page.filename.lower.endwith('.pdf')):
+        if not(page.filename.lower().endswith('.pdf')):
             message_flash.flash('File must be a pdf', 'danger')
             bottle.redirect('''/company/%s/companiesbook''' % (name,))
 

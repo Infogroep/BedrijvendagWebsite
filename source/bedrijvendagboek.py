@@ -96,7 +96,7 @@ def free_page_upload(name, index, raw):
     
     filename = bedrijvendagboek_path_free_page(name, index)
 
-    if not(os.path.exists('/bedrijvendagboek/%s/' % (name))):
+    if not(os.path.isdir('%s/%s' % (path, name))):
         os.mkdir(path + '/' + name)
 
     output_file = open(filename, 'w')
