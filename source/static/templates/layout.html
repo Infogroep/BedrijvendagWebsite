@@ -3,10 +3,11 @@
     <head>
         <meta charset="UTF-8" />
         <meta name="author" content="Kwinten Pardon, infogroep"/>
-        <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
         <title>Infogroep Bedrijvendag {{ edition }}</title>
         
         <link href="/static/css/bootstrap.css" rel="stylesheet" type="text/css">
+        <link href="/static/css/bootstrap-responsive.css" rel="stylesheet" type="text/css">
         <link href="/static/css/bedrijvendag.css" rel="stylesheet" type="text/css">
         
         <script scr="/static/js/jquery.js"></script>
@@ -23,26 +24,25 @@
               With a focus on students from the science faculty"/>
     </head>
     <body>
-    <div id="wrap">
         <header class="jumbotron subhead" id="header">
             <div class="container">
                 <div class="row-fluid">
-                    <div class="col-md-3">
-                        <img src="/static/img/iglogo-groot.png" width="175">
+                    <div class="col-md-3 col-xs-3 col-sm-3">
+                        <img class="img-responsive" src="/static/img/iglogo-groot.png" width="175">
                     </div>
-                    <div class="col-md-6">
+                    <div class="col-md-6 col-xs-6 col-sm-6">
                         <h1>Infogroep</br>Wetenschappelijke Kring</br>Bedrijvendag</h1>
                         <p class="lead">Edition {{ edition }}</p>
                     </div>
-                    <div class="col-md-3">
-                        <img src="/static/img/wk-groot.png" width="175">
+                    <div class="col-md-3 col-xs-3 col-sm-3">
+                        <img class="img-responsive" src="/static/img/wk-groot.png" width="175">
                     </div>
                 </div>
             </div>
         </header>
         <div class="container">
         <div class="row-fluid">
-            <div class="col-md-2 img-rounded" id="menu">
+            <div class="col-md-2 col-xs-2 col-sm-2 img-rounded" id="menu">
                 <div class="nav nav-list">
                     <li class="nav-header">Bedrijvendag</li>
                     <li><a href="/">Home</a></li>
@@ -68,16 +68,11 @@
                     <li><a href="/pricelist">Price list</a></li>
                 </div>
             </div>
-            <div class="col-md-9">
+            <div class="col-md-9 col-xs-9 col-sm-9">
                 {% block main %}{% endblock %}
             </div>
         </div>
         
-        </div>
-        <div id="push"></div>
-        <div id="footer">
-
-        </div>
 
      </body>
 </html>
