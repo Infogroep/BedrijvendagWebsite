@@ -26,6 +26,7 @@ body {
 #menu{
 	background-color: rgb(238, 238, 238);
 	margin-right: 35px;
+	min-width: 110px;
 }
 
 h1 small,
