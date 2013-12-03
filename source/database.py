@@ -376,7 +376,15 @@ def change_participant_status(company, year, state):
 
     cursor.execute('''UPDATE participants SET state = "%s" where companyID = %s AND year = %s''' % (state, ID, year))
 
-    close_connection(connection)    
+    cursor.execute('''SELECT email from companies where ID = %s''' % (ID,))
+    result = cursor.fetchone()
+
+    close_connection(connection)
+
+    print result, state
+
+    if (participant_converter.state_to_id(state) == 2):
+        mailing.send_confirmation_mail(result[0])
 
 
 def get_formula_by_id(id):
