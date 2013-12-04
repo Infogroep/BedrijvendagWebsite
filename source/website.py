@@ -351,6 +351,9 @@ def enlist_form_route(name):
             remarks = participant[6]
             pages = participant[8]
             high = participant[7]
+
+            if pages is None:
+                pages = 0
             
 
         return template('static/templates/enlist_inherit.html', options = get_formulas(), \
