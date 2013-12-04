@@ -42,6 +42,10 @@ initialise.initialise()
 def setup_session():
     request.session = bottle.request.environ.get('beaker.session')
 
+@bottle.get('/favicon.ico')
+def get_favicon():
+    return None
+
 @bottle.route('/')
 def index():
     '''returns static template index'''
@@ -274,7 +278,7 @@ def static_company_page(name):
 
 
         create_tex_file(name, location, slogan, why, NL, ENG, FR, DE, JOBS, STAGE, SJOBS, field, develop, FY, CH, WI, BIO, CW, BIN, GEO)
-        return template('static/templates/companiesbook_inherit.html', edition = edition, name=request.session.get('logged_in'), admin=(True if request.session.get('logged_in') in admin_users.values() else False))
+        bottle.redirect('''/company/%s/companiesbook''' % name)
     else:
         bottle.redirect('/unauthorized')
 
