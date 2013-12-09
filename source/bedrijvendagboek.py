@@ -57,6 +57,8 @@ def create_tex_file(name, location, slogan, why, NL, ENG, FR, DE, jobs, stage, s
     develop = latexify(develop)
     logo = get_logo(name)
 
+    print logo
+
     
     read_file = open('''%s/bbentry.tex''' % path, 'r')
     texstring = read_file.read()
@@ -83,6 +85,7 @@ def create_tex_file(name, location, slogan, why, NL, ENG, FR, DE, jobs, stage, s
     texstring = texstring.replace('[GEO]', stringvalue(geo))
     texstring = texstring.replace('[OPL]', field)
     texstring =  texstring.replace('[DOORGR]', develop)
+    texstring =  texstring.replace('[LOGO]', logo)
     
     tex_file_name = '''%s/%s.tex''' % (path, name)
 
