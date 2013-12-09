@@ -2,7 +2,6 @@ import os
 from os.path import dirname, abspath
 from database import *
 import logging, config
-logging.basicConfig(filename=config.log, format='%(asctime)s %(message)s', level=logging.DEBUG)
 
 path = dirname(abspath(__file__)) + '/bedrijvendagboek'
 
