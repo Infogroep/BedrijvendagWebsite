@@ -43,8 +43,8 @@ def has_free_page(name, number):
 
 def compile_tex(name):
     '''compiles the tex file to pdf'''
-    os.system('''pdflatex -interaction=nonstopmode  %s''' % (name))
-    os.system('''rm -rf *.aux''')
+    os.system('''pdflatex -interaction=nonstopmode -output-directory=bedrijvendagboek  %s''' % (name))
+    os.system('''rm -rf bedrijvendagboek/*.aux''')
 
 def create_tex_file(name, location, slogan, why, NL, ENG, FR, DE, jobs, stage, sjobs, field, develop, fy, ch, wi, bio, cw, bio_ing, geo):
     '''generates the tex file and calls the compile function in the end'''
@@ -86,6 +86,9 @@ def create_tex_file(name, location, slogan, why, NL, ENG, FR, DE, jobs, stage, s
     texstring =  texstring.replace('[DOORGR]', develop)
     
     tex_file_name = '''%s/%s.tex''' % (path, name)
+
+    print tex_file_name
+
     tex_file = open(tex_file_name, 'w')
     
     tex_file.write(texstring)
