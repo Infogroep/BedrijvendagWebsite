@@ -3,10 +3,10 @@ from wtforms import Form, BooleanField, StringField, PasswordField, IntegerField
 
 class RegistrationForm(Form):
 
-	def validate_address(form, field):
-		address_pattern = re.compile('(?i)^[a-z]*, [0-9]*[a-z]{0,2}$')
-		if address_pattern.match(field.data) is None:
-			raise ValidationError("Your address seems to be incorrect. Streetname, housenumber")
+#	def validate_address(form, field):
+#		address_pattern = re.compile('(?xi)^[a-z]*, [0-9]*[a-z]{0,2}$')
+#		if address_pattern.match(field.data) is None:
+#			raise ValidationError("Your address seems to be incorrect. Streetname, housenumber")
 
 	def validate_company_name(form, field):
 		company = database.company(field.data)
