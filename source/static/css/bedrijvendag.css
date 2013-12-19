@@ -63,6 +63,28 @@ h6 small,
     text-align: center;
 }
 
+.participant-box > a.thumbnail {
+    height: 250px;
+    max-width: 200px;
+    max-height: 200px;
+    position: relative;
+}
+
+.thumbnail .caption {
+    max-width: 200px;
+    position: absolute;
+    bottom: 0;
+    margin-left: auto;
+    margin-right: auto;
+    left: 0;
+    right: 0;
+}
+
+.thumbnail > img {
+    max-width: 200px;
+    max-height: 200px;
+}
+
 .required{
     color: #c12e2a;
     font-weight: bolder;
