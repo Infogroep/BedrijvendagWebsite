@@ -66,7 +66,7 @@ h6 small,
 
 .participant-box > a.thumbnail {
     height: 250px;
-    max-width: 200px;
+    max-width: inherit;
     max-height: 200px;
     position: relative;
 }
@@ -82,7 +82,7 @@ h6 small,
 }
 
 .thumbnail > img {
-    max-width: 180px;
+    max-width: 100%;
     max-height: 200px;
 }
 
