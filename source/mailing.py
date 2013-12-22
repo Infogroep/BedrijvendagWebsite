@@ -76,7 +76,7 @@ ENGLISH VERSION
 
 Dear,
 
-We hereby conform your company's registration for Bedrijvendag 2014. You can always upload your company's logo. We recommend you to upload your company's logo if you haven't done this yet.
+We hereby confirm your company's registration for Bedrijvendag 2014. You can always upload your company's logo. We recommend you to upload your company's logo if you haven't done this yet.
 
 The "bedrijvendagboek" (companies book) pages can always be edited by the organisation to fit in the space available to you. This depends on your formula which is visible at http://bedrijvendag.infogroep.be/pricelist. You can also buy more space untill your contract has been requested.
 
