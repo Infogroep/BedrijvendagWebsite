@@ -14,7 +14,6 @@ def latexify(text):
         text = text.decode('utf-8')
         text.replace("%", "\\%")
         text.replace("&", "\\&")
-        text.replace("é", "\\'{e}")
         return text
     else:
         return ''
