@@ -12,6 +12,7 @@ def latexify(text):
     if not(text is None):
         text.replace("%", "\\%")
         text.replace("&", "\\&")
+        text.replace("é", "\\'{e}")
         return text
     else:
         return ''
@@ -89,7 +90,7 @@ def create_tex_file(name, location, slogan, why, NL, ENG, FR, DE, jobs, stage, s
     texstring =  texstring.replace('[DOORGR]', develop)
     texstring =  texstring.replace('[LOGO]', logo)
 
-    texstring.decode('utf-8')
+    texstring.encode('utf-8')
     
     tex_file_name = '''%s/%s.tex''' % (path, name)
 
