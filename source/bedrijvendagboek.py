@@ -90,7 +90,7 @@ def create_tex_file(name, location, slogan, why, NL, ENG, FR, DE, jobs, stage, s
     texstring =  texstring.replace('[DOORGR]', develop)
     texstring =  texstring.replace('[LOGO]', logo)
 
-    texstring.encode('utf-8')
+#    texstring.encode('utf-8')
     
     tex_file_name = '''%s/%s.tex''' % (path, name)
 
