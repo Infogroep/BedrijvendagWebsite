@@ -11,7 +11,7 @@ path = dirname(abspath(__file__)) + '/bedrijvendagboek'
 def latexify(text):
     '''escapes certain characters to latex standards'''
     if not(text is None):
-        text = text.decode('utf-8')
+        text = text.encode('utf-8')
         text.replace("%", "\\%")
         text.replace("&", "\\&")
         return text
