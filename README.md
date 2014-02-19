@@ -12,7 +12,9 @@ The creation of a webplatform where administrators can get an overal look of the
 Requirements Linux
 ------------------
 * python-mysqldb
+* `sudo apt-get install python-mysqldb`
 * python-dev
+* `sudo apt-get install python-dev`
 
 
 Setting up environment
