@@ -258,19 +258,19 @@ def static_company_page(name):
     if(request.session.get('logged_in') == name):
         location = request.forms.get('location')
         if location is not None:
-            location = location.encode('UTF-8')
+            location = location.decode('UTF-8')
         slogan = request.forms.get('slogan')
         if slogan is not None:
-            slogan = slogan.encode('UTF-8')
+            slogan = slogan.decode('UTF-8')
         why = request.forms.get('why')
         if why is not None:
-            why = why.encode('UTF-8')
+            why = why.decode('UTF-8')
         field = request.forms.get('schooling')
         if field is not None:
-            field = field.encode('UTF-8')
+            field = field.decode('UTF-8')
         develop = request.forms.get('develop')
         if develop is not None:
-            develop = develop.encode('UTF-8')
+            develop = develop.decode('UTF-8')
         NL = bool(request.forms.get('NL'))
         FR = bool(request.forms.get('FR'))
         DE = bool(request.forms.get('DE'))
