@@ -1,3 +1,4 @@
+#!/usr/bin/env python
 # -*- coding: utf-8 -*-
 
 import os
@@ -10,6 +11,7 @@ path = dirname(abspath(__file__)) + '/bedrijvendagboek'
 def latexify(text):
     '''escapes certain characters to latex standards'''
     if not(text is None):
+        text = text.decode('utf-8')
         text.replace("%", "\\%")
         text.replace("&", "\\&")
         text.replace("é", "\\'{e}")
