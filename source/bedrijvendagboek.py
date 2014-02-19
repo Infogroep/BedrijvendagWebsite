@@ -88,8 +88,9 @@ def create_tex_file(name, location, slogan, why, NL, ENG, FR, DE, jobs, stage, s
     texstring = texstring.replace('[BIN]', stringvalue(bio_ing))
     texstring = texstring.replace('[GEO]', stringvalue(geo))
     texstring = texstring.replace('[OPL]', field)
-    texstring =  texstring.replace('[DOORGR]', develop)
-    texstring =  texstring.replace('[LOGO]', logo)
+    texstring = texstring.replace('[DOORGR]', develop)
+    print logo
+    texstring = texstring.replace('[LOGO]', logo)
 
 #    texstring.encode('utf-8')
     
