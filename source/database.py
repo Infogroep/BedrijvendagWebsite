@@ -511,3 +511,19 @@ def number_of_pages(company_name, year):
         return result[0]
     else:
         return -1
+
+def get_participating_years(company_name):
+    company_id = get_companyID(company_name)
+
+    connection = open_connection()
+    cursor = connection.cursor()
+
+    cursor.execute('''SELECT year FROM participants WHERE companyID = %s''' % (company_id))
+
+    result = list()
+
+    for row in cursor.fetchall():
+        result.append(row[0])
+
+    print result
+    return result

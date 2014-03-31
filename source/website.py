@@ -22,6 +22,7 @@ import forms.login_form as login_form, forms.news_form as news_form
 #app = bottle.Bottle()
 
 STATIC = ROOT + '/static'
+RESUMES = STATIC + '/resumes'
 BEDRIJVENDAGBOEK = ROOT + '/bedrijvendagboek'
 
 session_opts = {
@@ -139,6 +140,8 @@ def resume_upload():
             for error in form.errors[field_name]:
                 message_flash.flash(error, 'danger')
         return template('static/templates/resume_inherit.html', form=form, edition = edition, name=request.session.get('logged_in'), admin=(True if request.session.get('logged_in') in admin_users.values() else False))
+
+@bottle.route('company/<name>/resume')
 
 @bottle.route('/company/<name>')
 def company_page(name):
@@ -615,7 +618,21 @@ def remove_news_item_site(id):
 
 @bottle.route('/company/<name>/resumes')
 def show_resumes(name):
-    return template('static/templates/company_resume_inherit.html', edition = edition, name=request.session.get('logged_in'), admin=(True if request.session.get('logged_in') in admin_users.values() else False))
+    years = get_participating_years(name)
+    return template('static/templates/company_resume_inherit.html', years = years, sel_year = 0, edition = edition, name=request.session.get('logged_in'), admin=(True if request.session.get('logged_in') in admin_users.values() else False))
+
+@bottle.route('/company/<name>/resumes/<sel_year>')
+def show_resumes_year(name, sel_year):
+    #print sel_year
+    #years = get_participating_years(name)
+    #return template('static/templates/company_resume_inherit.html', years = years, sel_year = sel_year, edition = edition, name=request.session.get('logged_in'), admin=(True if request.session.get('logged_in') in admin_users.values() else False))
+    return static_file(sel_year + ".zip", root = RESUMES)
+
+#@bottle.route('/company/<name>/resumes/<filepath:path>')
+#def resumes_serve(name, filepath):
+#    print filepath, RESUMES
+#    return static_file(filepath, root = RESUMES)
+#    #return "test"
 
 
 @bottle.route('/company/<name>/upload/<index>', method='post')
