@@ -59,7 +59,7 @@ def create_tex_file(name, location, slogan, why, NL, ENG, FR, DE, jobs, stage, s
     website = latexify(website)
     field = latexify(field)
     develop = latexify(develop)
-    logo = get_logo(name)
+    logo = get_logo(name).encode('UTF-8')
 
     print logo
 

@@ -6,27 +6,41 @@
 		<b><td>Company</td><td>Formula</td><td>State</td><td>Tables</td><td>Promotion wands</td><td>High stand</td><td>Remarks</td><td></td></b>
 	</tr>
 	{% for company in participants %}
-   	<tr>
-       	{% for index in range(0, 7) %}
-		<td>{{company[index]}}</td>
-       	{% endfor%}
-       	<td>
-       		{% if company[7] == 0 %}
-       		<a class="btn" href="participants/setstate/{{company[0]}}/2">Confirm</a>
-       		<a class="btn" href="participants/setstate/{{company[0]}}/1">Place in queue</a>
-       		{% endif %}
-       		{% if company[7] == 1 %}
-       		<a class="btn" href="participants/setstate/{{company[0]}}/2">Confirm</a>
-       		{% endif %}
-          {% if company[7] == 3 %}
-          <a class="btn" href="participants/setstate/{{company[0]}}/4">Received signed contract</a>
-          {% endif %}
-          {% if company[7] == 4 %}
-          <a class="btn" href="participants/setstate/{{company[0]}}/5">Received payment</a>
-          {% endif %}
-       	</td>
-   	</tr>
-	{% endfor %}
+  <tr>
+    {% for index in range(0, 7) %}
+    <td>{{company[index]}}</td>
+    {% endfor%}
+    <td>
+     {% if company[7] == 0 %}
+     <a class="btn" href="participants/setstate/{{company[0]}}/2">Confirm</a>
+     <a class="btn" href="participants/setstate/{{company[0]}}/1">Place in queue</a>
+     {% endif %}
+     {% if company[7] == 1 %}
+     <a class="btn" href="participants/setstate/{{company[0]}}/2">Confirm</a>
+     {% endif %}
+     {% if company[7] == 3 %}
+     <a class="btn" href="participants/setstate/{{company[0]}}/4">Received signed contract</a>
+     {% endif %}
+     {% if company[7] == 4 %}
+     <a class="btn" href="participants/setstate/{{company[0]}}/5">Received payment</a>
+     {% endif %}
+   </td>
+   <td>
+    <ul class="nav nav-pills">
+      <li class="dropdown">
+        <a id="drop1" href="#" role="button" class="dropdown-toggle" data-toggle="dropdown">Dropdown <b class="caret"></b></a>
+        <ul class="dropdown-menu" role="menu" aria-labelledby="all_options">
+          <li role="presentation"><a role="menuitem" tabindex="-1"><a href="participants/setstate/{{company[0]}}/2">Set confirmed status</a></li>
+          <li role="presentation"><a role="menuitem" tabindex="-1"><a href="participants/setstate/{{company[0]}}/1">Set in queue status</a></li>
+          <li role="presentation"><a role="menuitem" tabindex="-1"><a href="participants/setstate/{{company[0]}}/3">Set requested contract status</a></li>
+          <li role="presentation"><a role="menuitem" tabindex="-1"><a href="participants/setstate/{{company[0]}}/4">Received signed contract</a></li>
+          <li role="presentation"><a role="menuitem" tabindex="-1"><a href="participants/setstate/{{company[0]}}/5">Received payment</a></li>
+        </ul>
+      </li>
+    </ul>
+  </td>
+</tr>
+{% endfor %}
 </table>
 
 {% endblock %}
