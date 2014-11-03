@@ -113,7 +113,7 @@ def login(user, password):
     connection = open_connection()
     cursor = connection.cursor()
     
-    cursor.execute('''SELECT password from companies where name="%s"''' % user)
+    cursor.execute('''SELECT password from companies where email="%s"''' % user)
     
     result = cursor.fetchone()
 #    company_ = company(user)
