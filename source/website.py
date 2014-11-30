@@ -29,7 +29,7 @@ BEDRIJVENDAGBOEK = ROOT + '/bedrijvendagboek'
 session_opts = {
     'session.type': 'file',
     'session.data_dir': './session/',
-    'session.cookie_expires': 900,
+    'session.cookie_expires': 1800,
     'session.auto': True,
 }
 
@@ -484,8 +484,9 @@ def login_():
     form = login_form.login_form(request.POST)
     
     if form.validate():
-        name = form.company_name.data
+        email = form.company_name.data
         password = form.password.data
+        name = get_company_name_by_email(email)
         
         route_address = '/company/%s'
         route_address = route_address % name

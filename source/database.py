@@ -113,7 +113,7 @@ def login(user, password):
     connection = open_connection()
     cursor = connection.cursor()
     
-    cursor.execute('''SELECT password from companies where email="%s"''' % user)
+    cursor.execute('''SELECT password from companies where name="%s"''' % user)
     
     result = cursor.fetchone()
 #    company_ = company(user)
@@ -518,7 +518,7 @@ def get_participating_years(company_name):
     connection = open_connection()
     cursor = connection.cursor()
 
-    cursor.execute('''SELECT year FROM participants WHERE companyID = %s''' % (company_id))
+    cursor.execute('''SELECT year FROM participants WHERE companyID = "%s"''' % (company_id))
 
     result = list()
 
@@ -527,3 +527,21 @@ def get_participating_years(company_name):
 
     print result
     return result
+
+def get_company_name_by_email(email):
+    
+    connection = open_connection()
+    cursor = connection.cursor()
+
+    print "SELECT name FROM companies WHERE email =\"" + email + "\""
+
+    cursor.execute('''SELECT name FROM companies WHERE email = \"%s\"''' % (email))
+
+    result = cursor.fetchone()
+
+    print result[0]
+
+    close_connection(connection)
+
+    return result[0]
+
