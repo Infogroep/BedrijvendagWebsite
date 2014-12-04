@@ -27,7 +27,7 @@ def get_website(name):
     connection = open_connection()
     cursor = connection.cursor()
     
-    cursor.execute('''SELECT website FROM companies WHERE name = "%s"''', name)
+    cursor.execute('''SELECT website FROM companies WHERE name = "%s"''' % (name))
 
     result = cursor.fetchone()
     
