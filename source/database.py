@@ -533,13 +533,12 @@ def get_company_name_by_email(email):
     connection = open_connection()
     cursor = connection.cursor()
 
-    print "SELECT name FROM companies WHERE email =\"" + email + "\""
-
     cursor.execute('''SELECT name FROM companies WHERE email = \"%s\"''' % (email))
 
     result = cursor.fetchone()
 
-    print result[0]
+    if result == None:
+        return None
 
     close_connection(connection)
 

@@ -499,7 +499,7 @@ def login_():
             request.session["logged_in"] = (name if name not in admin_users else admin_users[name])
             bottle.redirect(route_address)
         else:
-            message_flash.flash('The company/password combination is incorrect', 'danger')
+            message_flash.flash('The email/password combination is incorrect', 'danger')
             return template('static/templates/login_inherit.html', form=form, edition = edition, name=request.session.get('logged_in'), admin=(True if request.session.get('logged_in') in admin_users.values() else False))
 
     else:
