@@ -17,7 +17,8 @@ Infogroep""" % hash
 	msg["From"] = me
 	msg["To"] = to
 
-	s = smtplib.SMTP_SSL(host=config.mail_host, port=config.mail_port)
+	s = smtplib.SMTP(host=config.mail_host, port=config.mail_port)
+	s.starttls()
 	s.login(config.mail_user, config.mail_password)
 	s.sendmail(me, to, msg.as_string())
 	s.quit()
@@ -35,7 +36,8 @@ def send_enlist_mail(company):
 	msg["From"] = me
 	msg["To"] = me
 
-	s = smtplib.SMTP_SSL(host=config.mail_host, port=config.mail_port)
+	s = smtplib.SMTP(host=config.mail_host, port=config.mail_port)
+	s.starttls()
 	s.login(config.mail_user, config.mail_password)
 	s.sendmail(me, me, msg.as_string())
 	s.quit()
@@ -102,7 +104,8 @@ Elyn Meert
 
 	to_addresses = [to_address] + cc_address + bcc_address
 
-	s = smtplib.SMTP_SSL(host=config.mail_host, port=config.mail_port)
+	s = smtplib.SMTP(host=config.mail_host, port=config.mail_port)
+	s.starttls()
 	s.login(config.mail_user, config.mail_password)
 	s.sendmail(me, to_addresses, msg.as_string())
 	s.quit()
