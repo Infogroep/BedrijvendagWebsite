@@ -55,7 +55,7 @@ def send_confirmation_mail(to):
 	text = """Beste,
 
 
-Bij deze bevestigen wij uw inschrijving voor de Bedrijvendag 2014. Je kunt steeds een logo uploaden voor uw bedrijf. Indien je nog geen logo op de website hebt geplaatst raden wij u ten zeerste aan dit te alsnog doen.
+Bij deze bevestigen wij uw inschrijving voor de Bedrijvendag 2015. Je kunt steeds een logo uploaden voor uw bedrijf. Indien je nog geen logo op de website hebt geplaatst raden wij u ten zeerste aan dit te alsnog doen.
 
 De "bedrijvendagboek" pagina(s) kan/kunnen nog altijd aangepast worden om te passen in de daarvoor voorziene ruimte. De beschikbare ruimte hangt af van uw formule. Je kan dit altijd controleren op http://bedrijvendag.infogroep.be/pricelist. Je kan ook steeds ruimte bijkopen zolang je het contract niet hebt aangevraagd.
 
@@ -78,7 +78,7 @@ ENGLISH VERSION
 
 Dear,
 
-We hereby confirm your company's registration for Bedrijvendag 2014. You can always upload your company's logo. We recommend you to upload your company's logo if you haven't done this yet.
+We hereby confirm your company's registration for Bedrijvendag 2015. You can always upload your company's logo. We recommend you to upload your company's logo if you haven't done this yet.
 
 The "bedrijvendagboek" (companies book) pages can always be edited by the organisation to fit in the space available to you. This depends on your formula which is visible at http://bedrijvendag.infogroep.be/pricelist. You can also buy more space untill your contract has been requested.
 
@@ -97,7 +97,7 @@ Elyn Meert
 """
 
 	msg = MIMEText(text, "plain")
-	msg["Subject"] = """Bevestiging inschrijving / Confirmation registration Bedrijvendag 2014"""
+	msg["Subject"] = """Bevestiging inschrijving / Confirmation registration Bedrijvendag 2015"""
 
 	msg["From"] = me
 	msg["To"] = to

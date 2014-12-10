@@ -8,6 +8,7 @@ import beaker.middleware
 # Use Jinja2 as the template engine, allows for more extensive templates, like inheritance. http://jinja.pocoo.org/docs/
 import datetime, resume
 import bottle, logo, re, participant_converter
+from config import date as bdag_date
 from config import *
 from bottle import jinja2_view as view, jinja2_template as template, static_file, request, app
 from bottle_flash import FlashPlugin
@@ -61,7 +62,7 @@ def about():
 @bottle.route('/when_and_where')
 def when_and_where():
     '''Returns the when and where page'''
-    return template('static/templates/when_where_inherit.html', edition = edition, name = request.session.get('logged_in'), admin=(True if request.session.get('logged_in') in admin_users.values() else False))
+    return template('static/templates/when_where_inherit.html', edition = edition, date = bdag_date, name = request.session.get('logged_in'), admin=(True if request.session.get('logged_in') in admin_users.values() else False))
 
 @bottle.route('/contact')
 def contact():
