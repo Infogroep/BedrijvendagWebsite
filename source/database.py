@@ -198,6 +198,24 @@ def get_all_participants(year):
     else:
         return queryresult
 
+def get_all_confirmed_participants(year):
+    '''get all the participants currently confirmed to be present at the job fair'''
+    connection = open_connection()
+    cursor = connection.cursor()
+
+    cursor.execute('''SELECT c.filename,c.name, c.website, p.state FROM companies c,participants p WHERE c.id=p.companyID AND year = %s''' % (year))
+
+    qres = cursor.fetchall()
+
+    res = []
+
+    for p in qres:
+        state = participant_converter.state_to_id(p[3])
+        if state > 1 and state < 6:
+            res.append(p)
+
+    return res
+
 def get_status(name, edition):
     '''Gets the current status of the participant.
     if it isn't a participant return None'''
