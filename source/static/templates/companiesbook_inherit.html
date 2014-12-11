@@ -41,50 +41,50 @@
     </div>
     <div class="form-group">
         <label class="checkbox-inline">
-            <input type="checkbox" class="form-control" id="NL" name="NL" value="True">Dutch
+            <input type="checkbox" id="NL" name="NL" value="True">Dutch
         </label>
         <label class="checkbox-inline">
-            <input type="checkbox" class="form-control" id="ENG" name="ENG" value="True">English
+            <input type="checkbox" id="ENG" name="ENG" value="True">English
         </label>
         <label class="checkbox-inline">
-            <input type="checkbox" class="form-control" id="DE" name="DE" value="True">German
+            <input type="checkbox" id="DE" name="DE" value="True">German
         </label>
         <label class="checkbox-inline">
-            <input type="checkbox" class="form-control" id="FR" name="FR" value="True">French
-        </label>
-    </div>
-    <div class="form-group">
-        <label class="checkbox-inline">
-            <input type="checkbox" class="form-control" id="JOBS" name="JOBS" value="True">Jobs
-        </label>
-        <label class="checkbox-inline">
-            <input type="checkbox" class="form-control" id="SJOBS" name="SJOBS" value="True">Student Jobs
-        </label>
-        <label class="checkbox-inline">
-            <input type="checkbox" class="form-control" id="STAGE" name="STAGE" value="True">Internship
+            <input type="checkbox" id="FR" name="FR" value="True">French
         </label>
     </div>
     <div class="form-group">
         <label class="checkbox-inline">
-            <input type="checkbox" class="form-control" id="FY" name="FY" value="True">Physics
+            <input type="checkbox" id="JOBS" name="JOBS" value="True">Jobs
         </label>
         <label class="checkbox-inline">
-            <input type="checkbox" class="form-control" id="CH" name="CH" value="True">Chemistry
+            <input type="checkbox" id="SJOBS" name="SJOBS" value="True">Student Jobs
         </label>
         <label class="checkbox-inline">
-            <input type="checkbox" class="form-control" id="WI" name="WI" value="True">Mathematics
+            <input type="checkbox" id="STAGE" name="STAGE" value="True">Internship
+        </label>
+    </div>
+    <div class="form-group">
+        <label class="checkbox-inline">
+            <input type="checkbox" id="FY" name="FY" value="True">Physics
         </label>
         <label class="checkbox-inline">
-            <input type="checkbox" class="form-control" id="BIO" name="BIO" value="True">Biology
+            <input type="checkbox" id="CH" name="CH" value="True">Chemistry
         </label>
         <label class="checkbox-inline">
-            <input type="checkbox" class="form-control" id="CW" name="CW" value="True">Computer science
+            <input type="checkbox" id="WI" name="WI" value="True">Mathematics
         </label>
         <label class="checkbox-inline">
-            <input type="checkbox" class="form-control" id="GEO" name="GEO" value="True">Geography
+            <input type="checkbox" id="BIO" name="BIO" value="True">Biology
         </label>
         <label class="checkbox-inline">
-            <input type="checkbox" class="form-control" id="BIN" name="BIN" value="True">Bioscience engineering
+            <input type="checkbox" id="CW" name="CW" value="True">Computer science
+        </label>
+        <label class="checkbox-inline">
+            <input type="checkbox" id="GEO" name="GEO" value="True">Geography
+        </label>
+        <label class="checkbox-inline">
+            <input type="checkbox" id="BIN" name="BIN" value="True">Bioscience engineering
         </label>
     </div>
     <div class="form-group">
@@ -95,9 +95,9 @@
 {% for index in range(pages)%}
 <hr/>
 <form action="/company/{{name}}/upload/{{index}}" method="post" enctype="multipart/form-data">
-    <label for="free_page" class="control-group">Free page {{index}}</label>
+    <label for="free_page" >Free page {{index}}</label>
     <div class="col-lg-5">
-        <input type="file" class="form-control" id="free_page" name="free_page">
+        <input type="file" id="free_page" name="free_page">
     </div>
         <p class="help-block">Page must be a pdf file! {% if page_links[index] %} watch current page <a href="{{page_links[index]}}">here</a></p>{% endif %}
   <input type="submit" value="Upload" />
