@@ -1,0 +1,67 @@
+{% extends "static/templates/layout.html" %}
+{% set active = "student" %}
+{% block main %}
+
+<!-- Page Title -->
+<div class="section section-breadcrumbs">
+    <div class="container">
+        <div class="row">
+            <div class="col-md-12">
+                <h1>Student Information</h1>
+            </div>
+        </div>
+    </div>
+</div>
+{% with messages = get_flashed_messages() %}
+        {%if messages %}
+            {% for message, type in messages %}
+                <div class="alert alert-{{ type }}">
+                    <strong>{{message}}</strong>
+                </div>
+            {% endfor %}
+        {% endif %}
+{% endwith %}
+<div class="section">
+    <div class="container">
+        <div class="row">
+            <div class="col-sm-6">
+                <h3>Upload your resume</h3>
+                <div class="contact-form-wrapper">
+                    <form class="form-horizontal" role="form" method="post" action="/student" enctype="multipart/form-data">
+                        <div class="form-group">
+                            {{form.enrollment_number.label(class_="col-sm-3 control-label")}}
+                            <div class="col-sm-9">
+                                {{form.enrollment_number(class_="form-control")}}
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            {{form.field_of_study.label(class_="col-sm-3 control-label")}}
+                            <div class="col-sm-9">
+                                {{form.field_of_study(class_="form-control")}}
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            {{form.resume.label(class_="col-sm-3 control-label")}}
+                            <div class="col-sm-9">
+                                {{form.resume}}
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <div class="col-sm-12">
+                                <button type="submit" class="btn pull-right">Upload</button>
+                            </div>
+                        </div>
+                    </form>
+                </div>
+
+            </div>
+            <div class="col-sm-6">
+                <h3>Tombola</h3>
+                <p>Every edition of Bedrijvendag comes with a tombola where visiting students are able to win great prizes. Prizes will be placed here in due time.
+                    Students who want to hit the jackpot must upload their resume. You have to be a visiting student at the job fair if you want to make a chance at winning any prize.</p>
+            </div>
+        </div>
+    </div>
+</div>
+
+{% endblock %}

@@ -1,11 +1,78 @@
 {% extends "static/templates/layout.html" %}
+{% set active = "index" %}
+
 {% block main %}
-    {% for newsrow in news_feed_query %}
-        <div class="panel panel-primary">
-            <div class="panel-heading">
-                <h4 class="panel-title">{{newsrow[2]}}   <small>{{newsrow[1]}}</small></h4>
+<!-- Homepage Slider -->
+<div class="homepage-slider">
+    <div id="sequence">
+        <ul class="sequence-canvas">
+            <!-- Slide 1 -->
+            <li class="bg4">
+                <!-- Slide Title -->
+                <h2 class="title">Bedrijvendag 2015</h2>
+                <!-- Slide Text -->
+                <h3 class="subtitle"><span class="glyphicon glyphicon-calendar"></span> {{ date }} <br/>
+                    <br/>
+                    <a href="https://www.google.be/maps/place/50°49'14.8&quot;N+4°23'42.7&quot;E/@50.82077,4.395194,17z"><span
+                            class="glyphicon glyphicon-map-marker"></span></a> Vrije Universiteit Brussel <br/>
+                    <span class="glyphicon glyphicon-none"></span> Pleinlaan 2, 1050 Brussels
+                </h3>
+                <!-- Slide Image -->
+                <img class="slide-img" src="/static/img/ig-wk-logo.png" alt="Slide 1"/>
+            </li>
+        </ul>
+    </div>
+</div>
+<!-- End Homepage Slider -->
+
+<!-- Pricing Table -->
+<div class="section">
+    <div class="container">
+        <h2>Pricing</h2>
+
+        <div class="row">
+            <!-- Pricing Plans Wrapper -->
+            <div class="pricing-wrapper col-md-12">
+                <!-- Pricing Plan -->
+                <div class="pricing-plan">
+                    <h2 class="pricing-plan-title">Starter</h2>
+
+                    <p class="pricing-plan-price">&euro; 300</p>
+                    <!-- Pricing Plan Features -->
+                    <ul class="pricing-plan-features">
+                        <li>Access to resumes</li>
+                        <li><strong>1</strong> table</li>
+                        <li>Entry in company book</li>
+                    </ul>
+                    <a href="index.html" class="btn">Enlist Now</a>
+                </div>
+                <!-- End Pricing Plan -->
+                <div class="pricing-plan">
+                    <h2 class="pricing-plan-title">Standard</h2>
+
+                    <p class="pricing-plan-price">&euro; 650</p>
+                    <ul class="pricing-plan-features">
+                        <li><strong>2 by 2.5 meter</strong> space</li>
+                        <li><strong>2</strong> tables</li>
+                        <li>Entry in company book</li>
+                    </ul>
+                    <a href="index.html" class="btn">Enlist Now</a>
+                </div>
+                <div class="pricing-plan">
+                    <h2 class="pricing-plan-title">Premium</h2>
+
+                    <p class="pricing-plan-price">&euro; 900</p>
+                    <ul class="pricing-plan-features">
+                        <li><strong>2.5 by 3.5 meter</strong> space</li>
+                        <li><strong>Unlimited</strong> tables</li>
+                        <li>Entry in company book</li>
+                    </ul>
+                    <a href="index.html" class="btn">Enlist Now</a>
+                </div>
             </div>
-            <div class="panel-body">{{newsrow[3]}}</div>
+            <!-- End Pricing Plans Wrapper -->
         </div>
-    {% endfor%}
+    </div>
+</div>
+<!-- End Pricing Table -->
 {% endblock %}

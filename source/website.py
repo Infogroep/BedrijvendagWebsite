@@ -6,14 +6,12 @@ from password import *
 from bedrijvendagboek import *
 import beaker.middleware
 # Use Jinja2 as the template engine, allows for more extensive templates, like inheritance. http://jinja.pocoo.org/docs/
-import datetime, resume
+import resume
 import bottle, logo, re, participant_converter
-from config import date as bdag_date
 from config import *
-from bottle import jinja2_view as view, jinja2_template as template, static_file, request, app
+from bottle import jinja2_template as template, static_file, request
 from bottle_flash import FlashPlugin
 from bottle import Jinja2Template
-from os.path import dirname, abspath
 
 import mailing
 # import <directory>.<filename>
@@ -52,26 +50,44 @@ def get_favicon():
 @bottle.route('/')
 def index():
     '''returns static template index'''
-    return template('static/templates/index_inherit.html', news_feed_query = get_news_feed(), edition = edition, name=request.session.get('logged_in'), admin=(True if request.session.get('logged_in') in admin_users.values() else False))
+    return template('static/templates/index_inherit.html', news_feed_query = get_news_feed(), edition = edition, name=request.session.get('logged_in'), date=date_full, admin=(True if request.session.get('logged_in') in admin_users.values() else False))
 
 @bottle.route('/about')
 def about():
     '''Returns the about page'''
     return template('static/templates/about_inherit.html', edition = edition, name = request.session.get('logged_in'), admin=(True if request.session.get('logged_in') in admin_users.values() else False))
 
-@bottle.route('/when_and_where')
-def when_and_where():
-    '''Returns the when and where page'''
-    return template('static/templates/when_where_inherit.html', edition = edition, date = bdag_date, name = request.session.get('logged_in'), admin=(True if request.session.get('logged_in') in admin_users.values() else False))
-
 @bottle.route('/contact')
 def contact():
     return template('static/templates/contact_inherit.html', edition = edition, name = request.session.get('logged_in'), admin=(True if request.session.get('logged_in') in admin_users.values() else False))
 
-@bottle.route('/tombola')
-def when_and_where():
-    '''Returns the when and where page'''
-    return template('static/templates/tombola_inherit.html', edition = edition, name = request.session.get('logged_in'), admin=(True if request.session.get('logged_in') in admin_users.values() else False))
+@bottle.route('/student')
+def student():
+    '''Returns the student page'''
+    form = resume_form.resume_form()
+
+    return template('static/templates/student_inherit.html', form = form, edition = edition, name = request.session.get('logged_in'), admin=(True if request.session.get('logged_in') in admin_users.values() else False))
+
+
+@bottle.route('/student', method="post")
+def resume_upload():
+    '''Uploading of the resume
+    alle parameters are checked on server side
+    resume gets stored in the directory of uploaders
+    field of study
+    '''
+
+    form=resume_form.resume_form(request.POST)
+
+    if form.validate():
+        resume.upload(form.field_of_study.data, form.enrollment_number.data, form.resume.data.file.read())
+        message_flash.flash('Thank you for uploading your resume', 'success')
+        bottle.redirect('/student')
+    else:
+        for field_name in form.errors:
+            for error in form.errors[field_name]:
+                message_flash.flash(error, 'danger')
+        bottle.redirect('/student')
 
 @bottle.route('/participants')
 def participants():
@@ -79,14 +95,9 @@ def participants():
     result = get_all_confirmed_participants(edition)
     return template('static/templates/participants_inherit.html', participants = result, edition = edition, name = request.session.get('logged_in'), admin=(True if request.session.get('logged_in') in admin_users.values() else False))
 
-@bottle.route('/pricelist')
-def pricelist():
-    '''retuns static template pricelist'''
-    return template('static/templates/pricelist_inherit.html', edition = edition, name=request.session.get('logged_in'), admin=(True if request.session.get('logged_in') in admin_users.values() else False))
-
 @bottle.route('/static/<filepath:path>')
 def server_static(filepath):
-    '''routing to statci files: css, javascript'''
+    '''routing to static files: css, javascript'''
     return static_file(filepath,root= STATIC)
 
 @bottle.route('/logos/<filepath:path>')
@@ -115,33 +126,6 @@ def register_form():
     #form.content('class="form-control"')
 
     return template('static/templates/register_inherit.html', edition = edition, form = form, name=request.session.get('logged_in'), admin=(True if request.session.get('logged_in') in admin_users.values() else False))
-
-@bottle.route('/resume')
-def resume_form_route():
-    '''returns the static resume form'''
-
-    form = resume_form.resume_form()
-    return template('static/templates/resume_inherit.html', form=form, edition = edition, name=request.session.get('logged_in'), admin=(True if request.session.get('logged_in') in admin_users.values() else False)) 
-
-@bottle.route('/resume', method="post")
-def resume_upload():
-    '''Uploading of the resume
-    alle parameters are checked on server side
-    resume gets stored in the directory of uploaders
-    field of study
-    '''
-
-    form=resume_form.resume_form(request.POST)
-
-    if form.validate():
-        resume.upload(form.field_of_study.data, form.enrollment_number.data, form.resume.data.file.read())
-        message_flash.flash('Thank you for uploading your resume', 'success')
-        bottle.redirect('/resume')
-    else:
-        for field_name in form.errors:
-            for error in form.errors[field_name]:
-                message_flash.flash(error, 'danger')
-        return template('static/templates/resume_inherit.html', form=form, edition = edition, name=request.session.get('logged_in'), admin=(True if request.session.get('logged_in') in admin_users.values() else False))
 
 @bottle.route('company/<name>/resume')
 

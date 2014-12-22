@@ -1,14 +1,40 @@
 {% extends "static/templates/layout.html" %}
-
+{% set active = "contact" %}
 {% block main %}
 
-<p>You can always contact us with any questions or remarks. Please find our contact information below</p>
-<hr/>
-<p class="lead">Address</p>
-<p>Pleinlaan, 2<br/>1050 Elsene<br>Belgium</p>
-<p class="lead">Telephone number</p>
-<p>02/629.33.56</p>
-<p class="lead">Email</p>
-<p><a href="mailto:bedrijvendag@infogroep.be">bedrijvendag@infogroep.be</a></p>
+<!-- Page Title -->
+<div class="section section-breadcrumbs">
+    <div class="container">
+        <div class="row">
+            <div class="col-md-6">
+                <h1>Contact Us</h1>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="section">
+    <div class="container">
+        <div class="row">
+            <div class="col-sm-6">
+                <!-- Map -->
+                <div id="contact-us-map">
+
+                </div>
+             </div>
+            <!-- End Map -->
+            <!-- Contact Info -->
+             <div class="col-sm-6">
+                <p class="contact-us-details">
+                    <b>Address:</b> Pleinlaan 2, 1050 Brussels, Belgium<br/>
+                    <b>Phone:</b> <a href="tel:+32-2-629-33-56">+32 2 629 33 56</a><br/>
+                    <b>Email:</b> <a
+                        href="mailto:bedrijvendag@infogroep.be">bedrijvendag@infogroep.be</a>
+                </p>
+                <!-- End Contact Info -->
+            </div>
+        </div>
+    </div>
+</div>
 
 {% endblock %}
