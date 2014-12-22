@@ -2485,6 +2485,11 @@ span.color-red {
     padding-left: 10px;
   }
 }
+@media screen and (max-width: 735px) {
+    .mainmenu {
+        font-size: 0.53em;
+    }
+}
 @media screen and (max-width: 479px) {
   .mainmenu {
     font-size: 120%;
