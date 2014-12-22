@@ -2473,9 +2473,9 @@ span.color-red {
 .mainmenu-submenu ul {
   margin-left: 20px;
 }
-@media screen and (max-width: 979px) {
+@media screen and (max-width: 991px) {
   .mainmenu {
-    font-size: 0.8em;
+    font-size: 0.7em;
   }
   .mainmenu-submenu {
     font-size: 1.2em;
