@@ -12,6 +12,9 @@ body {
   -ms-transform: translateZ(0);
   transform: translateZ(0);
 }
+.section-company {
+    padding: 0px 0;
+}
 .section-white {
   background: #FFF;
 }
@@ -2472,6 +2475,9 @@ span.color-red {
 }
 .mainmenu-submenu ul {
   margin-left: 20px;
+}
+.mainmenu > .nav-submenu {
+    padding-left: 30px;
 }
 @media screen and (max-width: 991px) {
   .mainmenu {

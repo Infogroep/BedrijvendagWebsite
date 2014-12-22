@@ -51,13 +51,19 @@
         <div class="menuextras">
             <div class="extras">
                 <ul>
-                    <li><a href="/login">Login</a></li>
+                    {% if name == None or name is not defined %}
+	                    <li><a href="/login">Login</a></li>
+                    {% elif admin %}
+	                    <li><a href="/{{ name }}">{{ name }}</a></li>
+                    {% else %}
+	                    <li><a href="/company/{{ name }}">{{ name }}</a></li>
+                    {% endif %}
                 </ul>
             </div>
         </div>
         <nav id="mainmenu" class="mainmenu">
             <ul>
-                <li class="logo-wrapper"><a href="index.html"><img src="/static/img/bdag-logo.png" alt="IG WK Bedrijvendag"></a>
+                <li class="logo-wrapper"><a href="/"><img src="/static/img/bdag-logo.png" alt="IG WK Bedrijvendag"></a>
                 </li>
                 <li{%if active == 'index' %} class="active" {% endif %}>
                     <a href="/">Home</a>
