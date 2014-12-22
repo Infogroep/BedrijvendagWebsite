@@ -315,6 +315,12 @@ def update_(name, column):
         bottle.redirect('/company/%s' % name)
     else:
         bottle.redirect('/unauthorized')
+@bottle.route('/enlist')
+def enlist_redirect():
+    company = request.session.get('logged_in')
+    if company:
+        bottle.redirect('/company/%s/enlist' % company)
+    bottle.redirect('/login')
 
 @bottle.route('/company/<name>/enlist')
 def enlist_form_route(name):
