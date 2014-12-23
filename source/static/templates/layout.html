@@ -56,7 +56,8 @@
                     {% elif admin %}
 	                    <li><a href="/{{ name }}">{{ name }}</a></li>
                     {% else %}
-	                    <li><a href="/company/{{ name }}">{{ name }}</a></li>
+	                    <li class="company"><a href="/company/{{ name }}">{{ name }}</a></li>
+                        <li><a href="/company/{{name}}/logout">Logout</li>
                     {% endif %}
                 </ul>
             </div>

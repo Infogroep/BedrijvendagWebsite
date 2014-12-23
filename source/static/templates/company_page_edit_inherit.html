@@ -12,13 +12,13 @@
   <td>
    <form class="pull-right" method="post" action="/company/{{name}}/logo" enctype="multipart/form-data">
        <input type="file" name="logo" id="logo" placeholder="logo">
-       <br>
-       <button class="btn">Upload logo</button>
+       <br />
+       <button class="btn">Upload</button>
    </form>
   </td>
  </tr>
  <tr>
-  <td><a href="{{website}}">website: {{website}}</a></td>
+  <td>Website: <a href="{{website}}">{{website}}</a></td>
   <td>
    <form class="pull-right" method="post" action="/company/{{name}}/update/website">
        <input type="url" name="value" id="value" placeholder="{{website}}">
@@ -40,14 +40,14 @@
   </td>
  </tr>
  <tr>
-  <td>Area code, City{{postal}}, {{place}}</td>
+  <td>Area code, City: <br />{{postal}}, {{place}}</td>
   <td>
    <form class="pull-right" method="post" action="/company/{{name}}/update/area_code">
        <input type="text" name="value" id="value" placeholder="{{postal}}">
        <button class="btn">Update</button>
    </form>
-  </td>
-  <td>
+   <br />
+   <br />
    <form class="pull-right" method="post" action="/company/{{name}}/update/place">
        <input type="text" name="value" id="value" placeholder="{{place}}">
        <button class="btn">Update</button>
@@ -55,7 +55,7 @@
   </td>
  </tr>
  <tr>
-  <td>country: {{country}}</td>
+  <td>Country: {{country}}</td>
   <td>
    <form class="pull-right" method="post" action="/company/{{name}}/update/country">
        <input type="text" name="value" id="value" placeholder="{{country}}">

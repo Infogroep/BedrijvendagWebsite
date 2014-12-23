@@ -2479,6 +2479,19 @@ span.color-red {
 .mainmenu > .nav-submenu {
     padding-left: 30px;
 }
+.company {
+    border-right: 2px solid #4f8db3;
+}
+.form-group .companiesbook-label {
+    text-align: left;
+}
+.form-group .checkbox-inline{
+    padding-left: 35px;
+    text-align: left;
+}
+.form-horizontal .button {
+    margin-left: 0px;
+}
 @media screen and (max-width: 991px) {
   .mainmenu {
     font-size: 0.7em;
