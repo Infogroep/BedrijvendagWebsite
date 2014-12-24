@@ -548,6 +548,12 @@ def change_password_url(hash):
     else:
         bottle.redirect('/unauthorized')
 
+@bottle.route('/pricelist')
+def pricelist():
+    '''retuns static template pricelist'''
+    return template('static/templates/pricelist_inherit.html', edition = edition, name=request.session.get('logged_in'), admin=(True if request.session.get('logged_in') in admin_users.values() else False))
+
+
 @bottle.route('/<name>')
 def admin_page(name):
     '''returns the admin page'''
