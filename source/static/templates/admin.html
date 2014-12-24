@@ -1,19 +1,29 @@
 {% extends "static/templates/layout.html" %}
 
 {% block main %}
-<h1>{{name}}</h1>
-
-    <div class="navbar default-navbar" role="navigation">
-            <ul class="nav navbar-nav">
-                <li><a href="/{{name}}">Newspanel</a></li>
-                <li><a href="/{{name}}/financial">Financial</a></li>
-                <li><a href="/{{name}}/participants">Participants</a></li>
-            </ul>
-            <ul class="nav pull-right">
-                <li><a href="/company/{{name}}/logout">Logout</a></li>
-            </ul>
+<div class="section section-breadcrumbs section-company">
+    <div class="container">
+        <div class="row">
+            <div class="col-md-12 col-md-offset-3">
+                <nav id="mainmenu" class="mainmenu">
+                    <ul class="nav-submenu nav navbar-nav">
+                        <li><a href="/{{name}}/financial">Financial</a></li>
+                        <li><a href="/{{name}}/participants">Participants</a></li>
+                    </ul>
+                </nav>
+            </div>
+        </div>
     </div>
-
-{% block admin %}{% endblock %}
+</div>
+<div class="section">
+    <div class="container">
+        <div class="row">
+            <div class="col-sm-8 col-sm-offset-2">
+                {% block admin %}
+                {% endblock %}
+            </div>
+        </div>
+    </div>
+</div>
 
 {% endblock %}

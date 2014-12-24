@@ -54,7 +54,8 @@
                     {% if name == None or name is not defined %}
 	                    <li><a href="/login">Login</a></li>
                     {% elif admin %}
-	                    <li><a href="/{{ name }}">{{ name }}</a></li>
+	                    <li class="company"><a href="/{{ name }}">{{ name }}</a></li>
+                        <li><a href="/company/{{name}}/logout">Logout</li>
                     {% else %}
 	                    <li class="company"><a href="/company/{{ name }}">{{ name }}</a></li>
                         <li><a href="/company/{{name}}/logout">Logout</li>

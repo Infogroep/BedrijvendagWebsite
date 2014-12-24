@@ -554,7 +554,8 @@ def admin_page(name):
 
     if(name in admin_users.values() and request.session.get('logged_in') == name):
         form=news_form.news_form()
-        return template('static/templates/infogroep_inherit.html',form=form, edition = edition, news_feed_query = get_news_feed(), name=request.session.get('logged_in'), admin=(True if request.session.get('logged_in') in admin_users.values() else False))
+        bottle.redirect('/%s/participants' % name)
+        #return template('static/templates/infogroep_inherit.html',form=form, edition = edition, news_feed_query = get_news_feed(), name=request.session.get('logged_in'), admin=(True if request.session.get('logged_in') in admin_users.values() else False))
     else:
         bottle.redirect('/unauthorized')
 
