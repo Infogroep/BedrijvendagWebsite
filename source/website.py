@@ -327,12 +327,13 @@ def upload(name):
         img = request.files.logo
 
         if img:
+            filename, fileextension = os.path.splitext(img.filename)
             raw = img.file.read()
-            img_file = open(logo.original_logo(img.filename), 'w')
+            img_file = open(logo.original_logo(name+fileextension), 'w')
             img_file.write(raw)
             img_file.close()
-            logo.resize_logo(img.filename)
-            set_logo(name, logo.resized_logo(img.filename))
+            logo.resize_logo(name+fileextension)
+            set_logo(name, logo.resized_logo(name+fileextension))
         bottle.redirect('/company/%s/edit' % name)
     else:
         bottle.redirect('/unauthorized')
@@ -677,7 +678,6 @@ def show_resumes_year(name, sel_year):
 @bottle.route('/company/<name>/upload/<index>', method='post')
 def upload_free_page(name, index):
     if request.session.get('logged_in') == name:
-
         page = request.files.free_page
         if page is None:
             bottle.redirect('''/company/%s/companiesbook''' % (name,))

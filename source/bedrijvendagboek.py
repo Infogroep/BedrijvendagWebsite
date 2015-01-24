@@ -104,8 +104,8 @@ def create_tex_file(name, location, slogan, why, NL, ENG, FR, DE, jobs, stage, s
 
     compile_tex(tex_file_name)
 
-def free_page_upload(name, index, raw):
 
+def free_page_upload(name, index, raw):
     filename = bedrijvendagboek_path_free_page(name, index)
 
     if not(os.path.isdir('%s/%s' % (path, name))):
