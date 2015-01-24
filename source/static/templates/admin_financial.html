@@ -1,0 +1,27 @@
+{% extends "static/templates/admin.html" %}
+{% block admin %}
+
+<table class="table">
+	<tr>
+        <th>Company</th>
+        <th>Status</th>
+        <th>Stand</th>
+        <th>Price</th>
+    </tr>
+	{% for company in participants %}
+    <tr>
+        <td>{{company[0]}}</td>
+        <td>{{company[1]}}</td>
+        <td>{{company[2]}}</td>
+        <td>&euro;{{company[3]}}</td>
+    </tr>
+{% endfor %}
+    <tr>
+        <td></td>
+        <td></td>
+        <td><b>TOTAL: </b></td>
+        <td><b>&euro;{{revenue}}</b></td>
+    </tr>
+</table>
+
+{% endblock %}

@@ -126,20 +126,6 @@ def add_company(name, address, postal, place, country, tav, email, tel, fax, cel
     close_connection(connection)
 
 
-def add_news_item(short, text):
-    """Add a news item. News item are displayed on the front page"""
-
-    connection = open_connection()
-    cursor = connection.cursor()
-
-    now = time.time()
-
-    cursor.execute(
-        '''INSERT INTO newsfeed (postdate, description, newsmessage) VALUES(%s, "%s", "%s")''' % (now, short, text))
-
-    close_connection(connection)
-
-
 def get_companyID(name):
     """Get the id of given company"""
     connection = open_connection()
@@ -447,17 +433,6 @@ def get_formula_default_pages(id):
     return result[0]
 
 
-def remove_news_item(news_id):
-    """Removes a news item by id"""
-
-    connection = open_connection()
-    cursor = connection.cursor()
-
-    cursor.execute('''DELETE FROM newsfeed WHERE newsID = %s''' % (news_id,))
-
-    close_connection(connection)
-
-
 def confirm_email_company_match(company, email):
     connection = open_connection()
     cursor = connection.cursor()
@@ -570,3 +545,41 @@ def get_company_name_by_email(email):
 
     return result[0]
 
+
+def get_financial_overview(year):
+    """Query the database for registered companies
+    return tuple of (name, status, stand_type, price)"""
+
+    connection = open_connection()
+    cursor = connection.cursor()
+
+    cursor.execute("""SELECT companies.name, participants.state, formula.name, formula.price
+                      FROM participants
+                      INNER JOIN companies
+                      ON participants.companyID = companies.ID
+                      INNER JOIN formula
+                      ON participants.formulaID = formula.ID
+                      WHERE participants.year = %s""" % year)
+
+    results = cursor.fetchall()
+    close_connection(connection)
+
+    return results
+
+
+def get_total_potential_revenue(year):
+    """SUM query to get the total predicted revenue of this year"""
+
+    connection = open_connection()
+    cursor = connection.cursor()
+
+    cursor.execute("""SELECT SUM(formula.price)
+                      FROM participants
+                      INNER JOIN formula
+                      ON participants.formulaID = formula.ID
+                      WHERE participants.year = %s""" % year)
+
+    results = cursor.fetchone()
+    close_connection(connection)
+
+    return results[0]

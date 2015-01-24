@@ -635,6 +635,16 @@ def admin_participants(name):
     else:
         bottle.redirect('/unauthorized')
 
+@bottle.route('/<name>/financial')
+def admin_financials(name):
+    """Show the current confirmed revenue stream, as well as potential revenue"""
+    if name in admin_users.values() and request.session.get('logged_in') == name:
+        overview = get_financial_overview(edition)
+        revenue = get_total_potential_revenue(edition)
+        return template('static/templates/admin_financial.html', participants=overview, revenue=revenue)
+    else:
+        bottle.redirect('/unauthorized')
+
 
 @bottle.route('/<name>/participants/setstate/<company>/<state>')
 def set_state(name, company, state):
