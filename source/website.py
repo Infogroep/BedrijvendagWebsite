@@ -583,7 +583,7 @@ def recover_password(hash_value):
     if company_:
         return template('static/templates/password_recovery_inherit.html', edition=edition,
                         name=request.session.get('logged_in'),
-                        admin=(True if request.session.get('logged_in') in admin_users.values() else False), hash=hash)
+                        admin=(True if request.session.get('logged_in') in admin_users.values() else False), hash=hash_value)
     else:
         bottle.redirect('/unauthorized')
 
