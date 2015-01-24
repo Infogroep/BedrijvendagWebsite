@@ -641,7 +641,9 @@ def admin_financials(name):
     if name in admin_users.values() and request.session.get('logged_in') == name:
         overview = get_financial_overview(edition)
         revenue = get_total_potential_revenue(edition)
-        return template('static/templates/admin_financial.html', participants=overview, revenue=revenue)
+        return template('static/templates/admin_financial.html', edition=edition, participants=overview,
+                        revenue=revenue, name=request.session.get('logged_in'),
+                        admin=(True if request.session.get('logged_in') in admin_users.values() else False))
     else:
         bottle.redirect('/unauthorized')
 
