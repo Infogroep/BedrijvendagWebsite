@@ -570,7 +570,7 @@ def post_recover_password():
         add_password_hash(active_company, hash_value)
         mailing.send_recovery_email(email, hash_value)
         message_flash.flash('Email with further instructions sent', 'success')
-        bottle.redirect('/recover')
+        bottle.redirect('/login')
     else:
         message_flash.flash('No matching company found', 'danger')
         bottle.redirect('/recover')
