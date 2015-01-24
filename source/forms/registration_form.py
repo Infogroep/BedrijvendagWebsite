@@ -1,5 +1,7 @@
-import re, database, password
-from wtforms import Form, BooleanField, StringField, PasswordField, IntegerField, validators, ValidationError
+import re
+import database
+from wtforms import Form, StringField, PasswordField, validators, ValidationError
+
 
 class RegistrationForm(Form):
 

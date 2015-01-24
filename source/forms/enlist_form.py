@@ -1,5 +1,6 @@
 import database
-from wtforms import Form, BooleanField, SelectField, StringField, IntegerField, TextAreaField, validators, ValidationError
+from wtforms import Form, BooleanField, SelectField, IntegerField, TextAreaField, validators
+
 
 class enlist_update_form(Form):
 	

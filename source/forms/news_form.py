@@ -1,4 +1,5 @@
-from wtforms import Form, TextAreaField, StringField, PasswordField, IntegerField, validators, ValidationError
+from wtforms import Form, TextAreaField, StringField, validators
+
 
 class news_form(Form):
 

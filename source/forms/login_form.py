@@ -1,5 +1,5 @@
-import database
-from wtforms import Form, FileField, StringField, PasswordField, IntegerField, validators, ValidationError
+from wtforms import Form, StringField, PasswordField, validators
+
 
 class login_form(Form):
 

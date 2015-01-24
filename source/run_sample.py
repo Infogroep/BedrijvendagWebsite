@@ -1,6 +1,8 @@
-from bottle import TornadoServer, run
-from website import app as application
 from argparse import ArgumentParser
+
+from bottle import run
+from website import app as application
+
 
 if __name__ == "__main__":
     parser = ArgumentParser(description="Bottle and tornado sample code")

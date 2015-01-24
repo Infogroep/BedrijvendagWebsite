@@ -1,88 +1,67 @@
-import sqlite3
-import initialise, participant_converter
+import time
+
 from password import *
+
 from participant_state import *
 from config import database_name, database_user, database_password, database_host
 import MySQLdb as mysql
-import time, datetime, mailing
+import mailing
+
 
 
 # Opens the connection to the website data.
 # This different from the companies data
 
 def open_connection():
-    '''Opens connection to the companies database'''
+    """Opens connection to the companies database"""
     return mysql.connect(database_host, database_user, database_password, database_name, charset='utf8')
+
 
 # Closes the connection
 # First commits the changes
 def close_connection(connection):
-    '''Commits any changes and closes the connection to any database'''
+    """Commits any changes and closes the connection to any database"""
     connection.commit()
     connection.close()
 
+
 def get_website(name):
-    '''Returns the website from given company. Company name is expected to be a string'''
+    """Returns the website from given company. Company name is expected to be a string"""
 
     connection = open_connection()
     cursor = connection.cursor()
-    
+
     cursor.execute('''SELECT website FROM companies WHERE name = "%s"''' % (name))
 
     result = cursor.fetchone()
-    
+
     try:
         return result[0]
     except:
         return ""
 
-# extracts the newsfeed from the databse
-# time is an unix timestamp, we first convert to an human readable time
-def get_news_feed():
-    '''Fetches all the news items currently in the newsfeed 
-    remark: maybe fetch only the 10 newest?'''
-
-    connection = open_connection()
-    cursor = connection.cursor()
-
-    cursor.execute('''SELECT * FROM newsfeed ORDER BY postdate DESC''')
-    
-    queryresult = cursor.fetchall()
-    
-    close_connection(connection)
-    
-    #queryresult is a tuple of tuples. you can't write to tuples thus we first map them to list
-    queryresult = map(list, queryresult)
-    
-    # converting to human readable time
-    # I know it's not part of the database abstraction I'm so very sorry
-    # You can always rewrite it.
-    for result in queryresult:
-        date = datetime.datetime.fromtimestamp(float(result[1]))
-        result[1] = date.strftime("%d %B %Y - %H:%M")
-    
-    return queryresult
 
 def get_logo(company):
-    '''Get the path to the companies logo'''
+    """Get the path to the companies logo"""
     connection = open_connection()
     cursor = connection.cursor()
-    
+
     query = '''SELECT filename FROM companies WHERE name = "%s"''' % (company,)
     cursor.execute(query)
-    
+
     queryresult = cursor.fetchall()
-    
+
     close_connection(connection)
-    
-    if(len(queryresult) == 0):
+
+    if (len(queryresult) == 0):
         return False
     else:
         result = queryresult[0][0]
         return result
 
+
 def set_logo(company, filename):
-    '''set the path to the logo in the database'''
+    """set the path to the logo in the database"""
     connection = open_connection()
     cursor = connection.cursor()
 
@@ -92,37 +71,38 @@ def set_logo(company, filename):
 
 
 def company(name):
-    '''Get all the data stored in the database of this company'''
+    """Get all the data stored in the database of this company"""
     connection = open_connection()
     cursor = connection.cursor()
-    
-    cursor.execute('''SELECT id, name, address, area_code, place, country, tav, email, telephone_number, fax_number, cellphone_number, website FROM companies WHERE name = "%s"''' % name)
-    
+
+    cursor.execute(
+        '''SELECT id, name, address, area_code, place, country, tav, email, telephone_number, fax_number, cellphone_number, website FROM companies WHERE name = "%s"''' % name)
+
     queryresult = cursor.fetchall()
-    
-   
+
     close_connection(connection)
-    if (len(queryresult) == 1):
+    if len(queryresult) == 1:
         return queryresult[0]
     else:
         return False
 
+
 def login(user, password):
-    '''returns true if the user password pair matches
-    false otherwise'''
+    """returns true if the user password pair matches
+    false otherwise"""
     connection = open_connection()
     cursor = connection.cursor()
-    
-    cursor.execute('''SELECT password from companies where name="%s"''' % user)
-    
-    result = cursor.fetchone()
-#    company_ = company(user)
 
-#    if not(company_):
-#        return False
+    cursor.execute('''SELECT password from companies where name="%s"''' % user)
+
+    result = cursor.fetchone()
+    # company_ = company(user)
+
+    # if not(company_):
+    #        return False
     if result is None:
         return False
-    elif(len(result) == 0):
+    elif len(result) == 0:
         return False
     else:
         stored = result[0]
@@ -131,79 +111,91 @@ def login(user, password):
         else:
             return False
 
+
 def add_company(name, address, postal, place, country, tav, email, tel, fax, cell, website, hashed_password):
-    '''add a company to the company database'''
+    """add a company to the company database"""
 
     connection = open_connection()
     cursor = connection.cursor()
-        
+
     # The module to work with MySQL doesn't support ? string parsing when executing queries
-    cursor.execute('''INSERT INTO companies (name, address, area_code, place, country, tav, email, telephone_number, fax_number, cellphone_number, website, password) VALUES("%s", "%s", "%s", "%s", "%s", "%s", "%s", "%s", "%s", "%s", "%s", "%s")''' % \
-                  (name, address, postal, place, country, tav, email, tel, fax, cell, website, hashed_password))
+    cursor.execute(
+        '''INSERT INTO companies (name, address, area_code, place, country, tav, email, telephone_number, fax_number, cellphone_number, website, password) VALUES("%s", "%s", "%s", "%s", "%s", "%s", "%s", "%s", "%s", "%s", "%s", "%s")''' % \
+        (name, address, postal, place, country, tav, email, tel, fax, cell, website, hashed_password))
 
     close_connection(connection)
 
+
 def add_news_item(short, text):
-    '''Add a news item. News item are displayed on the front page'''
+    """Add a news item. News item are displayed on the front page"""
 
     connection = open_connection()
     cursor = connection.cursor()
 
     now = time.time()
-    
-    cursor.execute('''INSERT INTO newsfeed (postdate, description, newsmessage) VALUES(%s, "%s", "%s")''' % (now, short, text))
-    
+
+    cursor.execute(
+        '''INSERT INTO newsfeed (postdate, description, newsmessage) VALUES(%s, "%s", "%s")''' % (now, short, text))
+
     close_connection(connection)
 
+
 def get_companyID(name):
-    '''Get the id of given company'''
+    """Get the id of given company"""
     connection = open_connection()
     cursor = connection.cursor()
-    
+
     cursor.execute('''SELECT ID FROM companies where name = "%s"''' % (name,))
-    
+
     result = cursor.fetchone()
-    
+
     ID = result[0]
 
     return ID
 
+
 def is_participant(name, year):
-    '''Checks if given company is/was a participant at given year'''
+    """Checks if given company is/was a participant at given year"""
     connection = open_connection()
     cursor = connection.cursor()
-    
+
     ID = get_companyID(name)
-    
+
     cursor.execute('''SELECT companyID FROM participants where companyID = "%s" and year = "%s"''' % (ID, year))
 
     result = cursor.fetchall()
     close_connection(connection)
 
-    if (len(result) == 0):
+    if len(result) == 0:
         return False
     else:
         return True
 
+
 def get_all_participants(year):
-    '''gets all participants and their corresponding logos'''
+    """gets all participants and their corresponding logos"""
     connection = open_connection()
     cursor = connection.cursor()
-    cursor.execute('''SELECT c.filename,c.name, c.website FROM companies c,participants p WHERE c.id=p.companyID AND year = %s''' % (year))
+    cursor.execute(
+        '''SELECT c.filename,c.name, c.website FROM companies c,participants p WHERE c.id=p.companyID AND year = %s''' % (
+            year))
     queryresult = cursor.fetchall()
     close_connection(connection)
-    
-    if(len(queryresult) == 0):
+
+    if (len(queryresult) == 0):
         return []
     else:
         return queryresult
 
+
 def get_all_confirmed_participants(year):
-    '''get all the participants currently confirmed to be present at the job fair'''
+    """get all the participants currently confirmed to be present at the job fair"""
     connection = open_connection()
     cursor = connection.cursor()
 
-    cursor.execute('''SELECT c.filename,c.name, c.website, p.state FROM companies c,participants p WHERE c.id=p.companyID AND year = %s''' % (year))
+    cursor.execute(
+        '''SELECT c.filename,c.name, c.website, p.state FROM companies c,participants p WHERE c.id=p.companyID AND year = %s''' % (
+            year))
 
     qres = cursor.fetchall()
 
@@ -216,10 +208,11 @@ def get_all_confirmed_participants(year):
 
     return res
 
+
 def get_status(name, edition):
-    '''Gets the current status of the participant.
-    if it isn't a participant return None'''
-    if(is_participant(name, edition)):
+    """Gets the current status of the participant.
+    if it isn't a participant return None"""
+    if (is_participant(name, edition)):
         connection = open_connection()
         cursor = connection.cursor()
 
@@ -232,31 +225,32 @@ def get_status(name, edition):
         return result[0]
 
 
-
 def get_formulas():
-    '''fetches all possible formulas'''
+    """fetches all possible formulas"""
     connection = open_connection()
     cursor = connection.cursor()
-    
+
     cursor.execute('''SELECT ID, name, price FROM formula''')
     close_connection(connection)
-    
+
     return cursor.fetchall()
 
+
 def update(company, value, column):
-    '''Updates given column of given company to given value'''
+    """Updates given column of given company to given value"""
     connection = open_connection()
     cursor = connection.cursor()
-    
+
     cursor.execute('''UPDATE companies SET %s = "%s" where name = "%s"''' % (column, value, company))
-    
+
     close_connection(connection)
 
-def add_participant(company, year, formula, high):
-    '''add a participant to the given edition with given formula and high flag
-    company is also given. Checks if company isn't a participant yet '''
 
-    if(is_participant(company, year)):
+def add_participant(company, year, formula, high):
+    """add a participant to the given edition with given formula and high flag
+    company is also given. Checks if company isn't a participant yet"""
+
+    if is_participant(company, year):
         return False
 
     ID = get_companyID(company)
@@ -267,7 +261,7 @@ def add_participant(company, year, formula, high):
     number_of_pages = 0
     remarks = ""
 
-    if((formula == 2) or (formula == 3)):
+    if (formula == 2) or (formula == 3):
         tables = 0
         promotion_wands = 0
 
@@ -276,17 +270,16 @@ def add_participant(company, year, formula, high):
 
     cursor.execute('''INSERT INTO participants (companyID, year, formulaID, state, tables, promotion_wand, high_stand, number_of_pages, remarks) VALUES \
                                                (%s, %s, %s, "%s", %s, %s, %s, %s, "%s")''' % \
-                                               (ID, year, formula, state, tables, promotion_wands, high, number_of_pages, remarks))
+                   (ID, year, formula, state, tables, promotion_wands, high, number_of_pages, remarks))
     close_connection(connection)
 
     mailing.send_enlist_mail(company)
 
-    
 
 def get_participant(company_id, year):
-    '''get participant information of given company of given year'''
+    """get participant information of given company of given year"""
     connection = open_connection()
-    cursor = connection.cursor()    
+    cursor = connection.cursor()
 
     cursor.execute('''SELECT * FROM participants WHERE companyID = %s AND year = %s''' % (company_id, year))
 
@@ -297,7 +290,7 @@ def get_participant(company_id, year):
 
 
 def edit_participant(company, year, formula, high, tables, promotion_wands, pages, remarks):
-    '''edit the participant information'''
+    """edit the participant information"""
     ID = get_companyID(company)
     participant_information = get_participant(ID, year)
 
@@ -307,19 +300,19 @@ def edit_participant(company, year, formula, high, tables, promotion_wands, page
 
     formula = int(formula)
 
-    if (((int(current_high) != int(high)) and int(high) == 1) or (current_formula != formula)):
+    if ((int(current_high) != int(high)) and int(high) == 1) or (current_formula != formula):
         print "different"
         state = participant_converter.id_to_state(0)
 
     if formula == 2:
         tables = 2
         promotion_wands = 2
-    elif ((formula == 3) or (formula == 4)):
+    elif (formula == 3) or (formula == 4):
         tables = promotion_wands = 0
 
-    ## Rounds to the nearest 0,5
+    # # Rounds to the nearest 0,5
     pages = float(pages)
-    pages = round(pages * 20, -1) /20
+    pages = round(pages * 20, -1) / 20
 
     if tables is None:
         tables = 2
@@ -328,17 +321,18 @@ def edit_participant(company, year, formula, high, tables, promotion_wands, page
     if remarks is None:
         remarks = ""
 
-
     connection = open_connection()
     cursor = connection.cursor()
 
-    cursor.execute('''UPDATE participants SET formulaID = %s, state = "%s", tables = %s, promotion_wand = %s, high_stand = %s, number_of_pages = %s, remarks = "%s" WHERE companyID = %s''' % \
-                      (formula, state, tables, promotion_wands, high, pages, remarks, ID))
+    cursor.execute(
+        '''UPDATE participants SET formulaID = %s, state = "%s", tables = %s, promotion_wand = %s, high_stand = %s, number_of_pages = %s, remarks = "%s" WHERE companyID = %s''' % \
+        (formula, state, tables, promotion_wands, high, pages, remarks, ID))
 
     close_connection(connection)
 
+
 def get_company_name_by_id(company_id):
-    '''get the name of the company by given id'''
+    """get the name of the company by given id"""
     connection = open_connection()
     cursor = connection.cursor()
 
@@ -348,13 +342,16 @@ def get_company_name_by_id(company_id):
     close_connection(connection)
     return result[0]
 
+
 def get_participants(year):
-    '''Get all participants of a given year'''
+    """Get all participants of a given year"""
 
     connection = open_connection()
     cursor = connection.cursor()
 
-    cursor.execute('''SELECT companyID, formulaID, state, tables, promotion_wand, high_stand, remarks FROM participants where year = %s''' % (year,))
+    cursor.execute(
+        '''SELECT companyID, formulaID, state, tables, promotion_wand, high_stand, remarks FROM participants where year = %s''' % (
+            year,))
 
     result = cursor.fetchall()
     close_connection(connection)
@@ -362,14 +359,13 @@ def get_participants(year):
     result = map(lambda t: t + ("",), result)
 
     result = map(list, result)
-    
+
     # converting to human readable time
     # I know it's not part of the database abstraction I'm so very sorry
     # You can always rewrite it.
     for res in result:
         company_name = get_company_name_by_id(res[0])
         res[0] = company_name
-
 
         formula = get_formula_by_id(res[1])
         res[1] = formula
@@ -384,8 +380,9 @@ def get_participants(year):
 
     return result
 
+
 def change_participant_status(company, year, state):
-    '''Changes the status of the given participant (company and year)'''
+    """Changes the status of the given participant (company and year)"""
 
     ID = get_companyID(company)
 
@@ -406,11 +403,11 @@ def change_participant_status(company, year, state):
 
 
 def get_formula_by_id(id):
-    '''get the formula by given id'''
+    """get the formula by given id"""
     connection = open_connection()
     cursor = connection.cursor()
 
-    cursor.execute('''SELECT name FROM formula where ID = %s''' %(id))
+    cursor.execute('''SELECT name FROM formula where ID = %s''' % (id))
 
     result = cursor.fetchone()
 
@@ -418,8 +415,9 @@ def get_formula_by_id(id):
 
     return result[0]
 
+
 def get_formula(name, edition):
-    '''Get the formula of a given company and year'''
+    """Get the formula of a given company and year"""
     connection = open_connection()
     cursor = connection.cursor()
 
@@ -433,13 +431,14 @@ def get_formula(name, edition):
 
     return result[0]
 
+
 def get_formula_default_pages(id):
-    '''Get the number of pages included in this formula'''
+    """Get the number of pages included in this formula"""
 
     connection = open_connection()
     cursor = connection.cursor()
 
-    cursor.execute('''SELECT number_of_pages from formula where ID = %s''' %(id))
+    cursor.execute('''SELECT number_of_pages from formula where ID = %s''' % (id))
 
     result = cursor.fetchone()
 
@@ -447,8 +446,9 @@ def get_formula_default_pages(id):
 
     return result[0]
 
+
 def remove_news_item(news_id):
-    '''Removes a news item by id'''
+    """Removes a news item by id"""
 
     connection = open_connection()
     cursor = connection.cursor()
@@ -457,11 +457,13 @@ def remove_news_item(news_id):
 
     close_connection(connection)
 
+
 def confirm_email_company_match(company, email):
     connection = open_connection()
     cursor = connection.cursor()
 
-    cursor.execute('''SELECT companies.ID FROM companies WHERE companies.name = "%s" AND companies.email = "%s"''' % (company, email))
+    cursor.execute('''SELECT companies.ID FROM companies WHERE companies.name = "%s" AND companies.email = "%s"''' % (
+        company, email))
 
     result = cursor.fetchone()
     close_connection(connection)
@@ -470,21 +472,24 @@ def confirm_email_company_match(company, email):
         return result[0]
     else:
         return False
+
 
 def find_password_hash(hash):
     connection = open_connection()
     cursor = connection.cursor()
 
-    cursor.execute('''SELECT companies.name FROM recover_password INNER JOIN companies ON recover_password.companyID = companies.ID WHERE password_url = "%s"''' % hash)
+    cursor.execute(
+        '''SELECT companies.name FROM recover_password INNER JOIN companies ON recover_password.companyID = companies.ID WHERE password_url = "%s"''' % hash)
 
     result = cursor.fetchone()
 
     close_connection(connection)
-    
+
     if result:
         return result[0]
     else:
         return False
+
 
 def add_password_hash(company, hash):
     connection = open_connection()
@@ -494,7 +499,8 @@ def add_password_hash(company, hash):
 
     cursor.execute('''INSERT INTO recover_password (companyID, password_url) VALUES (%s, "%s")''' % (companyid, hash))
     close_connection(connection)
-    
+
+
 def delete_password_hash(hash):
     connection = open_connection()
     cursor = connection.cursor()
@@ -502,6 +508,7 @@ def delete_password_hash(hash):
     cursor.execute('''DELETE FROM recover_password WHERE password_url="%s"''' % hash)
 
     close_connection(connection)
+
 
 def change_password(company_name, hashed_password):
     connection = open_connection()
@@ -514,21 +521,22 @@ def change_password(company_name, hashed_password):
 
 def number_of_pages(company_name, year):
     connection = open_connection()
-    cursor = connection.cursor()    
+    cursor = connection.cursor()
 
     company_id = get_companyID(company_name)
 
-    cursor.execute('''SELECT number_of_pages FROM participants WHERE companyID = %s AND year = %s''' % (company_id, year))
+    cursor.execute(
+        '''SELECT number_of_pages FROM participants WHERE companyID = %s AND year = %s''' % (company_id, year))
 
     result = cursor.fetchone()
 
     close_connection(connection)
 
-    
     if result:
         return result[0]
     else:
         return -1
+
 
 def get_participating_years(company_name):
     company_id = get_companyID(company_name)
@@ -546,8 +554,8 @@ def get_participating_years(company_name):
     print result
     return result
 
+
 def get_company_name_by_email(email):
-    
     connection = open_connection()
     cursor = connection.cursor()
 
@@ -555,7 +563,7 @@ def get_company_name_by_email(email):
 
     result = cursor.fetchone()
 
-    if result == None:
+    if result is None:
         return None
 
     close_connection(connection)

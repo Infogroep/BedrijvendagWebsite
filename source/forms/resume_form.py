@@ -1,5 +1,5 @@
-import config, re
-from wtforms import Form, FileField, StringField, SelectField, IntegerField, validators, ValidationError
+import config
+from wtforms import Form, FileField, StringField, SelectField, validators, ValidationError
 
 class resume_form(Form):
 
