@@ -35,6 +35,8 @@ def get_website(name):
 
     result = cursor.fetchone()
 
+    close_connection(connection)
+
     try:
         return result[0]
     except:
@@ -100,6 +102,7 @@ def login(user, password):
 
     # if not(company_):
     #        return False
+    close_connection(connection)
     if result is None:
         return False
     elif len(result) == 0:
@@ -135,6 +138,8 @@ def get_companyID(name):
 
     result = cursor.fetchone()
 
+    close_connection(connection)
+
     ID = result[0]
 
     return ID
@@ -168,7 +173,7 @@ def get_all_participants(year):
     queryresult = cursor.fetchall()
     close_connection(connection)
 
-    if (len(queryresult) == 0):
+    if len(queryresult) == 0:
         return []
     else:
         return queryresult
@@ -526,7 +531,7 @@ def get_participating_years(company_name):
     for row in cursor.fetchall():
         result.append(row[0])
 
-    print result
+    close_connection(connection)
     return result
 
 
@@ -538,11 +543,10 @@ def get_company_name_by_email(email):
 
     result = cursor.fetchone()
 
-    if result is None:
-        return None
-
     close_connection(connection)
 
+    if result is None:
+        return None
     return result[0]
 
 
