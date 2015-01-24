@@ -597,10 +597,10 @@ def change_password_url(hash_value):
     retype_password = request.forms.get('password_confirm')
     if not is_equal(hashed_password, retype_password):
         message_flash.flash("Passwords did not match", 'danger')
-        bottle.redirect('/recover/%s' % hash)
+        bottle.redirect('/recover/%s' % hash_value)
     elif company_:
         change_password(company_, hashed_password)
-        delete_password_hash(hash)
+        delete_password_hash(hash_value)
         message_flash.flash("Password changed successfully", 'success')
         bottle.redirect('/login')
     else:
