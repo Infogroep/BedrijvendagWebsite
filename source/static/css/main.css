@@ -1423,6 +1423,7 @@ span.color-red {
 +	Portfolio Style
 --------------------------------------------------------------------------*/
 .portfolio-item {
+  min-height: 268px;
   position: relative;
   background: #FFF;
   margin-bottom: 20px;
