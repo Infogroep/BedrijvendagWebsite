@@ -7,13 +7,21 @@
         <th>Status</th>
         <th>Stand</th>
         <th>Price</th>
+        <th>Debet nota</th>
+        <th>Payment Status</th>
     </tr>
 	{% for company in participants %}
     <tr>
         <td>{{company[0]}}</td>
         <td>{{company[1]}}</td>
-        <td>{{company[2]}}</td>
-        <td>&euro;{{company[3]}}</td>
+        <td>{{company[3]}}</td>
+        <td>&euro;{{company[4]}}</td>
+        <td>FILLER</td>
+        {% if company[2] == None or company[2] == 0 %}
+            <td><a href="/{{name}}/financial/{{company[0]}}/{{edition}}/payment_status"><span class="payment-none glyphicon glyphicon-remove"></span></a></td>
+        {% else %}
+            <td><span class="payment-ok glyphicon glyphicon-ok"></span></td>
+        {% endif %}
     </tr>
 {% endfor %}
     <tr>
@@ -21,6 +29,12 @@
         <td></td>
         <td><b>TOTAL: </b></td>
         <td><b>&euro;{{revenue}}</b></td>
+    </tr>
+    <tr>
+        <td></td>
+        <td></td>
+        <td><b>CONFIRMED: </b></td>
+        <td><b>&euro;{{confirmed_revenue}}</b></td>
     </tr>
 </table>
 

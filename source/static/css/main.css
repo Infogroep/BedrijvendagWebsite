@@ -2704,3 +2704,11 @@ span.color-red {
     content: "\2122";
     color: transparent !important;
 }
+
+.payment-none {
+    color: red;
+}
+
+.payment-ok {
+    color: green;
+}

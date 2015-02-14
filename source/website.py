@@ -636,15 +636,28 @@ def admin_participants(name):
     else:
         bottle.redirect('/unauthorized')
 
+@bottle.route('/<name>/financial/<company>/<year>/payment_status')
+def admin_set_financial(name, company, year):
+    """Set company to payed"""
+    if name in admin_users.values() and request.session.get('logged_in') == name:
+        set_company_payment_status(get_companyID(company), year)
+        bottle.redirect('/%s/financial' % name)
+    else:
+        bottle.redirect('/unauthorized')
+
+
 @bottle.route('/<name>/financial')
 def admin_financials(name):
     """Show the current confirmed revenue stream, as well as potential revenue"""
     if name in admin_users.values() and request.session.get('logged_in') == name:
         overview = get_financial_overview(edition)
+        print overview
         revenue = get_total_potential_revenue(edition)
+        confirmed_revenue = get_total_confirmed_revenue(edition)
         return template('static/templates/admin_financial.html', edition=edition, participants=overview,
                         revenue=revenue, name=request.session.get('logged_in'),
-                        admin=(True if request.session.get('logged_in') in admin_users.values() else False))
+                        admin=(True if request.session.get('logged_in') in admin_users.values() else False),
+                        confirmed_revenue=confirmed_revenue)
     else:
         bottle.redirect('/unauthorized')
 
@@ -691,3 +704,4 @@ def upload_free_page(name, index):
         bottle.redirect('''/company/%s/companiesbook''' % (name,))
     else:
         bottle.redirect('/unauthorized')
+

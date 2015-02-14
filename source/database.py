@@ -557,7 +557,7 @@ def get_financial_overview(year):
     connection = open_connection()
     cursor = connection.cursor()
 
-    cursor.execute("""SELECT companies.name, participants.state, formula.name, formula.price
+    cursor.execute("""SELECT companies.name, participants.state, participants.payment_status, formula.name, formula.price
                       FROM participants
                       INNER JOIN companies
                       ON participants.companyID = companies.ID
@@ -587,3 +587,34 @@ def get_total_potential_revenue(year):
     close_connection(connection)
 
     return results[0]
+
+def get_total_confirmed_revenue(year):
+    """SUM query to get the total confirmed (as in, actually payed) revenue of this year"""
+
+    connection = open_connection()
+    cursor = connection.cursor()
+
+    cursor.execute("""SELECT SUM(formula.price)
+                      FROM participants
+                      INNER JOIN formula
+                      ON participants.formulaID = formula.ID
+                      WHERE participants.year = %s
+                      AND participants.payment_status = 1""" % year)
+
+    results = cursor.fetchone()
+    close_connection(connection)
+
+    return results[0]
+
+def set_company_payment_status(company_id, year):
+    """Set company to payed"""
+
+    connection = open_connection()
+    cursor = connection.cursor()
+
+    cursor.execute("""UPDATE participants
+                      SET payment_status = 1
+                      WHERE companyID = %s
+                      AND year = %s""" % (company_id, year))
+
+    close_connection(connection)
