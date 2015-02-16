@@ -16,7 +16,11 @@
         <td>{{company[1]}}</td>
         <td>{{company[3]}}</td>
         <td>&euro;{{company[4]}}</td>
-        <td>FILLER</td>
+        {% if company[5] %}
+        <td><a class="btn btn-default" href="/{{name}}/financial/download_invoice/{{company[0]}}" role="button">Download invoice</a></td>
+        {% else %}
+            <td><a class="btn btn-default" href="/{{name}}/financial/generate_invoice/{{company[0]}}" role="button">Generate invoice</a></td>
+        {% endif %}
         {% if company[2] == None or company[2] == 0 %}
             <td><a href="/{{name}}/financial/{{company[0]}}/{{edition}}/payment_status"><span class="payment-none glyphicon glyphicon-remove"></span></a></td>
         {% else %}

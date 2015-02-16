@@ -13,8 +13,7 @@ from bottle import Jinja2Template
 from password import *
 from database import *
 import initialise
-
-
+import invoice_generation
 import mailing
 # import <directory>.<filename>
 # Directory must contain an empty __init__.py file
@@ -651,13 +650,39 @@ def admin_financials(name):
     """Show the current confirmed revenue stream, as well as potential revenue"""
     if name in admin_users.values() and request.session.get('logged_in') == name:
         overview = get_financial_overview(edition)
-        print overview
         revenue = get_total_potential_revenue(edition)
         confirmed_revenue = get_total_confirmed_revenue(edition)
         return template('static/templates/admin_financial.html', edition=edition, participants=overview,
                         revenue=revenue, name=request.session.get('logged_in'),
                         admin=(True if request.session.get('logged_in') in admin_users.values() else False),
                         confirmed_revenue=confirmed_revenue)
+    else:
+        bottle.redirect('/unauthorized')
+
+@bottle.route('/<name>/financial/generate_invoice/<company_name>')
+def generate_invoice(name, company_name):
+    """Generate an invoice for a company"""
+    if name in admin_users.values() and request.session.get('logged_in') == name:
+        information = company(company_name)
+        print information
+        company_id = get_companyID(company_name)
+        print company_id
+        subscription_info = get_company_subscription_info(company_id, edition)
+        print subscription_info
+        invoice_generation.generate_invoice(company_name, information[6], information[2], information[3] + " " + information[4], information[5], edition, subscription_info[0], subscription_info[1])
+        invoice_generation.compile_latex(company_name)
+        set_participant_invoice(company_id, edition)
+        bottle.redirect('/%s/financial' % name)
+    else:
+        bottle.redirect('/unauthorized')
+
+@bottle.route('/<name>/financial/download_invoice/<company_name>')
+def download_invoice(name, company_name):
+    if name in admin_users.values() and request.session.get('logged_in') == name:
+        print company_name
+        print "%s/%s.pdf" % (company_name, company_name)
+        print ROOT+'/invoices/'
+        return static_file('%s/%s.pdf' % (company_name, company_name), root=ROOT+'/invoices/')
     else:
         bottle.redirect('/unauthorized')
 

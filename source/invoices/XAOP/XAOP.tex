@@ -1,0 +1,119 @@
+\documentclass{letter}
+\usepackage[english]{babel}
+\usepackage{graphicx}
+\usepackage{wrapfig}
+\usepackage[table]{xcolor}
+\usepackage{tabularx}
+\usepackage{fancyhdr}
+\usepackage{geometry}
+\usepackage{eurosym}
+
+\usepackage{datenumber}
+ \geometry{
+ a4paper,
+ total={210mm,297mm},
+ left=20mm,
+ right=20mm,
+ top=20mm,
+ bottom=20mm,
+ }
+
+\pagestyle{fancy}
+\begin{document}
+
+\begin{wrapfigure}{r}{0.32\textwidth}
+  \begin{center}
+    \includegraphics[width=0.32\textwidth]{invoices/ig.jpg}
+  \end{center}
+\end{wrapfigure}
+
+Infogroep
+\newline
+WEAC
+\newline
+Vrije Universiteit Brussel
+\newline
+Pleinlaan 2 
+\newline
+1050 Brussel
+\newline
+\newline
+Tel: 02 629 33 56
+\newline
+E-mail: penningmeester@infogroep.be
+\newline
+\newline
+IBAN: BE12 3630 0567 0092
+\newline
+BIC: BBRUBEBB
+
+\rule{\textwidth}{1pt}
+\newline
+
+
+\textbf{\huge{
+Debit Note
+}}
+
+\begin{tabular}{ r p{10cm} l r}
+	Debet Note nr & & Date & Page \\
+	1 & & \today & 1/1 \\
+\end{tabular} 
+\vspace{1cm}
+
+
+\textbf{To:}
+\newline
+XAOP
+\newline
+Stijn Van Vreckem
+\newline
+Vandenpeereboomstraat 44 bus 0.2
+\newline
+1500 Halle
+\newline
+Belgium
+
+
+
+
+\begin{tabular}{ |p{12cm} | r | r | r |}
+	\hline
+	\rowcolor{lightgray}
+	Description & Qty & Unit Price & Amount \\ [2pt]
+	\hline
+	&&&\\
+	Bedrijvendag 2015 - Walk by table & 1 & 300 \euro & 300  \euro \\[8cm]
+	
+	\hline
+	
+	 \multicolumn{1}{c}{}& \multicolumn{2}{|l|}{\cellcolor{lightgray} \textbf{Total}} & 300 \euro\\[2pt]
+	\cline{2-4}
+	
+\end{tabular} 
+
+
+
+
+
+\setdatetoday
+\addtocounter{datenumber}{30}
+\setdatebynumber{\thedatenumber}
+Payment due by: \datedate.
+\newline
+All transactions are free of VAT.
+\newline
+Please use structured bank transfer code  \textbf{***000/0000/00001***}.
+
+\vspace{1cm}
+Ayrton Vercruysse
+\newline
+Quaestor Infogroep 2014-2015
+\lfoot{ \begin{tabularx}{\textwidth}{X X X X}
+Infogroep & ig@infogroep.be & 02 629 33 56 & Pleinlaan 2, 1050 Brussel \\
+\end{tabularx}}
+\cfoot{}
+\renewcommand{\headrulewidth}{0pt}
+
+
+\end{document}

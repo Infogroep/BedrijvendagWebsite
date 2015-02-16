@@ -6,7 +6,7 @@ from participant_state import *
 from config import database_name, database_user, database_password, database_host
 import MySQLdb as mysql
 import mailing
-
+from urllib import urlencode
 
 
 # Opens the connection to the website data.
@@ -557,7 +557,7 @@ def get_financial_overview(year):
     connection = open_connection()
     cursor = connection.cursor()
 
-    cursor.execute("""SELECT companies.name, participants.state, participants.payment_status, formula.name, formula.price
+    cursor.execute("""SELECT companies.name, participants.state, participants.payment_status, formula.name, formula.price, participants.invoice
                       FROM participants
                       INNER JOIN companies
                       ON participants.companyID = companies.ID
@@ -617,4 +617,35 @@ def set_company_payment_status(company_id, year):
                       WHERE companyID = %s
                       AND year = %s""" % (company_id, year))
 
+    close_connection(connection)
+
+def get_company_subscription_info(company_id, year):
+    """Get company stand information"""
+
+    connection = open_connection()
+    cursor = connection.cursor()
+
+    cursor.execute("""SELECT formula.name, formula.price
+                      FROM formula
+                      INNER JOIN participants
+                      ON formula.ID = participants.formulaID
+                      INNER JOIN companies
+                      ON participants.companyID = companies.ID
+                      WHERE companies.ID = %s AND participants.year = %s""" % (company_id, year))
+    results = cursor.fetchone()
+
+    close_connection(connection)
+
+    return results
+
+def set_participant_invoice(company_id, year):
+    """Set the invoice location for a given participating company"""
+
+    connection = open_connection()
+    cursor = connection.cursor()
+
+    cursor.execute("""UPDATE participants
+                      SET invoice= 1
+                      WHERE companyID = %s
+                      AND year = %s""" % (company_id, year))
     close_connection(connection)
