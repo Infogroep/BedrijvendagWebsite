@@ -36,6 +36,6 @@ def generate_invoice(company, representative, address1, address2, address3, edit
 
 def compile_latex(company):
     '''compiles the tex file to pdf'''
-    os.system('''/usr/texbin/pdflatex -interaction=nonstopmode -output-directory="invoices/%s"  "invoices/%s/%s.tex"''' % (company, company, company))
+    os.system('''/usr/bin/pdflatex -interaction=nonstopmode -output-directory="invoices/%s"  "invoices/%s/%s.tex"''' % (company, company, company))
     os.system('''rm -rf invoices/%s/*.aux''' % company)
     os.system('''rm -rf invoices/%s/*.log''' % company)
