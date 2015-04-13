@@ -708,7 +708,7 @@ def show_resumes(name):
                     admin=(True if request.session.get('logged_in') in admin_users.values() else False))
 
 
-@bottle.route('/company/<name>/resumes/<sel_year>')
+@bottle.route('/company/<name>/resumes/<sel_year>.zip')
 def show_resumes_year(name, sel_year):
     return static_file(sel_year + ".zip", root=RESUMES)
 
