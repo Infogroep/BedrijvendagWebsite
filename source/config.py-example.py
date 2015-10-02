@@ -6,6 +6,7 @@ ROOT = os.path.dirname(file_name)
 field_directory = "resumes"
 
 date = "19/03/2014"
+date_full = ""
 event_location = "Nelson Mandela"
 
 event_start_time = "11:00"
