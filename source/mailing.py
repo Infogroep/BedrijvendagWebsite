@@ -8,7 +8,7 @@ def send_recovery_email(to, hash):
     me = config.mail_from
     text = """Someone has specified you forgot your login credentials for bedrijvendag.infogroep.be,
 if this is not the case, you can ignore this message. Otherwise, go to 
-http://bedrijvendag.infogroep.be/recover/%s 
+http://students2industry.be/recover/%s 
 to complete the recovery process.
 
 Infogroep""" % hash
