@@ -55,24 +55,19 @@ def send_confirmation_mail(to):
     cc_address = []
     bcc_address = [me]
 
-    text = """Beste,
-
-
-Bij deze bevestigen wij uw inschrijving voor de Bedrijvendag 2015. U kan steeds een logo uploaden voor uw bedrijf.
+    text = """Bij deze bevestigen wij uw inschrijving voor Students2Industry 2016. U kan steeds een logo uploaden voor uw bedrijf.
 Indien u nog geen logo op de website heeft geplaatst raden wij u ten zeerste aan dit alsnog te doen.
-De "bedrijvendagboek" pagina(s) kan/kunnen nog altijd aangepast worden om te passen in de daarvoor voorziene ruimte.
-De beschikbare ruimte hangt af van uw formule. Je kan dit altijd controleren op http://bedrijvendag.infogroep.be/pricelist.
+Het “Industry-book" pagina(s) kan/kunnen nog altijd aangepast worden om te passen in de daarvoor voorziene ruimte.
+De beschikbare ruimte hangt af van uw formule. Je kan dit altijd controleren op http://students2industry.be/pricelist.
 Je kan ook steeds ruimte bijkopen zolang je het contract niet hebt aangevraagd.
 Vergeet zeker niet om een contract aan te vragen, zodat we de inschrijving definitief kunnen maken.
-We zijn altijd beschikbaar voor vragen en opmerkingen op bedrijvendag@infogroep.be
+We zijn altijd beschikbaar voor vragen en opmerkingen op contact@students2industry.be
 
+Bedankt voor uw interesse en tot op Students2Industry,
 
-Bedankt voor uw interesse en tot op de Bedrijvendag,
-
-
-Met vriendelijke groeten,
 Kwinten Pardon
-Elyn Meert
+Badreddine Hachoumi
+Linda de Corte
 
 
 --------------------------
@@ -81,21 +76,23 @@ ENGLISH VERSION
 
 Dear,
 
-We hereby confirm your company's registration for Bedrijvendag 2015. You can always upload your company's logo.
+We hereby confirm your company's registration for Students2Industry 2016 You can always upload your company's logo.
 We recommend you to upload your company's logo if you haven't done this yet.
-The "bedrijvendagboek" (companies book) pages can always be edited by the organisation to fit in the space available to you.
-This depends on your formula which is visible at http://bedrijvendag.infogroep.be/pricelist.
+The "Industry-book" (companies book) pages can always be edited by the organisation to fit in the space available to you.
+This depends on your formula which is visible at http://students2industry.be/pricelist.
 You can also buy more space until your contract has been requested.
 Don't forget to request your contract to complete the registration and make it final.
-We are always available for questions and remarks at bedrijvendag@infogroep.be
+We are always available for questions and remarks at contact@students2industry.be
 
 
-Thank you for your interest and we're hoping to welcome you at the Bedrijvendag.
+Thank you for your interest and we're hoping to welcome you at Students2Industry.
 
 
 Best regards,
+
 Kwinten Pardon
-Elyn Meert
+Badreddine Hachoumi
+Linda de Corte
 
 """
 
