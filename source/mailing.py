@@ -55,10 +55,12 @@ def send_confirmation_mail(to):
     cc_address = []
     bcc_address = [me]
 
-    text = """Bij deze bevestigen wij uw inschrijving voor Students2Industry 2016. U kan steeds een logo uploaden voor uw bedrijf.
+    text = """Beste,
+
+Bij deze bevestigen wij uw inschrijving voor Students2Industry 2016. U kan steeds een logo uploaden voor uw bedrijf.
 Indien u nog geen logo op de website heeft geplaatst raden wij u ten zeerste aan dit alsnog te doen.
-Het “Industry-book" pagina(s) kan/kunnen nog altijd aangepast worden om te passen in de daarvoor voorziene ruimte.
-De beschikbare ruimte hangt af van uw formule. Je kan dit altijd controleren op http://students2industry.be/pricelist.
+Uw Industry-book pagina(s) kan/kunnen nog altijd aangepast worden om te passen in de daarvoor voorziene ruimte.
+De beschikbare ruimte hangt af van uw formule. Je kan dit altijd controleren op https://students2industry.be/pricelist
 Je kan ook steeds ruimte bijkopen zolang je het contract niet hebt aangevraagd.
 Vergeet zeker niet om een contract aan te vragen, zodat we de inschrijving definitief kunnen maken.
 We zijn altijd beschikbaar voor vragen en opmerkingen op contact@students2industry.be
@@ -78,7 +80,7 @@ Dear,
 
 We hereby confirm your company's registration for Students2Industry 2016 You can always upload your company's logo.
 We recommend you to upload your company's logo if you haven't done this yet.
-The "Industry-book" (companies book) pages can always be edited by the organisation to fit in the space available to you.
+your Industry-book (companies book) pages can always be edited by the organisation to fit in the space available to you.
 This depends on your formula which is visible at http://students2industry.be/pricelist.
 You can also buy more space until your contract has been requested.
 Don't forget to request your contract to complete the registration and make it final.
