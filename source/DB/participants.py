@@ -3,10 +3,11 @@ from sqlalchemy import Column, ForeignKey, Integer, String
 from sqlalchemy.orm import sessionmaker
 
 class Participants(AbstractDBclass, base):
+	__tablename__ 	= 'Participants'
 
-	companyID 		= Column(Integer)
-	year 			= Column(Integer)
-	formulaID 		= Column(Integer)
+	companyID 		= Column(Integer, primary_key=True, ForeignKey('companies.ID'))
+	year 			= Column(Integer, primary_key=True)
+	formulaID 		= Column(Integer, ForeignKey('formula.ID'))
 	state 			= Column(varchar(255))
 	tables 			= Column(Integer)
 	promotion_wand 	= Column(Integer)
