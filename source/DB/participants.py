@@ -2,16 +2,16 @@ from DB.database import Base, engine, AbstractDBclass
 from sqlalchemy import Column, ForeignKey, Integer, String
 from sqlalchemy.orm import sessionmaker
 
-class Participants(AbstractDBclass, base):
+class Participants(AbstractDBclass, Base):
 	__tablename__ 	= 'Participants'
 
-	companyID 		= Column(Integer, primary_key=True, ForeignKey('companies.ID'))
+	companyID 		= Column(Integer, ForeignKey('companies.ID'), primary_key=True)
 	year 			= Column(Integer, primary_key=True)
 	formulaID 		= Column(Integer, ForeignKey('formula.ID'))
-	state 			= Column(varchar(255))
+	state 			= Column(String(255))
 	tables 			= Column(Integer)
 	promotion_wand 	= Column(Integer)
-	remarks 		= Column(varchar(255))
+	remarks 		= Column(String(255))
 	high_stand 		= Column(Integer)
 	number_of_pages = Column(Integer)
 	payment_status 	= Column(Integer)
